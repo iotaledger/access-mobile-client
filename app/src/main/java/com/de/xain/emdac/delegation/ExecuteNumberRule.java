@@ -60,7 +60,7 @@ public class ExecuteNumberRule extends Rule {
         policyAttributeList = new PolicyAttributeList();
         policyAttributeList.addPolicyAttribute(new PolicyAttributeSingle("execution_num", String.valueOf(mMaxNumOfExecutions)));
         policyAttributeList.addPolicyAttribute(new PolicyAttributeSingle("request.execution_num.type", "request.execution_num.value"));
-        policyAttributeList.setOperation(PolicyAttributeList.Operation.GREATER_THEN);
+        policyAttributeList.setOperation(PolicyAttributeList.Operation.GREATER_THAN);
 
         return policyAttributeList;
     }
