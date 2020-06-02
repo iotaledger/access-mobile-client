@@ -18,7 +18,7 @@
   -->
 
 <resources>
-    <string name="app_name" translatable="false">EMDAC</string>
+    <string name="app_name" translatable="false">IOTA Access Client</string>
 
     <string name="structured">Structured</string>
     <string name="json">Json</string>
@@ -236,7 +236,7 @@
     <string name="nav_menu_item_delegation_editor">Delegation editor</string>
 
     <!-- Themes -->
-    <string name="theme_name_xain">XAIN</string>
+    <string name="theme_name_iota">IOTA</string>
 
     <string name="free">Free</string>
 

@@ -45,11 +45,11 @@ public class ThemeLab {
     private List<Theme> generateThemes() {
         List<Theme> themes = new ArrayList<>();
 
-        themes.add(new Theme(R.style.XAIN_NoActionBar,
-                R.string.theme_name_xain,
+        themes.add(new Theme(R.style.IOTA_NoActionBar,
+                R.string.theme_name_iota,
                 null,
-                R.drawable.ic_svg_xain_main,
-                R.drawable.ic_svg_xain_main_large));
+                R.drawable.ic_iota_main_24,
+                R.drawable.ic_iota_main_32));
 
         return themes;
     }

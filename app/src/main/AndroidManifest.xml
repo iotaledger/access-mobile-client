@@ -37,7 +37,7 @@
 
         <activity
             android:name=".splash.SplashActivity"
-            android:theme="@style/XAIN.NoActionBar">
+            android:theme="@style/IOTA.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,11 +48,11 @@
         <activity
             android:name=".navigation.NavigationDrawerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/XAIN.NoActionBar" />
+            android:theme="@style/IOTA.NoActionBar" />
         <activity
             android:name=".login.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/XAIN.NoActionBar" />
+            android:theme="@style/IOTA.NoActionBar" />
     </application>
 
 </manifest>
