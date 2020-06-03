@@ -25,7 +25,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.de.xain.emdac.command_editor.CommandEditorViewModel"/>
+            type="org.iota.access.command_editor.CommandEditorViewModel"/>
     </data>
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  This file is part of the IOTA Access distribution
   ~  (https://github.com/iotaledger/access)
   ~
@@ -20,14 +19,14 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.de.xain.emdac">
+    package="org.iota.access">
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".EmdacApp"
+        android:name="org.iota.access.IOTAAccessClientApp"
         android:allowBackup="true"
         android:extractNativeLibs="true"
         android:icon="@mipmap/ic_launcher"
@@ -36,7 +35,7 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute">
 
         <activity
-            android:name=".splash.SplashActivity"
+            android:name="org.iota.access.splash.SplashActivity"
             android:theme="@style/IOTA.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,11 +45,11 @@
         </activity>
 
         <activity
-            android:name=".navigation.NavigationDrawerActivity"
+            android:name="org.iota.access.navigation.NavigationDrawerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/IOTA.NoActionBar" />
         <activity
-            android:name=".login.LoginActivity"
+            android:name="org.iota.access.login.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/IOTA.NoActionBar" />
     </application>

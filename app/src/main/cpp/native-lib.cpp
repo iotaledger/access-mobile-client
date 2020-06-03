@@ -23,7 +23,7 @@
 #include <libauthdac.h>
 
 // Android log function wrappers
-static const char* kTAG = "jniAPILibDacAuthNative";
+static const char *kTAG = "jniAPILibDacAuthNative";
 #define LOGI(...) \
   ((void)__android_log_print(ANDROID_LOG_INFO, kTAG, __VA_ARGS__))
 #define LOGW(...) \
@@ -33,17 +33,16 @@ static const char* kTAG = "jniAPILibDacAuthNative";
 
 // processing callback to handler class
 typedef struct JniLibDacAuthContext {
-    jclass   libDacAuthClz;
-    jobject  libDacAuthObj;
-    jobject  socketObj;
+    jclass libDacAuthClz;
+    jobject libDacAuthObj;
+    jobject socketObj;
 
 } JniLibDacAuthContext_t;
 
-JavaVM* javaVM = NULL;
+JavaVM *javaVM = NULL;
 
-ssize_t read_socket(void *ext, void *data, unsigned short len)
-{
-    JniLibDacAuthContext_t *ctx = (JniLibDacAuthContext_t *)ext;
+ssize_t read_socket(void *ext, void *data, unsigned short len) {
+    JniLibDacAuthContext_t *ctx = (JniLibDacAuthContext_t *) ext;
     JNIEnv *env;
 
     LOGI("read_socket");
@@ -51,7 +50,7 @@ ssize_t read_socket(void *ext, void *data, unsigned short len)
     javaVM->AttachCurrentThread(&env, NULL);
 
     jmethodID receiveData = env->GetMethodID(ctx->libDacAuthClz, "ReceiveData",
-            "(Lcom/de/xain/emdac/api/tcp/TCPSocketObject;[BS)I");
+                                             "(Lorg/iota/access/api/tcp/TCPSocketObject;[BS)I");
 
     if (receiveData == NULL || env->ExceptionOccurred()) {
         env->ExceptionClear();
@@ -67,7 +66,7 @@ ssize_t read_socket(void *ext, void *data, unsigned short len)
 
     jint ret = env->CallIntMethod(ctx->libDacAuthObj, receiveData, ctx->socketObj, data_, len);
 
-    env->GetByteArrayRegion(data_, 0, len, (jbyte *)data);
+    env->GetByteArrayRegion(data_, 0, len, (jbyte *) data);
 
     env->DeleteLocalRef(data_);
     LOGI("read_socket %d", ret);
@@ -75,9 +74,8 @@ ssize_t read_socket(void *ext, void *data, unsigned short len)
     return ret;
 }
 
-ssize_t write_socket(void *ext, void *data, unsigned short len)
-{
-    JniLibDacAuthContext_t *ctx = (JniLibDacAuthContext_t *)ext;
+ssize_t write_socket(void *ext, void *data, unsigned short len) {
+    JniLibDacAuthContext_t *ctx = (JniLibDacAuthContext_t *) ext;
     JNIEnv *env;
 
     LOGI("write_socket");
@@ -85,7 +83,7 @@ ssize_t write_socket(void *ext, void *data, unsigned short len)
     javaVM->AttachCurrentThread(&env, NULL);
 
     jmethodID sendData = env->GetMethodID(ctx->libDacAuthClz, "SendData",
-            "(Lcom/de/xain/emdac/api/tcp/TCPSocketObject;[BS)I");
+                                          "(Lorg/iota/access/api/tcp/TCPSocketObject;[BS)I");
 
     if (sendData == NULL || env->ExceptionOccurred()) {
         env->ExceptionClear();
@@ -97,7 +95,7 @@ ssize_t write_socket(void *ext, void *data, unsigned short len)
     LOGI("write_socket");
 
     jbyteArray data_ = env->NewByteArray(len);
-    env->SetByteArrayRegion (data_, 0, len, (const jbyte *)data);
+    env->SetByteArrayRegion(data_, 0, len, (const jbyte *) data);
 
     jint ret = env->CallIntMethod(ctx->libDacAuthObj, sendData, ctx->socketObj, data_, len);
 
@@ -107,15 +105,14 @@ ssize_t write_socket(void *ext, void *data, unsigned short len)
     return ret;
 }
 
-int verify(unsigned char *key, int len)
-{
+int verify(unsigned char *key, int len) {
     return 0;//DAC_OK;
 }
 
 extern "C"
 JNIEXPORT jint JNICALL
-Java_com_de_xain_emdac_api_APILibDacAuthNative_dacInitClient(JNIEnv *env, jobject instance,
-                                                                   jlongArray session_, jobject socketObj) {
+Java_org_iota_access_api_APILibDacAuthNative_dacInitClient(JNIEnv *env, jobject instance,
+                                                           jlongArray session_, jobject socketObj) {
     if (session_ == NULL) {
         return 0;
     }
@@ -124,8 +121,9 @@ Java_com_de_xain_emdac_api_APILibDacAuthNative_dacInitClient(JNIEnv *env, jobjec
 
     env->GetJavaVM(&javaVM);
 
-    dacSession_t *dacSession = (dacSession_t *)malloc(sizeof(dacSession_t));
-    JniLibDacAuthContext_t *jniLibDacAuthContext = (JniLibDacAuthContext_t *)malloc(sizeof(JniLibDacAuthContext_t));
+    dacSession_t *dacSession = (dacSession_t *) malloc(sizeof(dacSession_t));
+    JniLibDacAuthContext_t *jniLibDacAuthContext = (JniLibDacAuthContext_t *) malloc(
+            sizeof(JniLibDacAuthContext_t));
 
     ret = (jint) dacInitClient(dacSession, jniLibDacAuthContext);
     dacSession->f_read = read_socket;
@@ -134,7 +132,8 @@ Java_com_de_xain_emdac_api_APILibDacAuthNative_dacInitClient(JNIEnv *env, jobjec
 
     session[0] = (jlong) dacSession;
 
-    jniLibDacAuthContext->libDacAuthClz = (jclass) env->NewGlobalRef(env->FindClass("com/de/xain/emdac/api/APILibDacAuthNative"));
+    jniLibDacAuthContext->libDacAuthClz = (jclass) env->NewGlobalRef(
+            env->FindClass("org/iota/access/api/APILibDacAuthNative"));
     jniLibDacAuthContext->libDacAuthObj = env->NewGlobalRef(instance);
     jniLibDacAuthContext->socketObj = env->NewGlobalRef(socketObj);
 
@@ -146,8 +145,8 @@ Java_com_de_xain_emdac_api_APILibDacAuthNative_dacInitClient(JNIEnv *env, jobjec
 
 extern "C"
 JNIEXPORT jint JNICALL
-Java_com_de_xain_emdac_api_APILibDacAuthNative_dacAuthenticate(JNIEnv *env, jobject instance,
-                                                                     jlongArray session_) {
+Java_org_iota_access_api_APILibDacAuthNative_dacAuthenticate(JNIEnv *env, jobject instance,
+                                                             jlongArray session_) {
     if (session_ == NULL) {
         return 0;
     }
@@ -165,9 +164,9 @@ Java_com_de_xain_emdac_api_APILibDacAuthNative_dacAuthenticate(JNIEnv *env, jobj
 
 extern "C"
 JNIEXPORT jint JNICALL
-Java_com_de_xain_emdac_api_APILibDacAuthNative_dacSetOption(JNIEnv *env, jobject instance,
-                                                                  jlongArray session_, jstring key_,
-                                                                  jbyteArray data_) {
+Java_org_iota_access_api_APILibDacAuthNative_dacSetOption(JNIEnv *env, jobject instance,
+                                                          jlongArray session_, jstring key_,
+                                                          jbyteArray data_) {
     if (session_ == NULL) {
         return 0;
     }
@@ -178,7 +177,7 @@ Java_com_de_xain_emdac_api_APILibDacAuthNative_dacSetOption(JNIEnv *env, jobject
     jint ret = 0;
 
     // TODO: Write this
-    dacSetOption(dacSession, key, (unsigned char *)data);
+    dacSetOption(dacSession, key, (unsigned char *) data);
     LOGI("APILibDacAuthNative_dacSetOption ret %d", ret);
 
     env->ReleaseLongArrayElements(session_, session, 0);
@@ -189,9 +188,9 @@ Java_com_de_xain_emdac_api_APILibDacAuthNative_dacSetOption(JNIEnv *env, jobject
 
 extern "C"
 JNIEXPORT jint JNICALL
-Java_com_de_xain_emdac_api_APILibDacAuthNative_dacSend(JNIEnv *env, jobject instance,
-                                                             jlongArray session_, jbyteArray data_,
-                                                             jshort length) {
+Java_org_iota_access_api_APILibDacAuthNative_dacSend(JNIEnv *env, jobject instance,
+                                                     jlongArray session_, jbyteArray data_,
+                                                     jshort length) {
     if (session_ == NULL) {
         return 0;
     }
@@ -203,7 +202,7 @@ Java_com_de_xain_emdac_api_APILibDacAuthNative_dacSend(JNIEnv *env, jobject inst
     // TODO: test this
 
     LOGI("APILibDacAuthNative_dacSend");
-    ret = dacSend(dacSession, (const unsigned char *)data, length);
+    ret = dacSend(dacSession, (const unsigned char *) data, length);
 
     env->ReleaseByteArrayElements(data_, data, 0);
     env->ReleaseLongArrayElements(session_, session, 0);
@@ -212,9 +211,9 @@ Java_com_de_xain_emdac_api_APILibDacAuthNative_dacSend(JNIEnv *env, jobject inst
 
 extern "C"
 JNIEXPORT jint JNICALL
-Java_com_de_xain_emdac_api_APILibDacAuthNative_dacReceive(JNIEnv *env, jobject instance,
-                                                                jlongArray session_, jbyteArray data_,
-                                                                jshort length) {
+Java_org_iota_access_api_APILibDacAuthNative_dacReceive(JNIEnv *env, jobject instance,
+                                                        jlongArray session_, jbyteArray data_,
+                                                        jshort length) {
     if (session_ == NULL) {
         return 0;
     }
@@ -226,7 +225,7 @@ Java_com_de_xain_emdac_api_APILibDacAuthNative_dacReceive(JNIEnv *env, jobject i
     // TODO: test this
 
     LOGI("APILibDacAuthNative_dacReceive");
-    ret = dacReceive(dacSession, (unsigned char **)&data, (unsigned short*)&length);
+    ret = dacReceive(dacSession, (unsigned char **) &data, (unsigned short *) &length);
 
     env->ReleaseLongArrayElements(session_, session, 0);
     env->ReleaseByteArrayElements(data_, data, 0);
@@ -235,8 +234,8 @@ Java_com_de_xain_emdac_api_APILibDacAuthNative_dacReceive(JNIEnv *env, jobject i
 
 extern "C"
 JNIEXPORT jint JNICALL
-Java_com_de_xain_emdac_api_APILibDacAuthNative_dacRelease(JNIEnv *env, jobject instance,
-                                                                jlongArray session_) {
+Java_org_iota_access_api_APILibDacAuthNative_dacRelease(JNIEnv *env, jobject instance,
+                                                        jlongArray session_) {
     if (session_ == NULL) {
         return 0;
     }

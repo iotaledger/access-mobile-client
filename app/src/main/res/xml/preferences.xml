@@ -68,7 +68,7 @@
         app:isPreferenceVisible="false">
 
         <Preference
-            android:fragment="com.de.xain.emdac.main.ui.VehicleInfoListFragment"
+            android:fragment="org.iota.access.main.ui.VehicleInfoListFragment"
             android:title="@string/pref_title_vehicle_information" />
     </PreferenceCategory>
 </PreferenceScreen>
