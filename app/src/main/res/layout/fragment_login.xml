@@ -27,7 +27,7 @@
 
         <variable
             name="viewModel"
-            type="com.de.xain.emdac.login.LoginViewModel" />
+            type="org.iota.access.login.LoginViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout

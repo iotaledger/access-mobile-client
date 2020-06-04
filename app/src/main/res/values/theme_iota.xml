@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  This file is part of the IOTA Access distribution
+  ~  (https://github.com/iotaledger/access)
+  ~
+  ~  Copyright (c) 2020 IOTA Stiftung.
+  ~
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="IOTA" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="button_1_style">@style/Button1.IOTA</item>
+        <item name="button_2_style">@style/Button2.IOTA</item>
+        <item name="button_1_background_color">@color/dark_gray</item>
+        <item name="edit_text_style">@style/EditText.IOTA</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="spinner_style">@style/Spinner.IOTA</item>
+        <item name="label_style">@style/Label1.IOTA</item>
+        <item name="spinner_item_style">@style/SpinnerItem.IOTA</item>
+        <item name="separation_label_style">@style/SeparationLabel.IOTA</item>
+        <item name="separator_line_color">@color/mid_gray</item>
+        <item name="toolbar_style">@style/Toolbar.IOTA</item>
+        <item name="command_list_item_header_color">?colorPrimary</item>
+        <item name="large_text_view_style">@style/LargeTextView.IOTA</item>
+        <item name="checkbox_style">@style/Checkbox.IOTA</item>
+        <item name="checkbox_color">@color/white</item>
+        <item name="actionBarSize">@dimen/toolbar_size</item>
+        <item name="preferenceTheme">@style/PreferenceTheme</item>
+        <item name="widget_background">@drawable/rounded_rectangle</item>
+        <item name="label_style_2">@style/TextView2.IOTA</item>
+        <item name="imageButtonStyle">@style/ImageButton.IOTA</item>
+        <item name="label_navigation_header">@style/Label1.IOTA.NavigationHeader</item>
+        <item name="action_menu_icon_color">@color/white</item>
+        <item name="command_list_item_header_label">@style/CommandListItemHeaderLabel.IOTA</item>
+        <item name="command_list_item_header_image_tint">@color/white</item>
+        <item name="button_1_image_color">@color/white</item>
+        <item name="nav_drawer_color_background">@color/white</item>
+        <item name="nav_drawer_color_item_icon_checked">@color/colorPrimaryDark</item>
+        <item name="nav_drawer_color_item_icon_unchecked">@color/colorPrimary</item>
+        <item name="nav_drawer_color_item_text_checked">@color/colorPrimaryDark</item>
+        <item name="nav_drawer_color_item_text_unchecked">@color/colorPrimary</item>
+
+        <item name="command_list_item_background">@color/light_gray</item>
+
+        <item name="radio_button_theme">@style/RadioButton.IOTA</item>
+
+        <item name="dialog_style">@style/DialogTheme.IOTA</item>
+
+        <item name="preference_title_color">@color/black</item>
+        <item name="preference_summary_color">@color/black</item>
+    </style>
+
+    <style name="DialogTheme.IOTA" parent="Theme.AppCompat.Dialog">
+        <item name="android:colorBackground">@color/white</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTitleStyle">@null</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- Radio Button -->
+    <style name="RadioButton.IOTA" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="colorControlNormal">@color/black</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">@dimen/general_text_size</item>
+    </style>
+
+    <style name="IOTA.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Image Button -->
+    <style name="ImageButton.IOTA" parent="Widget.AppCompat.ImageButton">
+        <item name="android:tint">@color/white</item>
+        <item name="android:background">#00000000</item>
+    </style>
+
+    <!-- Button 1 -->
+    <style name="Button1.IOTA" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">?attr/widget_background</item>
+        <item name="android:fontFamily">?attr/font_family</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:minHeight">40dp</item>
+        <item name="android:tint">@color/white</item>
+    </style>
+
+    <!-- Button 2 -->
+    <style name="Button2.IOTA" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:colorBackground">@android:color/white</item>
+    </style>
+
+    <!-- Edit Text -->
+    <style name="EditText.IOTA" parent="Widget.AppCompat.EditText">
+        <item name="android:minHeight">40dp</item>
+        <item name="android:background">?attr/widget_background</item>
+        <item name="android:fontFamily">?attr/font_family</item>
+        <item name="android:textColorHint">@color/light_gray</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:elevation" tools:ignore="NewApi">5dp</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!-- Label 1 -->
+    <style name="Label1.IOTA" parent="">
+        <item name="android:textSize">@dimen/general_text_size</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <!-- Command list item header label -->
+    <style name="CommandListItemHeaderLabel.IOTA" parent="">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!-- Label navigation header -->
+    <style name="Label1.IOTA.NavigationHeader" parent="Label1.IOTA">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- Text View 2 -->
+    <style name="TextView2.IOTA" parent="">
+        <item name="android:textSize">@dimen/general_text_size</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <!-- Large text view -->
+    <style name="LargeTextView.IOTA" parent="">
+        <item name="android:minHeight">40dp</item>
+        <item name="android:background">?attr/widget_background</item>
+        <item name="android:fontFamily">?attr/font_family</item>
+        <item name="android:textColorHint">@color/light_gray</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:elevation" tools:ignore="NewApi">5dp</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!-- Checkbox -->
+    <style name="Checkbox.IOTA" parent="">
+        <item name="android:background">?attr/widget_background</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">?attr/font_family</item>
+    </style>
+
+    <!-- Spinner -->
+    <style name="Spinner.IOTA" parent="">
+        <item name="android:elevation" tools:ignore="NewApi">5dp</item>
+        <item name="android:minHeight">40dp</item>
+        <item name="android:paddingRight">28dp</item>
+        <item name="android:paddingLeft">28dp</item>
+        <item name="android:background">@drawable/bg_spinner</item>
+        <item name="android:color">@color/white</item>
+    </style>
+
+    <!-- Spinner Item -->
+    <style name="SpinnerItem.IOTA" parent="">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center_vertical|center</item>
+        <item name="android:textSize">@dimen/label_text_size</item>
+    </style>
+
+    <!-- Toolbar -->
+    <style name="Toolbar.IOTA" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:colorBackground">@color/white</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!-- Separation Label -->
+    <style name="SeparationLabel.IOTA" parent="">
+        <item name="android:minHeight">30dp</item>
+        <item name="android:height">30dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/text_view_separation_line</item>
+        <item name="android:textSize">@dimen/general_text_size</item>
+    </style>
+
+</resources>

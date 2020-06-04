@@ -37,7 +37,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:src="@drawable/ic_svg_xain_main"
+            android:src="@drawable/ic_iota_main_24"
             app:layout_constraintBottom_toTopOf="@+id/text_username"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

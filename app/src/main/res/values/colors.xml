@@ -20,9 +20,9 @@
 
 <resources>
 
-    <color name="colorPrimaryDarkXAIN">#000000</color>
-    <color name="colorPrimaryXAIN">#131313</color>
-    <color name="colorAccentXAIN">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorPrimary">#131313</color>
+    <color name="colorAccent">#000000</color>
 
     <color name="blue">#0067a9</color>
     <color name="gray">#c2babc</color>

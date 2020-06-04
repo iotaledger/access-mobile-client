@@ -26,7 +26,7 @@
 
         <variable
             name="viewModel"
-            type="com.de.xain.emdac.delegation.rule.DelegationRuleViewModel" />
+            type="org.iota.access.delegation.rule.DelegationRuleViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout

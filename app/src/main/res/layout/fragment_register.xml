@@ -20,7 +20,9 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
+    tools:context="org.iota.access.register.RegisterFragment">
 
     <data>
 
@@ -28,11 +30,11 @@
 
         <import type="android.view.inputmethod.EditorInfo" />
 
-        <import type="com.de.xain.emdac.register.RegisterViewModel.Stage" />
+        <import type="org.iota.access.register.RegisterViewModel.Stage" />
 
         <variable
             name="viewModel"
-            type="com.de.xain.emdac.register.RegisterViewModel" />
+            type="org.iota.access.register.RegisterViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
