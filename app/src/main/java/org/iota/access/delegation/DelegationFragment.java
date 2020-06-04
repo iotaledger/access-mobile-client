@@ -341,7 +341,7 @@ public class DelegationFragment extends CommunicationFragment<DelegationViewMode
     public void onAddRuleItemClick() {
         Activity activity = getActivity();
         if (activity instanceof BaseActivity) {
-            ((BaseActivity) activity).addFragmentToBackStack(DelegationRuleFragment.newInstance(getTag(), null, false), DELEGATION_RULE_FRAGMENT_TAG);
+            ((BaseActivity) activity).addFragmentToBackStack(DelegationRuleFragment.newInstance(getTag(), null, true), DELEGATION_RULE_FRAGMENT_TAG);
         }
     }
 

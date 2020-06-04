@@ -160,9 +160,6 @@ public class DelegationRuleFragment extends ViewLifecycleFragment implements
         });
         mBinding.spinnerTypeOfRule.setAdapter(adapter);
 
-        mBinding.labelTypeOfRule.setVisibility(View.GONE);
-        mBinding.spinnerTypeOfRule.setVisibility(View.GONE);
-
         // mRule satisfy type
         adapter = new SpinnerArrayAdapter<>(getActivity(), new String[]{
                 getString(RuleSatisfyType.ONE_OR_MORE.getNameResId()),
@@ -509,7 +506,7 @@ public class DelegationRuleFragment extends ViewLifecycleFragment implements
     public void onAddRuleItemClick() {
         Activity activity = getActivity();
         if (activity instanceof BaseActivity) {
-            ((BaseActivity) activity).addFragmentToBackStack(DelegationRuleFragment.newInstance(getTag(), null, false), DELEGATION_RULE_FRAGMENT_TAG);
+            ((BaseActivity) activity).addFragmentToBackStack(DelegationRuleFragment.newInstance(getTag(), null, true), DELEGATION_RULE_FRAGMENT_TAG);
         }
     }
 
