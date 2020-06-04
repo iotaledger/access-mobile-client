@@ -19,7 +19,7 @@
 
 package org.iota.access.delegation;
 
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 import org.iota.access.R;
 import org.iota.access.api.model.policy.PolicyAttributeList;

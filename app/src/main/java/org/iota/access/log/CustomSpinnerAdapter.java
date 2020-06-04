@@ -21,8 +21,8 @@ package org.iota.access.log;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.databinding.DataBindingUtil;
-import android.support.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

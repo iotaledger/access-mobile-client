@@ -22,17 +22,18 @@ package org.iota.access.di;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import org.iota.access.IOTAAccessClientApp;
 import org.iota.access.di.module.ContextModule;
 
 import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjection;
-import dagger.android.support.HasSupportFragmentInjector;
 
 /**
  * Helper class for injecting dependencies
@@ -97,7 +98,7 @@ public class AppInjector {
      * @param activity The activity to be injected
      */
     private static void handleActivity(Activity activity) {
-        if (activity instanceof HasSupportFragmentInjector) {
+        if (activity instanceof AndroidInjector) {
             AndroidInjection.inject(activity);
         }
         if (activity instanceof FragmentActivity) {

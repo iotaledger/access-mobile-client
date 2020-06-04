@@ -19,7 +19,7 @@
 
 package org.iota.access.api.model;
 
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 import androidx.annotation.Nullable;
 

@@ -26,7 +26,7 @@ import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
-import android.support.annotation.MainThread;
+import androidx.annotation.MainThread;
 
 import java.util.List;
 

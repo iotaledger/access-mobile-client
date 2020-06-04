@@ -19,7 +19,7 @@
 
 package org.iota.access.utils;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.util.Objects;
 import java.util.StringJoiner;

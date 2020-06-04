@@ -19,11 +19,11 @@
 
 package org.iota.access;
 
-import android.arch.lifecycle.ViewModel;
-import android.databinding.Bindable;
-import android.databinding.Observable;
-import android.databinding.PropertyChangeRegistry;
-import android.support.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
+import androidx.databinding.Bindable;
+import androidx.databinding.Observable;
+import androidx.databinding.PropertyChangeRegistry;
+import androidx.annotation.NonNull;
 
 public class BaseObservableViewModel extends ViewModel implements Observable {
         private transient PropertyChangeRegistry mCallbacks;

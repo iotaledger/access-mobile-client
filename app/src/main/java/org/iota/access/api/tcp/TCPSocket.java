@@ -19,7 +19,7 @@
 
 package org.iota.access.api.tcp;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

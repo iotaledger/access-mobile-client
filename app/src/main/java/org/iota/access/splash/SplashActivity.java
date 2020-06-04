@@ -20,7 +20,7 @@
 package org.iota.access.splash;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.iota.access.R;
 

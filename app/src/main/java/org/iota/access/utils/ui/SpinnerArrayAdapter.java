@@ -20,8 +20,8 @@
 package org.iota.access.utils.ui;
 
 import android.content.Context;
-import android.support.annotation.ArrayRes;
-import android.support.annotation.NonNull;
+import androidx.annotation.ArrayRes;
+import androidx.annotation.NonNull;
 import android.widget.ArrayAdapter;
 
 import org.iota.access.R;

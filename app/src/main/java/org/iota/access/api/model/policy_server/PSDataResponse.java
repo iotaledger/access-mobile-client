@@ -19,7 +19,7 @@
 
 package org.iota.access.api.model.policy_server;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 

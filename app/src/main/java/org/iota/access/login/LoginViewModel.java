@@ -19,7 +19,7 @@
 
 package org.iota.access.login;
 
-import android.databinding.Bindable;
+import androidx.databinding.Bindable;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.util.Pair;

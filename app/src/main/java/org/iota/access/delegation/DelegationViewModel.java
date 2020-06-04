@@ -19,8 +19,8 @@
 
 package org.iota.access.delegation;
 
-import android.databinding.Bindable;
-import android.support.annotation.Nullable;
+import androidx.databinding.Bindable;
+import androidx.annotation.Nullable;
 import android.util.Pair;
 
 import org.iota.access.BR;

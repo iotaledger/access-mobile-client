@@ -21,7 +21,7 @@ package org.iota.access.main.ui;
 
 import android.content.Intent;
 import android.speech.RecognizerIntent;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Pair;
 
 import org.iota.access.CommunicationViewModel;

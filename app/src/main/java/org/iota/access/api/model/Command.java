@@ -20,7 +20,7 @@
 package org.iota.access.api.model;
 
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import org.iota.access.R;
 import org.iota.access.utils.ResourceProvider;

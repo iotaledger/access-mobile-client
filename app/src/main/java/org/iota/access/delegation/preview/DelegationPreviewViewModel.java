@@ -19,7 +19,7 @@
 
 package org.iota.access.delegation.preview;
 
-import android.databinding.Bindable;
+import androidx.databinding.Bindable;
 
 import org.iota.access.BaseObservableViewModel;
 import org.iota.access.api.model.policy.Policy;

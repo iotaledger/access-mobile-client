@@ -20,7 +20,7 @@
 package org.iota.access.delegation;
 
 import android.content.res.Resources;
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 import org.iota.access.R;
 

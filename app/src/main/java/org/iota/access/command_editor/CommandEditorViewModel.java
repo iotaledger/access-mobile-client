@@ -19,10 +19,10 @@
 
 package org.iota.access.command_editor;
 
-import android.databinding.Bindable;
+import androidx.databinding.Bindable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.iota.access.BR;

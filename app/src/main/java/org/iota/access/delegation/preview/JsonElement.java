@@ -19,7 +19,7 @@
 
 package org.iota.access.delegation.preview;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import org.iota.access.utils.ui.recursiverecyclerview.RecursiveItem;
 

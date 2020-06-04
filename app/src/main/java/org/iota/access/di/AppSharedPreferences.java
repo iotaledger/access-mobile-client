@@ -20,7 +20,7 @@
 package org.iota.access.di;
 
 import android.content.SharedPreferences;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.iota.access.api.model.Command;

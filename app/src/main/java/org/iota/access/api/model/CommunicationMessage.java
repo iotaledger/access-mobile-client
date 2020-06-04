@@ -19,7 +19,7 @@
 
 package org.iota.access.api.model;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import org.iota.access.main.model.VehicleInfo;
 import org.iota.access.models.RegisterUserModel;

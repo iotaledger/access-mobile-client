@@ -30,7 +30,7 @@
             type="org.iota.access.login.LoginViewModel" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -108,5 +108,5 @@
             app:layout_constraintStart_toStartOf="@+id/button_connect" />
 
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

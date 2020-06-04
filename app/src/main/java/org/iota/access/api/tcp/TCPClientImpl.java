@@ -19,7 +19,7 @@
 
 package org.iota.access.api.tcp;
 
-import android.support.annotation.WorkerThread;
+import androidx.annotation.WorkerThread;
 import android.util.Pair;
 
 import org.iota.access.SettingsFragment;

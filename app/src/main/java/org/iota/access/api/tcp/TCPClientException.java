@@ -20,7 +20,7 @@
 package org.iota.access.api.tcp;
 
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 
 public class TCPClientException extends Exception {
     public TCPClientException() {

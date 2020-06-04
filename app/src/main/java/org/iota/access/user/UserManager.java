@@ -19,7 +19,7 @@
 
 package org.iota.access.user;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import org.iota.access.di.AppSharedPreferences;
 import org.iota.access.models.User;

@@ -19,7 +19,7 @@
 
 package org.iota.access.api;
 
-import android.support.annotation.Keep;
+import androidx.annotation.Keep;
 
 import org.iota.access.api.tcp.TCPSocketObject;
 

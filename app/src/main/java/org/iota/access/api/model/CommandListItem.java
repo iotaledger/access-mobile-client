@@ -19,7 +19,7 @@
 
 package org.iota.access.api.model;
 
-import android.support.annotation.DrawableRes;
+import androidx.annotation.DrawableRes;
 
 public interface CommandListItem {
     String getHeaderName();

@@ -19,8 +19,8 @@
 
 package org.iota.access.delegation.rule;
 
-import android.databinding.Bindable;
-import android.support.annotation.Nullable;
+import androidx.databinding.Bindable;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.iota.access.BR;

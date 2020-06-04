@@ -19,12 +19,10 @@
 
 package org.iota.access;
 
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleObserver;
-import android.arch.lifecycle.OnLifecycleEvent;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
 import android.util.Pair;
-
-import org.iota.access.R;
 
 import org.iota.access.api.Communicator;
 import org.iota.access.api.tcp.TCPClient;
