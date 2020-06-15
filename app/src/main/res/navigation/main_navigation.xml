@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/commandListFragment">
+
+    <fragment
+        android:id="@+id/commandListFragment"
+        android:name="org.iota.access.ui.main.commandlist.CommandListFragment"
+        tools:layout="@layout/fragment_command_list">
+        <action
+            android:id="@+id/action_commandListFragment_to_commandEditorFragment"
+            app:destination="@id/commandEditorFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/delegationFragment"
+        android:name="org.iota.access.ui.main.delegation.DelegationFragment"
+        tools:layout="@layout/fragment_delegation">
+        <action
+            android:id="@+id/action_delegationFragment_to_delegationPreviewFragment"
+            app:destination="@id/delegationPreviewFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
+        <action
+            android:id="@+id/action_delegationFragment_to_delegationRuleFragment"
+            app:destination="@id/delegationRuleFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="org.iota.access.SettingsFragment"
+        android:label="SettingsFragment" />
+
+    <fragment
+        android:id="@+id/logFragment"
+        android:name="org.iota.access.log.LogFragment"
+        tools:layout="@layout/fragment_log" />
+
+    <fragment
+        android:id="@+id/walletFragment"
+        android:name="org.iota.access.ui.main.wallet.WalletFragment"
+        tools:layout="@layout/fragment_wallet" />
+
+    <fragment
+        android:id="@+id/delegationPreviewFragment"
+        android:name="org.iota.access.ui.main.delegation.preview.DelegationPreviewFragment"
+        tools:layout="@layout/fragment_delegation_preview" />
+
+    <fragment
+        android:id="@+id/delegationRuleFragment"
+        android:name="org.iota.access.ui.main.delegation.DelegationRuleFragment"
+        tools:layout="@layout/fragment_delegation_rule">
+        <action
+            android:id="@+id/action_delegationRuleFragment_self"
+            app:destination="@id/delegationRuleFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/commandEditorFragment"
+        android:name="org.iota.access.ui.main.commandeditor.CommandEditorFragment"
+        android:label="fragment_command_editor"
+        tools:layout="@layout/fragment_command_editor" />
+</navigation>

@@ -21,6 +21,9 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+apply plugin: "androidx.navigation.safeargs"
 
 android {
     compileSdkVersion 29
@@ -66,6 +69,9 @@ android {
     lintOptions {
         disable 'FieldCanBeLocal'
     }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
@@ -83,16 +89,16 @@ dependencies {
     implementation 'androidx.preference:preference:1.1.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation 'junit:junit:4.13'
+    kapt 'androidx.test.ext:junit:1.1.1'
+    kapt 'androidx.test.espresso:espresso-core:3.2.0'
 
     // dagger
     implementation "com.google.dagger:dagger:$daggerVersion"
-    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     implementation "com.google.dagger:dagger-android:$daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$daggerVersion"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
     // architecture components
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
@@ -109,11 +115,11 @@ dependencies {
     // Jackson
     implementation(
             [group: 'com.fasterxml.jackson.core',
-             name : 'jackson-core', version: "$jacksonVersion"],
+             name : 'jackson-core', version: '2.11.0'],
             [group: 'com.fasterxml.jackson.core',
-             name : 'jackson-annotations', version: "$jacksonVersion"],
+             name : 'jackson-annotations', version: '2.11.0'],
             [group: 'com.fasterxml.jackson.core',
-             name : 'jackson-databind', version: "$jacksonVersion"]
+             name : 'jackson-databind', version: '2.11.0']
     )
 
     // Rx
@@ -129,4 +135,12 @@ dependencies {
     implementation ("com.authenteq.android:flow:$authenteqVersion") {
         transitive = true
     }
+
+    // Navigation component java
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
+
+    // Navigation component kotlin
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 }

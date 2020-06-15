@@ -26,7 +26,7 @@
 
         <variable
             name="viewModel"
-            type="org.iota.access.delegation.rule.DelegationRuleViewModel" />
+            type="org.iota.access.ui.main.delegation.DelegationRuleViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -90,7 +90,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:clipChildren="false"
                 android:orientation="vertical"
                 android:weightSum="4">
@@ -101,6 +100,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:hint="@string/hint_enter"
+                    android:importantForAutofill="no"
                     android:inputType="numberDecimal"
                     android:text="@={viewModel.latitude}" />
 
@@ -111,6 +112,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
+                    android:hint="@string/hint_enter"
+                    android:importantForAutofill="no"
                     android:inputType="numberDecimal"
                     android:text="@={viewModel.longitude}" />
 
@@ -121,8 +124,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
+                    android:hint="@string/hint_enter"
+                    android:importantForAutofill="no"
                     android:inputType="numberDecimal"
-                    android:text="@={viewModel.radius}"/>
+                    android:text="@={viewModel.radius}" />
 
                 <Spinner
                     android:id="@+id/spinner_unit"

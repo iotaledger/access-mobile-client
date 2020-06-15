@@ -19,6 +19,7 @@
 
 package org.iota.access.models;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
@@ -64,6 +65,11 @@ public class User implements Serializable {
 
     public String getFirstName() {
         return mFirstName;
+    }
+
+    @NonNull
+    public String getFullName() {
+        return mFirstName + " " + mLastName;
     }
 
     public String getUserId() {

@@ -19,7 +19,6 @@
 
 package org.iota.access.api.model.policy_server;
 
-import org.iota.access.api.model.policy.Policy;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -30,14 +29,14 @@ public class PSDelegatePolicyRequest extends PSSendCommandRequest implements Ser
     private String owner;
     @SerializedName("deviceId")
     private String deviceId;
-    @SerializedName("policy")
-    private Policy policy;
+//    @SerializedName("policy")
+//    private Policy policy;
 
-    public PSDelegatePolicyRequest(String owner, String deviceId, Policy policy) {
+    public PSDelegatePolicyRequest(String owner, String deviceId) {
         super("add_policy");
         this.owner = owner;
         this.deviceId = deviceId;
-        this.policy = policy;
+//        this.policy = policy;
     }
 
 }

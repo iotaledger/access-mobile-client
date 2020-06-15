@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  This file is part of the IOTA Access distribution
   ~  (https://github.com/iotaledger/access)
   ~
@@ -18,19 +17,23 @@
   ~  limitations under the License.
   -->
 
-<layout xmlns:tools="http://schemas.android.com/tools">
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
+            android:id="@+id/appBarLayout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:elevation="6dp"
             android:theme="@style/AppTheme.AppBarOverlay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="UnusedAttribute">
 
             <androidx.appcompat.widget.Toolbar
@@ -47,19 +50,21 @@
                     android:layout_gravity="center"
                     android:drawablePadding="@dimen/toolbar_icon_padding"
                     android:text="@string/app_name"
-                    android:textSize="@dimen/general_text_size" />
+                    android:textSize="@dimen/general_text_size"
+                    tools:text="IOTA" />
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <FrameLayout
-                android:id="@+id/activity_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
-    </LinearLayout>
+        <fragment
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:defaultNavHost="true"
+            tools:ignore="FragmentTagUsage" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

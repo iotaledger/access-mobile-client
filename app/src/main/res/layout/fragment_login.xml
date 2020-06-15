@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  This file is part of the IOTA Access distribution
   ~  (https://github.com/iotaledger/access)
   ~
@@ -27,34 +26,53 @@
 
         <variable
             name="viewModel"
-            type="org.iota.access.login.LoginViewModel" />
+            type="org.iota.access.ui.auth.login.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:background="@android:color/white"
         android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/text_username"
-            style="?attr/edit_text_style"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="8dp"
-            android:hint="@string/hint_username"
-            android:inputType="text"
-            android:text="@={viewModel.username}"
-            app:layout_constraintBottom_toTopOf="@+id/view5"
+            app:layout_constraintBottom_toTopOf="@+id/divider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            tools:ignore="Autofill" />
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <EditText
+                android:id="@+id/textUsername"
+                style="?attr/edit_text_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/hint_username"
+                android:inputType="text"
+                android:text="@={viewModel.loginUsername}"
+                tools:ignore="Autofill" />
+
+            <EditText
+                android:id="@+id/textPassword"
+                android:layout_marginTop="16dp"
+                style="?attr/edit_text_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:text="@={viewModel.loginPassword}"
+                tools:ignore="Autofill" />
+        </LinearLayout>
 
         <View
-            android:id="@+id/view5"
+            android:id="@+id/divider"
             android:layout_width="0dp"
             android:layout_height="2dp"
             android:layout_marginStart="24dp"
@@ -63,12 +81,12 @@
             android:layout_marginRight="24dp"
             android:layout_marginBottom="16dp"
             android:background="?attr/separator_line_color"
-            app:layout_constraintBottom_toTopOf="@+id/button_connect"
+            app:layout_constraintBottom_toTopOf="@+id/buttonConnect"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/button_connect"
+            android:id="@+id/buttonConnect"
             style="?attr/button_1_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -76,7 +94,7 @@
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="8dp"
             android:text="@string/button_connect"
-            app:layout_constraintBottom_toTopOf="@+id/textView"
+            app:layout_constraintBottom_toTopOf="@id/textView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
@@ -89,13 +107,13 @@
             android:layout_marginBottom="8dp"
             android:gravity="center"
             android:text="@string/label_or"
-            app:layout_constraintBottom_toTopOf="@+id/button_create_account"
-            app:layout_constraintEnd_toEndOf="@+id/button_connect"
+            app:layout_constraintBottom_toTopOf="@+id/buttonCreateAccount"
+            app:layout_constraintEnd_toEndOf="@+id/buttonConnect"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/button_connect" />
+            app:layout_constraintStart_toStartOf="@+id/buttonConnect" />
 
         <Button
-            android:id="@+id/button_create_account"
+            android:id="@+id/buttonCreateAccount"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_marginBottom="24dp"
@@ -104,8 +122,8 @@
             android:text="@string/button_title_create_account"
             android:textColor="?attr/button_1_background_color"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/button_connect"
-            app:layout_constraintStart_toStartOf="@+id/button_connect" />
+            app:layout_constraintEnd_toEndOf="@+id/buttonConnect"
+            app:layout_constraintStart_toStartOf="@+id/buttonConnect" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

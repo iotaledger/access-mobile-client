@@ -20,11 +20,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".login.LoginActivity">
+    tools:context=".ui.auth.login.LoginActivity">
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
-        app:showAsAction="withText|ifRoom"
-        android:icon="@drawable/ic_action_settings"/>
+        app:showAsAction="withText|always"
+        android:icon="@drawable/ic_settings"/>
 </menu>
