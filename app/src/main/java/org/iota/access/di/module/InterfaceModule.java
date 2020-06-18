@@ -20,7 +20,7 @@
 package org.iota.access.di.module;
 
 import org.iota.access.api.OnMessageReceived;
-import org.iota.access.main.OnMessageReceivedImpl;
+import org.iota.access.ui.main.OnMessageReceivedImpl;
 
 import dagger.Binds;
 import dagger.Module;

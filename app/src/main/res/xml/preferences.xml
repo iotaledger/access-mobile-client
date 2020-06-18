@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  This file is part of the IOTA Access distribution
   ~  (https://github.com/iotaledger/access)
   ~
@@ -22,53 +21,56 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:divider="@drawable/separation_line">
 
-    <PreferenceCategory android:title="@string/pref_category_connection">
+    <PreferenceCategory
+        android:title="@string/pref_category_connection"
+        app:iconSpaceReserved="false">
 
         <EditTextPreference
-            android:theme="?attr/label_style"
-            android:textColorHint="@color/red"
             android:defaultValue="192.168.3.1"
             android:key="pref_ip_address"
-            android:title="@string/pref_title_ip_address"/>
+            android:textColorHint="@color/red"
+            android:theme="?attr/label_style"
+            android:title="@string/pref_title_ip_address"
+            app:iconSpaceReserved="false" />
+
         <EditTextPreference
             android:defaultValue="9998"
             android:dialogMessage="Value between 0 and 65535"
             android:key="pref_port_number"
-            android:title="@string/pref_title_port_number" />
+            android:title="@string/pref_title_port_number"
+            app:iconSpaceReserved="false" />
+
         <ListPreference
+            android:defaultValue="2"
             android:entries="@array/protocol_types"
             android:entryValues="@array/protocol_types"
             android:key="pref_protocol"
-            android:defaultValue="2"
-            android:title="@string/label_protocol" />
+            android:title="@string/label_protocol"
+            app:iconSpaceReserved="false" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_category_appearance">
+    <PreferenceCategory
+        android:title="@string/pref_category_appearance"
+        app:iconSpaceReserved="false">
 
         <ListPreference
             android:key="pref_theme"
-            android:title="@string/pref_title_theme" />
+            android:title="@string/pref_title_theme"
+            app:iconSpaceReserved="false" />
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="pref_category_units"
         android:title="@string/pref_category_units"
+        app:iconSpaceReserved="false"
         app:isPreferenceVisible="false">
         <ListPreference
             android:key="pref_temperature_unit"
-            android:title="@string/pref_title_temperature_unit" />
+            android:title="@string/pref_title_temperature_unit"
+            app:iconSpaceReserved="false" />
         <ListPreference
             android:key="pref_distance_unit"
-            android:title="@string/pref_title_distance_unit" />
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:key="pref_category_vehicle_information"
-        android:title="@string/pref_category_vehicle_information"
-        app:isPreferenceVisible="false">
-
-        <Preference
-            android:fragment="org.iota.access.main.ui.VehicleInfoListFragment"
-            android:title="@string/pref_title_vehicle_information" />
+            android:title="@string/pref_title_distance_unit"
+            app:iconSpaceReserved="false" />
     </PreferenceCategory>
 </PreferenceScreen>

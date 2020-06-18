@@ -26,6 +26,7 @@ import org.iota.access.BuildConfig;
 import org.iota.access.api.APILibDacAuthNative;
 import org.iota.access.api.Communicator;
 import org.iota.access.api.CommunicatorImpl;
+import org.iota.access.api.CommunicatorStub;
 import org.iota.access.api.OnMessageReceived;
 import org.iota.access.api.PSService;
 import org.iota.access.api.TSService;
@@ -33,6 +34,8 @@ import org.iota.access.api.asr.ASRClient;
 import org.iota.access.api.tcp.TCPClient;
 import org.iota.access.api.tcp.TCPClientImpl;
 import org.iota.access.api.udp.UDPClient;
+import org.iota.access.data.DataProvider;
+import org.iota.access.data.DataProviderImpl;
 import org.iota.access.di.AppSharedPreferences;
 import org.iota.access.utils.ResourceProvider;
 import com.google.gson.FieldNamingPolicy;
@@ -84,8 +87,8 @@ public class AppModule {
     @Provides
     @Singleton
     public Communicator providesCommunicator(TCPClient tcpClient, TSService tsService, PSService psService) {
-        return new CommunicatorImpl(tcpClient);
-//        return new CommunicatorStub(tsService, psService);
+//        return new CommunicatorImpl(tcpClient);
+        return new CommunicatorStub(tsService, psService);
     }
 
     @Singleton
@@ -258,5 +261,11 @@ public class AppModule {
             return (X509TrustManager) trustManagers[0];
         }
         return null;
+    }
+
+    @Provides
+    @Singleton
+    public DataProvider providesDataProvider() {
+        return new DataProviderImpl();
     }
 }

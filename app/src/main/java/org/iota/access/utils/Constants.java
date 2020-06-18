@@ -24,11 +24,9 @@ package org.iota.access.utils;
  */
 public class Constants {
 
-    public static final String POLICY_ID_PREFIX = "TODO: ";
     public static final String ACTION_CLOSE_DOOR = "close_door";
     public static final String ACTION_OPEN_DOOR = "open_door";
     public static final String ACTION_OPEN_TRUNK = "open_trunk";
     public static final String DATE_AND_TIME_FORMAT = "dd/MM/yyyy HH:mm";
     public static final float TOKEN_SCALE_FACTOR = 1000f;
-    public static final String AUTHENTEQ_LICENSE_KEY = "23595c0681664e668374708f66e88a4a-sandbox";
 }

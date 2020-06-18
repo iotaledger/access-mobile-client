@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/upper_drawer_group"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@id/commandListFragment"
+            android:icon="@drawable/ic_home"
+            android:title="@string/nav_menu_item_home" />
+        <item
+            android:id="@id/delegationFragment"
+            android:icon="@drawable/ic_edit"
+            android:title="@string/nav_menu_item_delegation_editor" />
+        <item
+            android:id="@id/walletFragment"
+            android:icon="@drawable/ic_wallet"
+            android:title="@string/nav_menu_item_wallet" />
+        <item
+            android:id="@id/logFragment"
+            android:icon="@drawable/ic_log"
+            android:title="@string/nav_menu_log" />
+        <item
+            android:id="@id/settingsFragment"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/nav_menu_item_settings" />
+    </group>
+
+    <item
+        android:id="@+id/log_out_menu_item"
+        android:checkable="false"
+        android:icon="@drawable/ic_logout"
+        android:title="@string/nav_menu_item_log_out" />
+</menu>

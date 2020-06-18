@@ -25,7 +25,7 @@ import android.util.Pair;
 import org.iota.access.api.model.CommunicationMessage;
 import org.iota.access.api.model.TCPResponse;
 import org.iota.access.api.tcp.TCPClient;
-import org.iota.access.delegation.UserPublic;
+import org.iota.access.models.DelegationUser;
 import org.iota.access.models.GetUserIdResponse;
 import org.iota.access.models.User;
 import org.iota.access.models.UserUtils;
@@ -124,12 +124,12 @@ public class CommunicatorStub implements Communicator {
                 }
                 break;
                 case CommunicationMessage.GET_ALL_USERS: {
-                    TCPResponse<List<UserPublic>> tcpResponse = new TCPResponse<>();
-                    List<UserPublic> users = new ArrayList<>();
-                    users.add(new UserPublic("jamie", "3c9d985c5d630e6e02f676997c5e9f03b45c6b7529b2491e8de03c18af3c9d87f0a65ecb5dd8f390dee13835354b222df414104684ce9f1079a059f052ca6e51"));
-                    users.add(new UserPublic("charlie", "3c9d985c5d630e6e02f676997c5e9f03b45c6b7529b2491e8de03c18af3c9d87f0a65ecb5dd8f390dee13835354b222df414104684ce9f1079a059f052ca6e51"));
-                    users.add(new UserPublic("alex", "3c9d985c5d630e6e02f676997c5e9f03b45c6b7529b2491e8de03c18af3c9d87f0a65ecb5dd8f390dee13835354b222df414104684ce9f1079a059f052ca6e51"));
-                    users.add(new UserPublic("richard", "3c9d985c5d630e6e02f676997c5e9f03b45c6b7529b2491e8de03c18af3c9d87f0a65ecb5dd8f390dee13835354b222df414104684ce9f1079a059f052ca6e51"));
+                    TCPResponse<List<DelegationUser>> tcpResponse = new TCPResponse<>();
+                    List<DelegationUser> users = new ArrayList<>();
+                    users.add(new DelegationUser("jamie", "3c9d985c5d630e6e02f676997c5e9f03b45c6b7529b2491e8de03c18af3c9d87f0a65ecb5dd8f390dee13835354b222df414104684ce9f1079a059f052ca6e51"));
+                    users.add(new DelegationUser("charlie", "3c9d985c5d630e6e02f676997c5e9f03b45c6b7529b2491e8de03c18af3c9d87f0a65ecb5dd8f390dee13835354b222df414104684ce9f1079a059f052ca6e51"));
+                    users.add(new DelegationUser("alex", "3c9d985c5d630e6e02f676997c5e9f03b45c6b7529b2491e8de03c18af3c9d87f0a65ecb5dd8f390dee13835354b222df414104684ce9f1079a059f052ca6e51"));
+                    users.add(new DelegationUser("richard", "3c9d985c5d630e6e02f676997c5e9f03b45c6b7529b2491e8de03c18af3c9d87f0a65ecb5dd8f390dee13835354b222df414104684ce9f1079a059f052ca6e51"));
                     tcpResponse.setError(0);
                     tcpResponse.setMessage("success");
                     tcpResponse.setData(users);

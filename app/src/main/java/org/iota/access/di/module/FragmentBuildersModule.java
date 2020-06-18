@@ -20,15 +20,14 @@
 package org.iota.access.di.module;
 
 import org.iota.access.SettingsFragment;
-import org.iota.access.delegation.DelegationFragment;
-import org.iota.access.delegation.DelegationListFragment;
-import org.iota.access.delegation.preview.DelegationPreviewStructuredFragment;
-import org.iota.access.delegation.rule.DelegationRuleFragment;
-import org.iota.access.login.LoginFragment;
-import org.iota.access.command_editor.CommandEditorFragment;
-import org.iota.access.main.ui.CommandListFragment;
-import org.iota.access.main.ui.VehicleInfoListFragment;
-import org.iota.access.register.RegisterFragment;
+import org.iota.access.ui.main.commandeditor.CommandEditorFragment;
+import org.iota.access.ui.main.delegation.preview.DelegationPreviewJsonFragment;
+import org.iota.access.ui.main.delegation.preview.DelegationPreviewStructuredFragment;
+import org.iota.access.ui.auth.login.LoginFragment;
+import org.iota.access.ui.auth.register.RegisterFragment;
+import org.iota.access.ui.main.commandlist.CommandListFragment;
+import org.iota.access.ui.main.delegation.DelegationFragment;
+import org.iota.access.ui.main.delegation.DelegationRuleFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -49,22 +48,19 @@ public abstract class FragmentBuildersModule {
     abstract LoginFragment contributeLoginFragment();
 
     @ContributesAndroidInjector
-    abstract VehicleInfoListFragment contributeVehicleInfoFragment();
-
-    @ContributesAndroidInjector
     abstract SettingsFragment contributePreferenceFragment();
 
     @ContributesAndroidInjector
     abstract DelegationFragment contributeDelegationFragment();
 
     @ContributesAndroidInjector
-    abstract DelegationListFragment contributeDelegationListFragment();
-
-    @ContributesAndroidInjector
     abstract DelegationRuleFragment contributeDelegationRuleFragment();
 
     @ContributesAndroidInjector
     abstract DelegationPreviewStructuredFragment contributeDelegationPreviewFragment();
+
+    @ContributesAndroidInjector
+    abstract DelegationPreviewJsonFragment contributeDelegationPreviewJsonFragment();
 
     @ContributesAndroidInjector
     abstract RegisterFragment contributeRegisterFragment();

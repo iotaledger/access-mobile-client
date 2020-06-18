@@ -19,7 +19,7 @@
 
 package org.iota.access.api;
 
-import org.iota.access.main.OnMessageReceivedImpl;
+import org.iota.access.ui.main.OnMessageReceivedImpl;
 
 /**
  * SuperClass for connection clients holding the message receive listener

@@ -19,17 +19,15 @@
   ~  limitations under the License.
   -->
 
-<layout>
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/text_view"
+        style="?attr/label_style_2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            style="?attr/label_style_2"
-            android:textColor="@color/black"
-            android:id="@+id/text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </ScrollView>
-</layout>
+        android:layout_height="wrap_content"
+        android:textColor="@color/black" />
+</ScrollView>

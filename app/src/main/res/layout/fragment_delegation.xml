@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  This file is part of the IOTA Access distribution
   ~  (https://github.com/iotaledger/access)
   ~
@@ -19,176 +18,198 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="org.iota.access.ui.main.delegation.DelegationFragment">
 
     <data>
 
         <variable
             name="viewModel"
-            type="org.iota.access.delegation.DelegationViewModel" />
+            type="org.iota.access.ui.main.delegation.DelegationViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraint_layout"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible">
+        android:layout_height="match_parent">
 
-        <androidx.core.widget.NestedScrollView
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_layout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:fillViewport="true"
-            app:layout_constraintBottom_toTopOf="@+id/view"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
 
-            <LinearLayout
+            <org.iota.access.customviews.CustomNestedScrollView
+                android:id="@+id/nestedScrollView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginRight="24dp"
-                android:orientation="vertical"
-                android:paddingTop="16dp">
+                android:layout_height="0dp"
+                android:fillViewport="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/label_delegate_to"
-                    style="?attr/separation_label_style"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_delegate_to" />
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingStart="24dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="24dp"
+                    android:paddingBottom="72dp">
 
-                <Button
-                    android:id="@+id/button_users"
-                    style="?attr/button_1_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/button_users" />
-
-                <TextView
-                    android:id="@+id/label_actions"
-                    style="?attr/separation_label_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/label_action" />
-
-                <Button
-                    android:id="@+id/button_actions"
-                    style="?attr/button_1_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/button_actions" />
-
-                <TextView
-                    style="?attr/separation_label_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/label_fee" />
-
-                <Spinner
-                    android:id="@+id/spinner_cost"
-                    style="?attr/spinner_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:selectedItemPosition="@={viewModel.selectedCostIndex}" />
-
-                <TextView
-                    style="?attr/separation_label_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/label_num_of_executions" />
-
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="vertical">
-
-                    <RadioButton
-                        android:id="@+id/button_unlimited"
-                        android:theme="?attr/radio_button_theme"
+                    <TextView
+                        android:id="@+id/label_delegate_to"
+                        style="?attr/separation_label_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/button_unlimited" />
+                        android:text="@string/label_delegate_to" />
 
-                    <RadioButton
-                        android:id="@+id/buttonOneTimeOnly"
-                        android:theme="?attr/radio_button_theme"
+                    <Button
+                        android:id="@+id/button_users"
+                        style="?attr/button_1_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/button_one_time_only" />
-                </RadioGroup>
+                        android:layout_marginTop="8dp"
+                        android:text="@string/button_users" />
 
-                <TextView
-                    android:id="@+id/label_rules"
-                    style="?attr/separation_label_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/label_rules_optional" />
+                    <TextView
+                        android:id="@+id/label_actions"
+                        style="?attr/separation_label_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/label_action" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rules_recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp" />
+                    <Button
+                        android:id="@+id/button_actions"
+                        style="?attr/button_1_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/button_actions" />
 
-                <!--<Button-->
-                <!--android:id="@+id/button_rules_enabled"-->
-                <!--style="?attr/button_1_style"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--android:text="@string/button_rule_granted" />-->
+                    <TextView
+                        style="?attr/separation_label_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/label_fee" />
 
-                <!--<Button-->
-                <!--android:id="@+id/button_rules_disabled"-->
-                <!--style="?attr/button_1_style"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="16dp"-->
-                <!--android:layout_marginBottom="16dp"-->
-                <!--android:text="@string/button_rule_denied" />-->
+                    <!--suppress AndroidUnknownAttribute -->
+                    <Spinner
+                        android:id="@+id/spinner_cost"
+                        style="?attr/spinner_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:selectedItemPosition="@={viewModel.selectedCostIndex}" />
 
-            </LinearLayout>
+                    <TextView
+                        style="?attr/separation_label_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/label_num_of_executions" />
 
-        </androidx.core.widget.NestedScrollView>
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical">
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="0dp"
-            android:layout_height="2dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginBottom="16dp"
-            android:background="?attr/separator_line_color"
-            app:layout_constraintBottom_toTopOf="@+id/button_delegate"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+                        <RadioButton
+                            android:id="@+id/button_unlimited"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/button_unlimited"
+                            android:theme="?attr/radio_button_theme" />
 
-        <Button
-            android:id="@+id/button_delegate"
-            style="?attr/button_1_style"
-            android:layout_width="0dp"
+                        <RadioButton
+                            android:id="@+id/buttonOneTimeOnly"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/button_one_time_only"
+                            android:theme="?attr/radio_button_theme" />
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/label_rules"
+                        style="?attr/separation_label_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/label_rules_optional" />
+
+                    <Button
+                        android:id="@+id/buttonRulesGrant"
+                        style="?attr/button_1_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/button_rule_grant"
+                        android:textAllCaps="false"
+                        android:textColor="@color/green" />
+
+                    <Button
+                        android:id="@+id/buttonRulesDeny"
+                        style="?attr/button_1_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="@string/button_rule_deny"
+                        android:textAllCaps="false"
+                        android:textColor="@color/red" />
+
+                    <TextView
+                        android:id="@+id/lblObligateIfGranted"
+                        style="?attr/separation_label_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/label_obligate_if_granted" />
+
+                    <Spinner
+                        android:id="@+id/spinnerObligateIfGranted"
+                        style="?attr/spinner_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:selectedItemPosition="@={viewModel.selectedObligationGrantIndex}" />
+
+                    <TextView
+                        android:id="@+id/lblObligateIfDenied"
+                        style="?attr/separation_label_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/label_obligate_if_denied" />
+
+                    <Spinner
+                        android:id="@+id/spinnerObligateIfDenied"
+                        style="?attr/spinner_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:selectedItemPosition="@={viewModel.selectedObligationDenyIndex}" />
+
+                </LinearLayout>
+
+            </org.iota.access.customviews.CustomNestedScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/button_delegate"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_send"
+            app:backgroundTint="@color/red"
+            app:fabSize="normal" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

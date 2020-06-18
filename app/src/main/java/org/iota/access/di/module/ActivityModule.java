@@ -20,9 +20,9 @@
 package org.iota.access.di.module;
 
 import org.iota.access.BaseActivity;
-import org.iota.access.login.LoginActivity;
-import org.iota.access.navigation.NavigationDrawerActivity;
-import org.iota.access.splash.SplashActivity;
+import org.iota.access.MainActivity;
+import org.iota.access.ui.auth.login.LoginActivity;
+import org.iota.access.ui.splash.SplashActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -37,13 +37,13 @@ public abstract class ActivityModule {
     @ContributesAndroidInjector
     abstract SplashActivity contributeSplashActivity();
 
-    @ContributesAndroidInjector(modules = FragmentBuildersModule.class)
-    abstract NavigationDrawerActivity contributeNavigationDrawerActivity();
-
     @ContributesAndroidInjector
     abstract BaseActivity contributeBaseActivity();
 
     @ContributesAndroidInjector(modules = FragmentBuildersModule.class)
     abstract LoginActivity contributeLoginActivity();
+
+    @ContributesAndroidInjector(modules = FragmentBuildersModule.class)
+    abstract MainActivity contributesMainActivity();
 
 }

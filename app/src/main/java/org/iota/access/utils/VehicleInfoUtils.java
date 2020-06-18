@@ -20,7 +20,7 @@
 package org.iota.access.utils;
 
 import org.iota.access.R;
-import org.iota.access.main.model.VehicleInfo;
+import org.iota.access.ui.main.model.VehicleInfo;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;

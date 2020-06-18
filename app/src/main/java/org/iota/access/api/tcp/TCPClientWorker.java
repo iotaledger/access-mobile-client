@@ -30,7 +30,11 @@ public class TCPClientWorker extends HandlerThread {
     public TCPClientWorker() {
         super(TAG);
         start();
-        handler = new Handler(getLooper());
+    }
+
+    @Override
+    protected void onLooperPrepared() {
+        handler = new Handler();
     }
 
     public TCPClientWorker execute(Runnable task) {

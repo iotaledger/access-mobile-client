@@ -23,15 +23,15 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import org.iota.access.CommunicationViewModel;
-import org.iota.access.command_editor.CommandEditorViewModel;
-import org.iota.access.delegation.preview.DelegationPreviewViewModel;
-import org.iota.access.delegation.DelegationViewModel;
-import org.iota.access.delegation.rule.DelegationRuleViewModel;
+import org.iota.access.ui.main.commandeditor.CommandEditorViewModel;
 import org.iota.access.di.ViewModelKey;
-import org.iota.access.login.LoginViewModel;
-import org.iota.access.main.model.VehicleInfoListViewModel;
-import org.iota.access.main.ui.CommandListViewModel;
-import org.iota.access.register.RegisterViewModel;
+import org.iota.access.ui.auth.login.LoginViewModel;
+import org.iota.access.ui.auth.register.RegisterViewModel;
+import org.iota.access.ui.main.commandlist.CommandListViewModel;
+import org.iota.access.ui.main.delegation.DelegationRuleViewModel;
+import org.iota.access.ui.main.delegation.DelegationSharedViewModel;
+import org.iota.access.ui.main.delegation.DelegationViewModel;
+import org.iota.access.ui.main.model.VehicleInfoListViewModel;
 import org.iota.access.viewmodel.CustomViewModelFactory;
 
 import dagger.Binds;
@@ -72,12 +72,7 @@ public abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(CommandEditorViewModel.class)
-    abstract ViewModel bindCommandEditorViewModell(CommandEditorViewModel viewModel);
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(DelegationPreviewViewModel.class)
-    abstract ViewModel bindDelegationPreviewViewModel(DelegationPreviewViewModel viewModel);
+    abstract ViewModel bindCommandEditorViewModel(CommandEditorViewModel viewModel);
 
     @Binds
     @IntoMap
@@ -91,4 +86,9 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(CommunicationViewModel.class)
     abstract ViewModel bindCommunicationViewModel(CommunicationViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DelegationSharedViewModel.class)
+    abstract ViewModel bindDelegationSharedViewModel(DelegationSharedViewModel viewModel);
 }

@@ -31,6 +31,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.AlertDialog;
 import android.widget.Button;
 
+import org.iota.access.ui.dialogs.ProgressDialogFragment;
+
 /**
  * Helper class for creating and displaying dialogs
  */
@@ -44,7 +46,7 @@ public class DialogFragmentUtil {
         return AlertDialogFragment.newInstance(message, positiveTextId, negativeTextId, listener);
     }
 
-    public static ProgressDialogFragment createProgressDialog(String message, @StringRes int cancelTextRes,@Nullable ProgressDialogFragment.ProgressDialogListener listener) {
+    public static ProgressDialogFragment createProgressDialog(String message, @StringRes int cancelTextRes, @Nullable ProgressDialogFragment.ProgressDialogListener listener) {
         return ProgressDialogFragment.newInstance(message, cancelTextRes, listener);
     }
 

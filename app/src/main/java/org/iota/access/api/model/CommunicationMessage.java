@@ -21,7 +21,7 @@ package org.iota.access.api.model;
 
 import androidx.annotation.NonNull;
 
-import org.iota.access.main.model.VehicleInfo;
+import org.iota.access.ui.main.model.VehicleInfo;
 import org.iota.access.models.RegisterUserModel;
 
 import com.google.gson.Gson;
