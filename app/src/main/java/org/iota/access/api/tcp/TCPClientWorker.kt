@@ -16,17 +16,27 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+package org.iota.access.api.tcp
 
-package org.iota.access.utils;
+import android.os.Handler
+import android.os.HandlerThread
 
-/**
- * Helper class for holding constants used throughout the app
- */
-public class Constants {
+class TCPClientWorker : HandlerThread(TAG) {
+    private lateinit var handler: Handler
 
-    public static final String ACTION_CLOSE_DOOR = "close_door";
-    public static final String ACTION_OPEN_DOOR = "open_door";
-    public static final String ACTION_OPEN_TRUNK = "open_trunk";
-    public static final String DATE_AND_TIME_FORMAT = "dd/MM/yyyy HH:mm";
-    public static final float TOKEN_SCALE_FACTOR = 1000f;
+    override fun onLooperPrepared() {
+        handler = Handler()
+    }
+
+    fun execute(task: Runnable?) {
+        handler.post(task)
+    }
+
+    companion object {
+        private const val TAG = "TCPClientWorker"
+    }
+
+    init {
+        start()
+    }
 }

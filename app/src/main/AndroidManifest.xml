@@ -8,11 +8,12 @@
 
     <application
         android:name=".IOTAAccessClientApp"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:extractNativeLibs="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        tools:replace="android:allowBackup"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute" >
         <activity
             android:name=".MainActivity"
@@ -28,10 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".navigation.NavigationDrawerActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/IOTA.NoActionBar" />
+
         <activity
             android:name="org.iota.access.ui.auth.login.LoginActivity"
             android:screenOrientation="portrait"

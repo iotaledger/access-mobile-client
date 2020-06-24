@@ -116,4 +116,5 @@ public class APILibDacAuthNative {
     public native int dacReceive(long[] session, byte[] data, short length);
 
     public native int dacRelease(long[] session);
+
 }

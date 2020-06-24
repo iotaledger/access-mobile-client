@@ -142,7 +142,6 @@
     <string name="log_type_device">Device</string>
     <string name="log_type_mobile">Mobile</string>
     <string name="protocol_type_none">None</string>
-    <string name="protocol_type_dac" translatable="false">DACv1.0</string>
     <string name="protocol_type_tiny" translatable="false">TinyEmbeddedv0.7</string>
     <string name="start_time">Start delegation time</string>
     <string name="end_time">End delegation time</string>
@@ -164,6 +163,7 @@
     <string name="error_msg_no_actions_selected">Please select at least one action</string>
     <string name="error_msg_delegation_failed">Delegation request failed</string>
     <string name="error_msg_user_must_be_logged_in">User must be logged in</string>
+    <string name="error_msg_unable_to_sign_policy">You are unable to sign policy</string>
 
     <string name="empty_string" />
 

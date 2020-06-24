@@ -7,6 +7,8 @@ import org.iota.access.models.DelegationUser
 
 interface DataProvider {
 
+    val deviceId: String
+
     val availableObligations: List<DelegationObligation>
 
     val availableActions: List<DelegationAction>
@@ -15,6 +17,9 @@ interface DataProvider {
 }
 
 class DataProviderImpl : DataProvider {
+
+    override val deviceId: String = "123"
+
     override val availableObligations: List<DelegationObligation> =
             DataProviderGeneric.getAllObligations()
 

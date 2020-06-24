@@ -37,7 +37,6 @@ import org.iota.access.ui.dialogs.QuestionDialogFragment
 import org.iota.access.ui.main.commandlist.CommandsAdapter.CommandsAdapterListener
 import org.iota.access.user.UserManager
 import org.iota.access.utils.Constants
-import org.iota.access.utils.Optional
 import org.iota.access.utils.ui.DialogFragmentUtil
 import timber.log.Timber
 import java.io.IOException
@@ -71,7 +70,7 @@ class CommandListFragment : CommunicationFragment<CommandListViewModel>(), Comma
 
     override fun onStart() {
         super.onStart()
-        if (!viewModel.isPolicyRequested) viewModel.getPolicyList() else if (!viewModel.commandList.isEmpty) {
+        if (!viewModel.isPolicyRequested) viewModel.policyList else if (!viewModel.commandList.isEmpty) {
             binding.fab.show()
         }
     }
@@ -86,7 +85,7 @@ class CommandListFragment : CommunicationFragment<CommandListViewModel>(), Comma
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.recyclerView.adapter = CommandsAdapter(commands, this)
-        binding.swipeRefreshLayout.setOnRefreshListener { viewModel.getPolicyList() }
+        binding.swipeRefreshLayout.setOnRefreshListener { viewModel.policyList }
         combineCommandsFromServerAndFromPreferences()
     }
 
@@ -122,7 +121,7 @@ class CommandListFragment : CommunicationFragment<CommandListViewModel>(), Comma
                 true
             }
             R.id.action_add_new_command -> {
-                navController?.navigate(CommandListFragmentDirections.actionCommandListFragmentToCommandEditorFragment())
+                navController.navigate(CommandListFragmentDirections.actionCommandListFragmentToCommandEditorFragment())
                 true
             }
             R.id.action_refill_tokens -> {
@@ -250,8 +249,8 @@ class CommandListFragment : CommunicationFragment<CommandListViewModel>(), Comma
         disposable?.let {
             it.add(viewModel.observableCommandList
                     .observeOn(AndroidSchedulers.mainThread())
-                    .filter { listOptional: Optional<List<Command?>?> -> !listOptional.isEmpty }
-                    .map { obj: Optional<List<Command>> -> obj.get() }
+                    .filter { optList -> !optList.isEmpty }
+                    .map { optList -> optList.get()!! }
                     .subscribe({ commandList: List<Command> -> handleNewCommandList(commandList) }, Timber::e))
             it.add(viewModel.showRefresh
                     .observeOn(AndroidSchedulers.mainThread())

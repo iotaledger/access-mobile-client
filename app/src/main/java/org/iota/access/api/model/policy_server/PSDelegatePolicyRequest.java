@@ -22,21 +22,31 @@ package org.iota.access.api.model.policy_server;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.Map;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class PSDelegatePolicyRequest extends PSSendCommandRequest implements Serializable {
 
     @SerializedName("owner")
     private String owner;
     @SerializedName("deviceId")
     private String deviceId;
-//    @SerializedName("policy")
-//    private Policy policy;
+    @SerializedName("policy")
+    private Map<String, Object> policy;
+    @SerializedName("signature")
+    private String signature;
 
-    public PSDelegatePolicyRequest(String owner, String deviceId) {
+    public PSDelegatePolicyRequest(
+            final String owner,
+            final String deviceId,
+            final Map<String, Object> policy,
+            final String signature
+    ) {
         super("add_policy");
         this.owner = owner;
         this.deviceId = deviceId;
-//        this.policy = policy;
+        this.policy = policy;
+        this.signature = signature;
     }
 
 }

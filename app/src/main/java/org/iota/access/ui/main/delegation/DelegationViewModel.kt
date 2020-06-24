@@ -29,15 +29,20 @@ import org.iota.access.BR
 import org.iota.access.CommunicationViewModel
 import org.iota.access.R
 import org.iota.access.api.Communicator
+import org.iota.access.api.PSService
+import org.iota.access.api.model.policy_server.PSDelegatePolicyRequest
 import org.iota.access.api.model.policy_server.PSEmptyResponse
 import org.iota.access.data.DataProvider
+import org.iota.access.extensions.toBase64
 import org.iota.access.models.*
 import org.iota.access.models.rules.ExecuteNumberRule
 import org.iota.access.models.rules.Rule
 import org.iota.access.user.UserManager
 import org.iota.access.utils.Constants
+import org.iota.access.utils.EncryptHelper
 import org.iota.access.utils.Optional
 import org.iota.access.utils.ResourceProvider
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -46,7 +51,8 @@ class DelegationViewModel @Inject constructor(
         communicator: Communicator,
         resourceProvider: ResourceProvider,
         dataProvider: DataProvider,
-        private val userManager: UserManager
+        private val userManager: UserManager,
+        private val psService: PSService
 ) : CommunicationViewModel(communicator, resourceProvider) {
 
     val allActions: List<DelegationAction> = dataProvider.availableActions
@@ -57,6 +63,8 @@ class DelegationViewModel @Inject constructor(
 
     val rulesGrantId = Rule.generateId()
     val rulesDenyId = Rule.generateId()
+
+    private val deviceId: String = dataProvider.deviceId
 
     private val mSelectedUsers = BehaviorSubject.createDefault<Set<DelegationUser>>(HashSet())
     private val mDelegationActionList = BehaviorSubject.createDefault<List<DelegationAction>>(ArrayList())
@@ -78,9 +86,8 @@ class DelegationViewModel @Inject constructor(
     val delegationActionList: List<DelegationAction>
         get() = mDelegationActionList.value!!
 
-    fun setDelegationList(delegationActionList: List<DelegationAction>) {
-        mDelegationActionList.onNext(delegationActionList)
-    }
+    fun setDelegationList(delegationActionList: List<DelegationAction>) =
+            mDelegationActionList.onNext(delegationActionList)
 
     val observableMaxNumOfExecutions: Observable<Optional<Int>>
         get() = mMaxNumOfExecutions
@@ -133,22 +140,30 @@ class DelegationViewModel @Inject constructor(
             return
         }
 
+        val privateKey = user.privateKey
+
+        if (privateKey == null) {
+            mShowDialogMessage.onNext(mResourceProvider.getString(R.string.error_msg_unable_to_sign_policy))
+            return
+        }
+
         mShowLoading.onNext(Pair(true, mResourceProvider.getString(R.string.msg_delegating)))
 
         requests = ArrayList()
         for (action in delegationActionList) {
-            val policy = createPolicy(false, action, gocRule, docRule)
-            val map = policy?.toMap()
-            print(map.toString())
+            val policy = createPolicy(false, action, gocRule, docRule) ?: continue
+            val json = JSONObject(policy.toMap()).toString()
+            val signature = EncryptHelper.signMessage(json, privateKey).toBase64()
 
-//            val request = PSDelegatePolicyRequest(
-//                    user.username,
-//                    user.deviceId,
-//                    createPolicy(false, action))
+            val request = PSDelegatePolicyRequest(
+                    user.publicId,
+                    deviceId,
+                    policy.toMap(),
+                    signature)
 
-//            requests?.add(mPSService
-//                    .delegatePolicy(request),
-//                    .subscribeOn(Schedulers.io()))
+            requests?.add(psService
+                    .delegatePolicy(request)
+                    .subscribeOn(Schedulers.io()))
         }
         if (requestsDisposable != null) {
             requestsDisposable!!.dispose()
