@@ -10,13 +10,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import org.iota.access.BaseFragment
 import org.iota.access.R
 import org.iota.access.SettingsFragment
 import org.iota.access.databinding.FragmentLoginBinding
 import org.iota.access.di.Injectable
-import org.iota.access.models.User
 import org.iota.access.user.UserManager
+import org.iota.access.utils.EncryptHelper
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -24,7 +27,7 @@ import javax.inject.Inject
 class LoginFragment : BaseFragment(R.layout.fragment_login), Injectable {
 
     @Inject
-    lateinit var mUserManager: UserManager
+    lateinit var userManager: UserManager
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -74,32 +77,34 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), Injectable {
         disposable = CompositeDisposable().apply {
             add(viewModel.loginCompleted
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ user: User -> onLoginComplete(user) }) { t: Throwable? -> Timber.e(t) })
+                    .subscribe({ onLoginComplete() }, Timber::e))
 
             add(viewModel
                     .observableShowLoadingMessage
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ pair: Pair<Boolean?, String?> -> showLoading(pair.first, pair.second) }, { t: Throwable? -> Timber.e(t) }))
+                    .subscribe({ pair: Pair<Boolean?, String?> -> showLoading(pair.first, pair.second) }, Timber::e))
 
             add(viewModel
                     .observableShowDialogMessage
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ message: String -> showInfoDialog(message) }, { t: Throwable? -> Timber.e(t) }))
+                    .subscribe({ message: String -> showInfoDialog(message) }, Timber::e))
         }
     }
 
     private fun unbindViewModel() = disposable?.dispose()
 
-    private fun onLoginComplete(user: User) {
-        mUserManager.startSession(user)
-        navController.navigate(LoginFragmentDirections.actionLoginFragmentToActivityMain())
-    }
+    private fun onLoginComplete() =
+            navController.navigate(LoginFragmentDirections.actionLoginFragmentToActivityMain())
 
     private fun onCreateAccountButtonClick() {
         navController.navigate(R.id.action_loginFragment_to_registerFragment)
     }
 
     private fun onConnectButtonClick() {
+//        CoroutineScope(IO).launch {
+//
+//        EncryptHelper.test()
+//        }
         viewModel.logIn()
     }
 

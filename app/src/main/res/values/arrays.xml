@@ -31,7 +31,6 @@
 
     <string-array name="protocol_types">
         <item>@string/protocol_type_none</item>
-        <item>@string/protocol_type_dac</item>
         <item>@string/protocol_type_tiny</item>
     </string-array>
 

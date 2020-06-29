@@ -36,8 +36,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.navigation.NavigationView
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
@@ -53,7 +51,7 @@ import timber.log.Timber
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     @Inject
     lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
@@ -175,16 +173,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Preference
         }
 
         navController.navigate(R.id.settingsFragment, SettingsFragment.createArgs(true), navBuilder.build())
-    }
-
-    override fun onPreferenceStartFragment(caller: PreferenceFragmentCompat?, preference: Preference): Boolean {
-        // TODO: 11.6.2020. Check if vehicle info list fragment should be removed
-//        if (preference.fragment == VehicleInfoListFragment::class.java.name) {
-//            val fragment = VehicleInfoListFragment.newInstance()
-//            addFragmentToBackStack(fragment, NavigationDrawerActivity.FRAGMENT_TAG_VEHICLE_INFORMATION)
-//            return true
-//        }
-        return true
     }
 
     companion object {

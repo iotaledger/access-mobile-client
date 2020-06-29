@@ -21,7 +21,9 @@ package org.iota.access.user
 import org.iota.access.di.AppSharedPreferences
 import org.iota.access.models.User
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class UserManager @Inject constructor(var preferences: AppSharedPreferences) {
     var user: User?
         private set

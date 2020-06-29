@@ -25,6 +25,7 @@ import com.google.gson.reflect.TypeToken
 import org.iota.access.SettingsFragment
 import org.iota.access.api.model.Command
 import org.iota.access.models.User
+import org.json.JSONObject
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -55,17 +56,19 @@ class AppSharedPreferences @Inject internal constructor(private val sharedPrefer
     }
 
     fun putUser(user: User?) {
-        putString(SettingsFragment.Keys.PREF_KEY_USER, gson.toJson(user))
+        if (user != null) {
+            putString(SettingsFragment.Keys.PREF_KEY_USER, user.toJSONObject().toString())
+        } else {
+            putString(SettingsFragment.Keys.PREF_KEY_USER, null)
+        }
     }
 
     val user: User?
         get() {
-            val userJson = sharedPreferences.getString(SettingsFragment.Keys.PREF_KEY_USER, null)
-            return if (userJson?.isEmpty() != false) null else try {
-                gson.fromJson(userJson, User::class.java)
-            } catch (ignored: JsonSyntaxException) {
-                null
-            }
+            val userJson = sharedPreferences
+                    .getString(SettingsFragment.Keys.PREF_KEY_USER, null) ?: return null
+            val json = JSONObject(userJson)
+            return User.fromJSONObject(json)
         }
 
     fun putCommandList(commandList: List<Command>?) {
@@ -85,20 +88,5 @@ class AppSharedPreferences @Inject internal constructor(private val sharedPrefer
                 null
             }
         }
-
-    fun removeCommandFromList(command: Command) {
-        // TODO: 30.1.2019. Fix removing command
-        val oldList = commandList?.toMutableList() ?: return
-        var i = 0
-        val n = oldList.size
-        while (i < n) {
-            if (oldList[i] == command) {
-                oldList.removeAt(i)
-                break
-            }
-            ++i
-        }
-        putCommandList(oldList)
-    }
 
 }
