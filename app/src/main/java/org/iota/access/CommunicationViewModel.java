@@ -39,7 +39,7 @@ import timber.log.Timber;
 public class CommunicationViewModel extends BaseObservableViewModel implements LifecycleObserver {
 
     protected final Communicator mCommunicator;
-    protected final ResourceProvider mResourceProvider;
+    protected final ResourceProvider resourceProvider;
 
     protected final PublishSubject<String> mSnackbarMessage = PublishSubject.create();
     protected final PublishSubject<Pair<Boolean, String>> mShowLoading = PublishSubject.create();
@@ -50,7 +50,7 @@ public class CommunicationViewModel extends BaseObservableViewModel implements L
     @Inject
     public CommunicationViewModel(Communicator communicator, ResourceProvider resourceProvider) {
         mCommunicator = communicator;
-        mResourceProvider = resourceProvider;
+        this.resourceProvider = resourceProvider;
     }
 
     public Observable<Pair<Boolean, String>> getObservableShowLoadingMessage() {
@@ -121,14 +121,14 @@ public class CommunicationViewModel extends BaseObservableViewModel implements L
         String message;
         switch (error) {
             case UNABLE_TO_CONNECT:
-                message = mResourceProvider.getString(R.string.msg_tcp_client_unable_to_connect);
+                message = resourceProvider.getString(R.string.msg_tcp_client_unable_to_connect);
                 break;
             case TIMEOUT:
-                message = mResourceProvider.getString(R.string.msg_tcp_timeout);
+                message = resourceProvider.getString(R.string.msg_tcp_timeout);
                 break;
             case UNKNOWN:
             default:
-                message = mResourceProvider.getString(R.string.something_wrong_happened);
+                message = resourceProvider.getString(R.string.something_wrong_happened);
                 break;
         }
         mSnackbarMessage.onNext(message);

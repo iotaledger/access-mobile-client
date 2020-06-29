@@ -128,26 +128,26 @@ class DelegationViewModel @Inject constructor(
     fun delegate(gocRule: Rule?, docRule: Rule?) {
         val user = userManager.user
         if (user == null) {
-            mShowDialogMessage.onNext(mResourceProvider.getString(R.string.error_msg_user_must_be_logged_in))
+            mShowDialogMessage.onNext(resourceProvider.getString(R.string.error_msg_user_must_be_logged_in))
             return
         }
         if (mSelectedUsers.value?.size ?: 0 == 0) {
-            mShowDialogMessage.onNext(mResourceProvider.getString(R.string.error_msg_no_users_selected))
+            mShowDialogMessage.onNext(resourceProvider.getString(R.string.error_msg_no_users_selected))
             return
         }
         if (mDelegationActionList.value?.size ?: 0 == 0) {
-            mShowDialogMessage.onNext(mResourceProvider.getString(R.string.error_msg_no_actions_selected))
+            mShowDialogMessage.onNext(resourceProvider.getString(R.string.error_msg_no_actions_selected))
             return
         }
 
         val privateKey = user.privateKey
 
         if (privateKey == null) {
-            mShowDialogMessage.onNext(mResourceProvider.getString(R.string.error_msg_unable_to_sign_policy))
+            mShowDialogMessage.onNext(resourceProvider.getString(R.string.error_msg_unable_to_sign_policy))
             return
         }
 
-        mShowLoading.onNext(Pair(true, mResourceProvider.getString(R.string.msg_delegating)))
+        mShowLoading.onNext(Pair(true, resourceProvider.getString(R.string.msg_delegating)))
 
         requests = ArrayList()
         for (action in delegationActionList) {
@@ -189,9 +189,9 @@ class DelegationViewModel @Inject constructor(
                             requestsDisposable = null
                             mShowLoading.onNext(Pair(false, null))
                             if (isSuccessful) {
-                                mShowDialogMessage.onNext(mResourceProvider.getString(R.string.msg_delegating_success))
+                                mShowDialogMessage.onNext(resourceProvider.getString(R.string.msg_delegating_success))
                             } else {
-                                mShowDialogMessage.onNext(mResourceProvider.getString(R.string.error_msg_delegation_failed))
+                                mShowDialogMessage.onNext(resourceProvider.getString(R.string.error_msg_delegation_failed))
                             }
                         }  // on error
                 ) { throwable: Throwable ->

@@ -20,7 +20,6 @@
 package org.iota.access.di.module;
 
 import org.iota.access.SettingsFragment;
-import org.iota.access.ui.main.commandeditor.CommandEditorFragment;
 import org.iota.access.ui.main.delegation.preview.DelegationPreviewJsonFragment;
 import org.iota.access.ui.main.delegation.preview.DelegationPreviewStructuredFragment;
 import org.iota.access.ui.auth.login.LoginFragment;
@@ -40,9 +39,6 @@ import dagger.android.ContributesAndroidInjector;
 public abstract class FragmentBuildersModule {
     @ContributesAndroidInjector
     abstract CommandListFragment contributeCommandListFragment();
-
-    @ContributesAndroidInjector
-    abstract CommandEditorFragment contributeCommandEditorFragment();
 
     @ContributesAndroidInjector
     abstract LoginFragment contributeLoginFragment();

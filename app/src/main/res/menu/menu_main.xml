@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  This file is part of the IOTA Access distribution
   ~  (https://github.com/iotaledger/access)
   ~
@@ -33,11 +32,6 @@
         android:title="@string/action_clear_users"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/action_add_new_command"
-        android:orderInCategory="104"
-        android:title="@string/button_add_new_command"
-        app:showAsAction="never" />
     <item
         android:id="@+id/action_refill_tokens"
         android:orderInCategory="105"

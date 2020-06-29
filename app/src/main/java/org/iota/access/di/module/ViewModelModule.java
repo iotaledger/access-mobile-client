@@ -23,7 +23,6 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import org.iota.access.CommunicationViewModel;
-import org.iota.access.ui.main.commandeditor.CommandEditorViewModel;
 import org.iota.access.di.ViewModelKey;
 import org.iota.access.ui.auth.login.LoginViewModel;
 import org.iota.access.ui.auth.register.RegisterViewModel;
@@ -31,7 +30,6 @@ import org.iota.access.ui.main.commandlist.CommandListViewModel;
 import org.iota.access.ui.main.delegation.DelegationRuleViewModel;
 import org.iota.access.ui.main.delegation.DelegationSharedViewModel;
 import org.iota.access.ui.main.delegation.DelegationViewModel;
-import org.iota.access.ui.main.model.VehicleInfoListViewModel;
 import org.iota.access.viewmodel.CustomViewModelFactory;
 
 import dagger.Binds;
@@ -39,7 +37,7 @@ import dagger.Module;
 import dagger.multibindings.IntoMap;
 
 /**
- * Helper class for binding custom {@link ViewModelProvider.Factory} and ViewModels
+ * Helper class for binding custom {@link ViewModelProvider.Factory} and ViewModels.
  */
 @Module
 public abstract class ViewModelModule {
@@ -63,16 +61,6 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(DelegationRuleViewModel.class)
     abstract ViewModel bindDelegationRuleViewModel(DelegationRuleViewModel viewModel);
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(VehicleInfoListViewModel.class)
-    abstract ViewModel bindVehicleInfoViewModel(VehicleInfoListViewModel viewModel);
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(CommandEditorViewModel.class)
-    abstract ViewModel bindCommandEditorViewModel(CommandEditorViewModel viewModel);
 
     @Binds
     @IntoMap

@@ -31,7 +31,7 @@ import org.iota.access.api.model.TCPResponse;
 import org.iota.access.models.GetUserIdResponse;
 import org.iota.access.models.RegisterUserModel;
 import org.iota.access.models.User;
-import org.iota.access.utils.JsonUtils;
+import org.iota.access.utils.JSONUtils;
 import org.iota.access.utils.ResourceProvider;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -117,19 +117,19 @@ public class RegisterViewModel extends CommunicationViewModel {
 
     public void checkUsername() {
         if (TextUtils.isEmpty(mUsername))
-            mShowDialogMessage.onNext(mResourceProvider.getString(R.string.msg_empty_username));
+            mShowDialogMessage.onNext(resourceProvider.getString(R.string.msg_empty_username));
         else
-            sendTCPMessage(CommunicationMessage.makeGetAuthenteqUserIdRequest(mUsername), mResourceProvider.getString(R.string.msg_registering));
+            sendTCPMessage(CommunicationMessage.makeGetAuthenteqUserIdRequest(mUsername), resourceProvider.getString(R.string.msg_registering));
     }
 
     public void registerUser() {
         String message = null;
         if (TextUtils.isEmpty(mUsername))
-            message = mResourceProvider.getString(R.string.msg_empty_username);
+            message = resourceProvider.getString(R.string.msg_empty_username);
         else if (TextUtils.isEmpty(mFirstName))
-            message = mResourceProvider.getString(R.string.msg_empty_first_name);
+            message = resourceProvider.getString(R.string.msg_empty_first_name);
         else if (TextUtils.isEmpty(mLastName))
-            message = mResourceProvider.getString(R.string.msg_empty_last_name);
+            message = resourceProvider.getString(R.string.msg_empty_last_name);
 
         if (message != null) {
             mShowDialogMessage.onNext(message);
@@ -137,14 +137,14 @@ public class RegisterViewModel extends CommunicationViewModel {
         }
 
         RegisterUserModel registerUserModel = new RegisterUserModel(mFirstName, mLastName, mUsername, mUserId);
-        sendTCPMessage(CommunicationMessage.makeRegisterRequest(registerUserModel, mGson), mResourceProvider.getString(R.string.msg_registering));
+        sendTCPMessage(CommunicationMessage.makeRegisterRequest(registerUserModel, mGson), resourceProvider.getString(R.string.msg_registering));
     }
 
     @Override
     protected void handleTCPResponse(String sentMessage, String response) {
         super.handleTCPResponse(sentMessage, response);
 
-        JsonElement jsonElement = JsonUtils.extractJsonElement(response);
+        JsonElement jsonElement = JSONUtils.extractJsonElement(response);
         if (jsonElement == null) return;
 
         String cmd = CommunicationMessage.getCmdFromMessage(sentMessage);
@@ -161,15 +161,15 @@ public class RegisterViewModel extends CommunicationViewModel {
                         if (user != null)
                             mRegisterCompleted.onNext(user);
                         else
-                            mShowDialogMessage.onNext(mResourceProvider.getString(R.string.something_wrong_happened));
+                            mShowDialogMessage.onNext(resourceProvider.getString(R.string.something_wrong_happened));
                     } else {
                         String message = tcpResponse.getMessage();
                         if (message == null)
-                            message = mResourceProvider.getString(R.string.something_wrong_happened);
+                            message = resourceProvider.getString(R.string.something_wrong_happened);
                         mShowDialogMessage.onNext(message);
                     }
                 } catch (JsonSyntaxException ignored) {
-                    mShowDialogMessage.onNext(mResourceProvider.getString(R.string.something_wrong_happened));
+                    mShowDialogMessage.onNext(resourceProvider.getString(R.string.something_wrong_happened));
                 }
             }
             break;
@@ -180,7 +180,7 @@ public class RegisterViewModel extends CommunicationViewModel {
                             }.getType());
                     if (tcpResponse.isSuccessful()) {
                         // username already exists
-                        mShowDialogMessage.onNext(mResourceProvider.getString(R.string.msg_username_already_exists, mUsername));
+                        mShowDialogMessage.onNext(resourceProvider.getString(R.string.msg_username_already_exists, mUsername));
                     } else {
                         // username does not exist
                         mStartOnboarding.onNext(true);
