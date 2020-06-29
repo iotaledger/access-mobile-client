@@ -59,10 +59,6 @@ class SettingsFragment : BasePreferenceFragmentCompat(), Injectable, Preference.
         super.onViewCreated(view, savedInstanceState)
         view.setBackgroundColor(Color.WHITE)
 
-        // Vehicle information category
-        (preferenceScreen.findPreference<Preference>(PREF_CATEGORY_VEHICLE_INFORMATION) as? PreferenceCategory)?.let {
-            it.isVisible = showAdditionalSettings
-        }
 
         // Unit category
         (preferenceScreen.findPreference<Preference>(PREF_CATEGORY_UNITS) as? PreferenceCategory)?.let {
@@ -161,7 +157,6 @@ class SettingsFragment : BasePreferenceFragmentCompat(), Injectable, Preference.
         const val PREF_KEY_IP_ADDRESS = "pref_ip_address"
         const val PREF_KEY_PORT_NUMBER = "pref_port_number"
         const val PREF_KEY_PROTOCOL = "pref_protocol"
-        const val PREF_KEY_VEHICLE_INFORMATION = "pref_vehicle_information"
         const val PREF_KEY_TEMPERATURE_UNIT = "pref_temperature_unit"
         const val PREF_KEY_DISTANCE_UNIT = "pref_distance_unit"
         const val PREF_KEY_CUSTOM_COMMANDS = "pref_custom_commands"
@@ -171,7 +166,6 @@ class SettingsFragment : BasePreferenceFragmentCompat(), Injectable, Preference.
         private const val INITIAL_THEME = "com.iota.access.initial_theme"
         private const val SHOW_ADDITIONAL_SETTINGS = "com.iota.access.show_additional_settings"
         private const val PREF_CATEGORY_UNITS = "pref_category_units"
-        private const val PREF_CATEGORY_VEHICLE_INFORMATION = "pref_category_vehicle_information"
 
         fun createArgs(showAdditionalSettings: Boolean): Bundle {
             val args = Bundle()

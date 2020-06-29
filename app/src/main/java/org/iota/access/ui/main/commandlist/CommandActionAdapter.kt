@@ -18,51 +18,52 @@
  */
 package org.iota.access.ui.main.commandlist
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import org.iota.access.R
-import org.iota.access.api.model.Command
+import org.iota.access.api.model.CommandAction
 import org.iota.access.databinding.CommandListItemBinding
-import org.iota.access.utils.ui.UiUtils
 import java.lang.ref.WeakReference
 
 /**
- * Adapter for the command list
+ * Adapter for the command action list.
  */
-class CommandsAdapter constructor(
-        private val commands: List<Command>,
-        listener: CommandsAdapterListener
+class CommandActionAdapter constructor(
+        private val commands: MutableList<CommandAction>,
+        listener: CommandActionAdapterListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class CommandViewHolder(binding: CommandListItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        private var commandName: TextView = binding.textCommandName
-        private var imageHeader: ImageView = binding.imgHeader
-        private var imageStatus: ImageView = binding.imgStatus
-        private var commandButton: Button = binding.buttonCommand
-        private var paidTextView: TextView = binding.isPaidTextView
+        private val commandName: TextView = binding.textCommandName
+        private val commandImage: ImageView = binding.imgStatus
+        private val commandButton: Button = binding.buttonCommand
+        private val paidTextView: TextView = binding.isPaidTextView
+        private val deleteButton: ImageButton = binding.buttonDelete
 
-        fun bind(command: Command, listener: WeakReference<CommandsAdapterListener>) {
-            commandButton.text = command.actionName
-            commandName.text = command.headerName
-            UiUtils.setImageWithTint(imageHeader, command.headerImageResId, R.attr.command_list_item_header_image_tint, Color.WHITE)
-            UiUtils.setImageWithTint(imageStatus, command.statusImageResId, R.attr.command_list_item_status_image_tint, Color.WHITE)
-            commandButton.setOnClickListener { listener.get()?.onCommandSelected(command) }
-            paidTextView.visibility = if (command.activeAction.isPaid) View.GONE else View.VISIBLE
+        fun bind(commandAction: CommandAction, listener: WeakReference<CommandActionAdapterListener>) {
+            commandButton.text = commandAction.actionName
+            commandName.text = commandAction.headerName
+            commandImage.setImageResource(commandAction.imageResId)
+            commandButton.setOnClickListener { listener.get()?.onCommandSelected(commandAction) }
+            deleteButton.setOnClickListener { listener.get()?.onCommandDeleteClick(commandAction) }
+            deleteButton.visibility = if (commandAction.deletable) View.VISIBLE else View.GONE
+            paidTextView.visibility = if (commandAction.isPaid) View.GONE else View.VISIBLE
         }
     }
 
-    interface CommandsAdapterListener {
-        fun onCommandSelected(command: Command)
+    interface CommandActionAdapterListener {
+        fun onCommandSelected(commandAction: CommandAction)
+        fun onCommandDeleteClick(commandAction: CommandAction)
     }
 
-    private val listener: WeakReference<CommandsAdapterListener> = WeakReference(listener)
+    private val listener: WeakReference<CommandActionAdapterListener> = WeakReference(listener)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding: CommandListItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),
@@ -74,15 +75,10 @@ class CommandsAdapter constructor(
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         val commandHolder = viewHolder as CommandViewHolder
-        configureViewForCommand(commandHolder, position)
-    }
-
-    private fun configureViewForCommand(holder: CommandViewHolder, position: Int) {
         val command = commands[position]
-        holder.bind(command, listener)
+        commandHolder.bind(command, listener)
     }
 
-    // Return the size of your data set (invoked by the layout manager)
     override fun getItemCount(): Int {
         return commands.size
     }

@@ -8,15 +8,7 @@
     <fragment
         android:id="@+id/commandListFragment"
         android:name="org.iota.access.ui.main.commandlist.CommandListFragment"
-        tools:layout="@layout/fragment_command_list">
-        <action
-            android:id="@+id/action_commandListFragment_to_commandEditorFragment"
-            app:destination="@id/commandEditorFragment"
-            app:enterAnim="@anim/enter_anim"
-            app:exitAnim="@anim/exit_anim"
-            app:popEnterAnim="@anim/pop_enter_anim"
-            app:popExitAnim="@anim/pop_exit_anim" />
-    </fragment>
+        tools:layout="@layout/fragment_command_list" />
 
     <fragment
         android:id="@+id/delegationFragment"
@@ -70,9 +62,4 @@
             app:popEnterAnim="@anim/pop_enter_anim"
             app:popExitAnim="@anim/pop_exit_anim" />
     </fragment>
-    <fragment
-        android:id="@+id/commandEditorFragment"
-        android:name="org.iota.access.ui.main.commandeditor.CommandEditorFragment"
-        android:label="fragment_command_editor"
-        tools:layout="@layout/fragment_command_editor" />
 </navigation>

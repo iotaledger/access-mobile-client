@@ -48,7 +48,7 @@ class LoginViewModel @Inject constructor(
         val loginUsername = this.loginUsername
 
         if (loginUsername == null || loginUsername.isEmpty()) {
-            mShowDialogMessage.onNext(mResourceProvider.getString(R.string.msg_empty_username))
+            mShowDialogMessage.onNext(resourceProvider.getString(R.string.msg_empty_username))
             return
         }
 
@@ -62,7 +62,7 @@ class LoginViewModel @Inject constructor(
                     userManager.startSession(defaultUser)
                     _loginCompleted.onNext(defaultUser)
                 } else {
-                    mShowDialogMessage.onNext(mResourceProvider.getString(R.string.msg_unable_to_log_in))
+                    mShowDialogMessage.onNext(resourceProvider.getString(R.string.msg_unable_to_log_in))
                 }
             }
         }.start()

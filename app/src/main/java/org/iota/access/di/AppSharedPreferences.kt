@@ -23,8 +23,10 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
 import org.iota.access.SettingsFragment
-import org.iota.access.api.model.Command
+import org.iota.access.api.model.CommandAction
 import org.iota.access.models.User
+import org.iota.access.utils.ResourceProvider
+import org.json.JSONArray
 import org.json.JSONObject
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -33,7 +35,10 @@ import javax.inject.Singleton
  * Custom [SharedPreferences] class providing different methods for saving data
  */
 @Singleton
-class AppSharedPreferences @Inject internal constructor(private val sharedPreferences: SharedPreferences, private val gson: Gson) {
+class AppSharedPreferences @Inject internal constructor(
+        private val sharedPreferences: SharedPreferences,
+        private val resourceProvider: ResourceProvider
+) {
 
     private fun putString(key: String?, value: String?) {
         sharedPreferences.edit().putString(key, value).apply()
@@ -69,24 +74,6 @@ class AppSharedPreferences @Inject internal constructor(private val sharedPrefer
                     .getString(SettingsFragment.Keys.PREF_KEY_USER, null) ?: return null
             val json = JSONObject(userJson)
             return User.fromJSONObject(json)
-        }
-
-    fun putCommandList(commandList: List<Command>?) {
-        putString(SettingsFragment.Keys.PREF_KEY_CUSTOM_COMMANDS, gson.toJson(commandList))
-    }
-
-    val commandList: List<Command>?
-        get() {
-            val commandListString = getString(SettingsFragment.Keys.PREF_KEY_CUSTOM_COMMANDS)
-            if (commandListString.equals("", ignoreCase = true)) {
-                return null
-            }
-            val type = object : TypeToken<List<Command?>?>() {}.type
-            return try {
-                gson.fromJson<List<Command>>(commandListString, type)
-            } catch (ignored: JsonSyntaxException) {
-                null
-            }
         }
 
 }

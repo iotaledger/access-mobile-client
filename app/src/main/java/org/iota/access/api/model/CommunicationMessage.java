@@ -21,19 +21,13 @@ package org.iota.access.api.model;
 
 import androidx.annotation.NonNull;
 
-import org.iota.access.ui.main.model.VehicleInfo;
-import org.iota.access.models.RegisterUserModel;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import org.json.JSONArray;
+import org.iota.access.models.RegisterUserModel;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CommunicationMessage {
 
@@ -41,12 +35,10 @@ public class CommunicationMessage {
     public final static String USER_ID_ELEMENT = "user_id";
     public final static String RESOLVE = "resolve";
     public final static String GET_POLICY_LIST = "get_policy_list";
-    public final static String SET_DATASET = "set_dataset";
+    public final static String SET_DATA_SET = "set_data_set";
     public final static String POLICY_ID_ELEMENT = "policy_id";
-    public final static String DATASET_LIST = "dataset_list";
     public final static String ENABLE_POLICY = "enable_policy";
-    public final static String GET_DATASET = "get_dataset";
-    public final static String LOGIN = "login";
+    public final static String GET_DATA_SET = "get_data_set";
     public final static String USERNAME = "username";
     public final static String GET_AUTH_USER_ID = "get_auth_user_id";
     public final static String GET_USER = "get_user";
@@ -77,48 +69,11 @@ public class CommunicationMessage {
         return json.toString();
     }
 
-    public static String makeVehicleInfoSaveRequest(List<VehicleInfo> vehicleInfoList) {
-        JSONObject json = new JSONObject();
-        List<String> idList = new ArrayList<>();
-        for (VehicleInfo vehicleInfo : vehicleInfoList) {
-            idList.add(vehicleInfo.getId());
-        }
-        try {
-            json.put(CMD_ELEMENT, SET_DATASET);
-            JSONArray jsonArray = new JSONArray(idList);
-            json.put(DATASET_LIST, jsonArray);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return json.toString();
-    }
-
     public static String makeEnablePolicyRequest(String policyId) {
         JSONObject json = new JSONObject();
         try {
             json.put(CMD_ELEMENT, ENABLE_POLICY);
             json.put(POLICY_ID_ELEMENT, policyId);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return json.toString();
-    }
-
-    public static String makeGetDatasetRequest() {
-        JSONObject json = new JSONObject();
-        try {
-            json.put(CMD_ELEMENT, GET_DATASET);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return json.toString();
-    }
-
-    public static String makeGetUserRequest(@NonNull String username) {
-        JSONObject json = new JSONObject();
-        try {
-            json.put(CMD_ELEMENT, GET_USER);
-            json.put(USERNAME, username);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -141,12 +96,6 @@ public class CommunicationMessage {
         JsonElement obj = gson.toJsonTree(registerUserModel);
         json.addProperty(CMD_ELEMENT, REGISTER_USER);
         json.add(USER, obj);
-        return json.toString();
-    }
-
-    public static String makeGetAllUsersRequest() {
-        JsonObject json = new JsonObject();
-        json.addProperty(CMD_ELEMENT, GET_ALL_USERS);
         return json.toString();
     }
 
