@@ -26,13 +26,12 @@ object UserUtils {
             val userList: MutableList<User> = ArrayList()
 
             userList.add(User(
-                    id = "123",
                     publicId = "3c9d985c5d630e6e02f676997c5e9f03b45c6b7529b2491e8de03c18af3c9d87f0a65ecb5dd8f390dee13835354b222df414104684ce9f1079a059f052ca6e51",
                     username = "johnsmith",
                     firstName = "John",
                     lastName = "Smith",
                     walletId = "0xa41ea875a26Eef4c4319E9998BEa9333cd1d94Cd",
-                    signingKey = "6OUt/4SuN0YUew0E1nzMoLkA285lEAfoU46A3ZVFvlHt41riW+a3/XkrQxFLuWGnj6iay101XxVbPUyBbnWj5g=="
+                    signingKey = "Z8Zpc1H/Suwpzbqr8vvjRnzCVPgb6OeNdlouYzOfyZqvzVNEO3kNKu9Fnci+vD2mIk/7kqqAGUxfDmMo4+RJJw=="
             ))
 
             return userList

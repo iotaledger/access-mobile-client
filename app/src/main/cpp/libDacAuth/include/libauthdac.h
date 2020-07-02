@@ -43,7 +43,7 @@
 
 #include "stdio.h"
 
-//#include "lwip/arch.h"
+#include "apiorig.h"
 
 //////////////////////////////////////////
 // Macros and defines
@@ -85,6 +85,7 @@ typedef struct dacSession {
 //////////////////////////////////////////
 
 /* DAC_ERRORS */int dacInitClient(dacSession_t *, void *);
+
 /* DAC_ERRORS */int dacInitServer(dacSession_t *, void *);
 
 /* DAC_ERRORS */int dacSetOption(dacSession_t *, const  char *, unsigned char *);
@@ -96,6 +97,19 @@ typedef struct dacSession {
 /* DAC_ERRORS */int dacReceive(dacSession_t *, unsigned char **, unsigned short *);
 
 /* DAC_ERRORS */int dacRelease(dacSession_t *);
+
+int cryptoSignKeypair(unsigned char *pub_key, unsigned char *prv_key);
+
+int cryptoSign(
+        unsigned char *signed_message,
+        unsigned long long *signed_message_len,
+        const unsigned char *message,
+        unsigned long long message_len,
+        const unsigned char *secret_key
+);
+
+
+
 #ifdef __cplusplus
 };
 #endif

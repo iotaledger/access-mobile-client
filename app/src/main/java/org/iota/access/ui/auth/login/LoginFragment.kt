@@ -10,16 +10,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
 import org.iota.access.BaseFragment
 import org.iota.access.R
 import org.iota.access.SettingsFragment
+import org.iota.access.api.APILibDacAuthNative
 import org.iota.access.databinding.FragmentLoginBinding
 import org.iota.access.di.Injectable
 import org.iota.access.user.UserManager
-import org.iota.access.utils.EncryptHelper
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -31,6 +28,9 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), Injectable {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var authNative: APILibDacAuthNative
 
     private lateinit var viewModel: LoginViewModel
     private lateinit var binding: FragmentLoginBinding
@@ -48,7 +48,6 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), Injectable {
 
         binding.viewModel = viewModel
         binding.buttonConnect.setOnClickListener { onConnectButtonClick() }
-        binding.buttonCreateAccount.setOnClickListener { onCreateAccountButtonClick() }
 
         setHasOptionsMenu(true)
         bindViewModel()
@@ -93,20 +92,12 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), Injectable {
 
     private fun unbindViewModel() = disposable?.dispose()
 
-    private fun onLoginComplete() =
-            navController.navigate(LoginFragmentDirections.actionLoginFragmentToActivityMain())
-
-    private fun onCreateAccountButtonClick() {
-        navController.navigate(R.id.action_loginFragment_to_registerFragment)
+    private fun onLoginComplete() {
+        navController.navigate(LoginFragmentDirections.actionLoginFragmentToActivityMain())
+        activity?.finish()
     }
 
-    private fun onConnectButtonClick() {
-//        CoroutineScope(IO).launch {
-//
-//        EncryptHelper.test()
-//        }
-        viewModel.logIn()
-    }
+    private fun onConnectButtonClick() = viewModel.logIn()
 
     private fun onSettingsOptionsClick() {
         val args = SettingsFragment.createArgs(false)

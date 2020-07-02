@@ -51,9 +51,8 @@ import timber.log.Timber;
 @Singleton
 public class TCPClientImpl implements TCPClient {
 
-    private final int PROTOCOL_NONE = 0;
-    private final int PROTOCOL_DAC = 1;
-    private final int PROTOCOL_TINY = 2;
+    private final int PROTOCOL_TINY = 0;
+    private final int PROTOCOL_NONE = 1;
 
     private final int BUFFER_SIZE = 4096;
 
@@ -87,7 +86,6 @@ public class TCPClientImpl implements TCPClient {
             case PROTOCOL_TINY:
                 doTinyConnection(message);
                 break;
-            case PROTOCOL_DAC:
             case PROTOCOL_NONE:
                 doSimpleConnection(message);
                 break;
@@ -116,7 +114,6 @@ public class TCPClientImpl implements TCPClient {
                     mApiLibDacAuthNative.dacSend(mSession, data, (short) data.length);
                 };
                 break;
-            case PROTOCOL_DAC:
             case PROTOCOL_NONE:
             default:
                 runnable = () -> {
@@ -154,7 +151,6 @@ public class TCPClientImpl implements TCPClient {
 
                 };
                 break;
-            case PROTOCOL_DAC:
             case PROTOCOL_NONE:
             default:
                 runnable = () -> {
@@ -162,7 +158,7 @@ public class TCPClientImpl implements TCPClient {
                     int c;
                     try {
                         while ((mBufferIn != null) && ((c = mBufferIn.read()) != '\0')) {
-                            message.append(Character.toString((char) c));
+                            message.append((char) c);
                         }
                     } catch (IOException ex) {
                         ex.printStackTrace();

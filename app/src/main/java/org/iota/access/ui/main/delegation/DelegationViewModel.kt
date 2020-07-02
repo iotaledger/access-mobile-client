@@ -28,6 +28,7 @@ import io.reactivex.subjects.BehaviorSubject
 import org.iota.access.BR
 import org.iota.access.CommunicationViewModel
 import org.iota.access.R
+import org.iota.access.api.APILibDacAuthNative
 import org.iota.access.api.Communicator
 import org.iota.access.api.PSService
 import org.iota.access.api.model.policy_server.PSDelegatePolicyRequest
@@ -39,10 +40,8 @@ import org.iota.access.models.rules.ExecuteNumberRule
 import org.iota.access.models.rules.Rule
 import org.iota.access.user.UserManager
 import org.iota.access.utils.Constants
-import org.iota.access.utils.EncryptHelper
 import org.iota.access.utils.Optional
 import org.iota.access.utils.ResourceProvider
-import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -51,6 +50,7 @@ class DelegationViewModel @Inject constructor(
         communicator: Communicator,
         resourceProvider: ResourceProvider,
         dataProvider: DataProvider,
+        private val authNative: APILibDacAuthNative,
         private val userManager: UserManager,
         private val psService: PSService
 ) : CommunicationViewModel(communicator, resourceProvider) {
@@ -66,13 +66,12 @@ class DelegationViewModel @Inject constructor(
 
     private val deviceId: String = dataProvider.deviceId
 
-    private val mSelectedUsers = BehaviorSubject.createDefault<Set<DelegationUser>>(HashSet())
-    private val mDelegationActionList = BehaviorSubject.createDefault<List<DelegationAction>>(ArrayList())
-    private val mMaxNumOfExecutions = BehaviorSubject.createDefault(Optional<Int>(null))
+    private val selectedUsers = BehaviorSubject.createDefault<Set<DelegationUser>>(HashSet())
+    private val _delegationActionList = BehaviorSubject.createDefault<List<DelegationAction>>(ArrayList())
+    private val maxNumOfExecutions = BehaviorSubject.createDefault(Optional<Int>(null))
 
     private var requestsDisposable: CompositeDisposable? = null
     private var requests: MutableList<Observable<PSEmptyResponse>>? = null
-    private var mSelectedCostIndex = 0
 
     private val obligationGrant: DelegationObligation?
         get() = if (selectedObligationGrantIndex == 0) null else allObligations[selectedObligationGrantIndex - 1]
@@ -81,18 +80,18 @@ class DelegationViewModel @Inject constructor(
         get() = if (selectedObligationDenyIndex == 0) null else allObligations[selectedObligationDenyIndex - 1]
 
     val observableDelegationActionList: Observable<List<DelegationAction>>
-        get() = mDelegationActionList
+        get() = _delegationActionList
 
     val delegationActionList: List<DelegationAction>
-        get() = mDelegationActionList.value!!
+        get() = _delegationActionList.value!!
 
     fun setDelegationList(delegationActionList: List<DelegationAction>) =
-            mDelegationActionList.onNext(delegationActionList)
+            _delegationActionList.onNext(delegationActionList)
 
     val observableMaxNumOfExecutions: Observable<Optional<Int>>
-        get() = mMaxNumOfExecutions
+        get() = maxNumOfExecutions
 
-    fun setMaxNumOfExecutions(value: Int?) = mMaxNumOfExecutions.onNext(Optional(value))
+    fun setMaxNumOfExecutions(value: Int?) = maxNumOfExecutions.onNext(Optional(value))
 
     @get:Bindable
     var selectedObligationGrantIndex: Int = 0
@@ -109,20 +108,19 @@ class DelegationViewModel @Inject constructor(
         }
 
     @get:Bindable
-    var selectedCostIndex: Int
-        get() = mSelectedCostIndex
+    var selectedCostIndex: Int = 0
         set(selectedCostIndex) {
-            mSelectedCostIndex = selectedCostIndex
+            field = selectedCostIndex
             notifyPropertyChanged(BR.selectedCostIndex)
         }
 
     val observableSelectedUsers: Observable<Set<DelegationUser>>
-        get() = mSelectedUsers
+        get() = selectedUsers
 
     var selectedDelegationUsers: Set<DelegationUser>
-        get() = mSelectedUsers.value!!
+        get() = selectedUsers.value!!
         set(selectedUsers) {
-            mSelectedUsers.onNext(selectedUsers)
+            this.selectedUsers.onNext(selectedUsers)
         }
 
     fun delegate(gocRule: Rule?, docRule: Rule?) {
@@ -131,35 +129,26 @@ class DelegationViewModel @Inject constructor(
             mShowDialogMessage.onNext(resourceProvider.getString(R.string.error_msg_user_must_be_logged_in))
             return
         }
-        if (mSelectedUsers.value?.size ?: 0 == 0) {
+        if (selectedUsers.value?.size ?: 0 == 0) {
             mShowDialogMessage.onNext(resourceProvider.getString(R.string.error_msg_no_users_selected))
             return
         }
-        if (mDelegationActionList.value?.size ?: 0 == 0) {
+        if (_delegationActionList.value?.size ?: 0 == 0) {
             mShowDialogMessage.onNext(resourceProvider.getString(R.string.error_msg_no_actions_selected))
-            return
-        }
-
-        val privateKey = user.privateKey
-
-        if (privateKey == null) {
-            mShowDialogMessage.onNext(resourceProvider.getString(R.string.error_msg_unable_to_sign_policy))
             return
         }
 
         mShowLoading.onNext(Pair(true, resourceProvider.getString(R.string.msg_delegating)))
 
         requests = ArrayList()
-        for (action in delegationActionList) {
-            val policy = createPolicy(false, action, gocRule, docRule) ?: continue
-            val json = JSONObject(policy.toMap()).toString()
-            val signature = EncryptHelper.signMessage(json, privateKey).toBase64()
 
-            val request = PSDelegatePolicyRequest(
-                    user.publicId,
-                    deviceId,
-                    policy.toMap(),
-                    signature)
+        val ownerId = user.publicId
+        val privateKey = user.privateKey
+
+        for (action in delegationActionList) {
+            val policy = createPolicy(false, action, gocRule, docRule)
+
+            val request = createDelegatePolicyRequest(policy, ownerId, privateKey)
 
             requests?.add(psService
                     .delegatePolicy(request)
@@ -202,12 +191,21 @@ class DelegationViewModel @Inject constructor(
                 })
     }
 
+    /**
+     * Creates policy.
+     *
+     * @param obfuscate If `true`, policyId and publicId will be obfuscated.
+     * If `false`, policyId and publicId will not be obfuscated.
+     * @param action Action to be delegated.
+     * @param gocRule Rule for policy GoC.
+     * @param docRule Rule for policy DoC.
+     */
     fun createPolicy(
             obfuscate: Boolean,
             action: DelegationAction? = null,
             gocRule: Rule? = null,
             docRule: Rule? = null
-    ): Policy? {
+    ): Policy {
         val gocAttrList: MutableList<PolicyAttributeList> = mutableListOf()
 
         // Add GoC rule to GoC
@@ -226,7 +224,7 @@ class DelegationViewModel @Inject constructor(
         }
 
         // Add number of executions to GoC
-        val optNumOfExecutions = mMaxNumOfExecutions.value
+        val optNumOfExecutions = maxNumOfExecutions.value
         if (optNumOfExecutions != null && !optNumOfExecutions.isEmpty) {
             val numOfExecutionsAttr = ExecuteNumberRule(optNumOfExecutions.get()).build()
             gocAttrList.add(numOfExecutionsAttr)
@@ -253,8 +251,29 @@ class DelegationViewModel @Inject constructor(
                 policyGoc = policyGoc
         )
 
-        val cost = COST_VALUES[mSelectedCostIndex]
+        val cost = COST_VALUES[selectedCostIndex]
         return Policy("sha-256", policyObject, cost.toString(), if (obfuscate) "**********" else null)
+    }
+
+    /**
+     * Created [PSDelegatePolicyRequest] object to be send as a request to policy store server.
+     *
+     * @param policy Policy.
+     * @param ownerId ID of policy owner.
+     * @param privateKey Key to be used for signing policy.
+     */
+    private fun createDelegatePolicyRequest(
+            policy: Policy,
+            ownerId: String,
+            privateKey: ByteArray
+    ): PSDelegatePolicyRequest {
+        val message = policy.policyId //JSONObject(policy.toMap()).toString()
+        val messageByteArray = message.toByteArray(Charsets.UTF_8)
+
+        val signature = authNative.cryptoSign(messageByteArray, messageByteArray.size, privateKey)
+        val signatureBase64 = signature.toBase64()
+
+        return PSDelegatePolicyRequest(ownerId, deviceId, policy.toMap(), signatureBase64)
     }
 
     /**
@@ -264,7 +283,7 @@ class DelegationViewModel @Inject constructor(
      * @return policy attribute
      */
     private fun createUsersPolicyAttribute(obfuscate: Boolean): PolicyAttributeList? {
-        val selectedUsers = mSelectedUsers.value ?: return null
+        val selectedUsers = selectedUsers.value ?: return null
         if (selectedUsers.isEmpty()) return null
 
         return if (selectedUsers.size == 1) {

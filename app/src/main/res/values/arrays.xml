@@ -30,8 +30,8 @@
     </string-array>
 
     <string-array name="protocol_types">
-        <item>@string/protocol_type_none</item>
         <item>@string/protocol_type_tiny</item>
+        <item>@string/protocol_type_none</item>
     </string-array>
 
     <string-array name="layer_types">

@@ -38,7 +38,6 @@ import org.iota.access.utils.ResourceProvider
 import java.util.*
 import javax.inject.Inject
 
-
 class DelegationRuleViewModel @Inject constructor(
         preferences: AppSharedPreferences,
         private val mResourceProvider: ResourceProvider
@@ -224,12 +223,10 @@ class DelegationRuleViewModel @Inject constructor(
         get() =
             RuleSatisfyType.values()[selectedRuleSatisfyTypeIndex.coerceIn(RuleSatisfyType.values().indices)]
 
-    private fun createTimeRule(ruleId: String): TimeRule {
-        return TimeRule(
-                ruleId,
-                limitationTimeFromBehavior.value!!,
-                limitationTimeUntilBehavior.value!!)
-    }
+    private fun createTimeRule(ruleId: String): TimeRule = TimeRule(
+            ruleId,
+            limitationTimeFromBehavior.value!!,
+            limitationTimeUntilBehavior.value!!)
 
     private fun validateAndCreateLocationRule(ruleId: String): LocationRule? {
         var message: String? = null

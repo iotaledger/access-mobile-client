@@ -39,11 +39,26 @@ android {
                 cppFlags "-frtti -fexceptions"
             }
         }
+        ndk {
+            abiFilters 'arm64-v8a', 'x86_64', 'x86'
+        }
     }
     buildTypes {
+        debug {
+            debuggable true
+            applicationIdSuffix ".debug"
+            it.buildConfigField('Boolean', 'STUB_DEVICE_COMUNICATOR', "false")
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            it.buildConfigField('Boolean', 'STUB_DEVICE_COMUNICATOR', "false")
+        }
+
+        demo {
+            initWith debug
+            it.buildConfigField('Boolean', 'STUB_DEVICE_COMUNICATOR', "true")
         }
 
         buildTypes.each {
@@ -132,11 +147,6 @@ dependencies {
     // Timber
     implementation "com.jakewharton.timber:timber:$timberVersion"
 
-    // Authenteq
-    implementation ("com.authenteq.android:flow:$authenteqVersion") {
-        transitive = true
-    }
-
     // Navigation component java
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
@@ -146,14 +156,8 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     // KTX extensions for lifecycle
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha04"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha04"
-
-    // Spongy castle
-    implementation 'com.madgag.spongycastle:core:1.58.0.0'
-    implementation 'com.madgag.spongycastle:prov:1.58.0.0'
-    implementation 'com.madgag.spongycastle:pkix:1.54.0.0'
-    implementation 'com.madgag.spongycastle:pg:1.54.0.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha05'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha05'
 
     // EdDSA-Java
     implementation 'net.i2p.crypto:eddsa:0.3.0'
@@ -161,4 +165,7 @@ dependencies {
     // Kotlin coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5"
+
+    // LeakCanary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
 }

@@ -5,6 +5,7 @@ import net.i2p.crypto.eddsa.EdDSAPrivateKey
 import net.i2p.crypto.eddsa.EdDSAPublicKey
 import net.i2p.crypto.eddsa.spec.EdDSANamedCurveTable
 import java.security.KeyPair
+import java.security.MessageDigest
 import java.security.SecureRandom
 
 
@@ -21,7 +22,7 @@ object EncryptHelper {
     }
 
     fun signMessage(message: String, privateKey: EdDSAPrivateKey): ByteArray =
-            EdDSAEngine()
+            EdDSAEngine(MessageDigest.getInstance("SHA-512"))
                     .apply {
                         initSign(privateKey)
                         update(message.toByteArray(Charsets.UTF_8))

@@ -39,164 +39,150 @@
 
 static dacStruct_t internal;
 
-/* DAC_ERRORS */int dacInit(dacSession_t *session, void *ext, int type)
-{
-   int ret = DAC_ERROR;
+/* DAC_ERRORS */int dacInit(dacSession_t *session, void *ext, int type) {
+    int ret = DAC_ERROR;
 
-   if (NULL != session)
-   {
-      memset((void *) session, 0, sizeof(dacSession_t));
+    if (NULL != session) {
+        memset((void *) session, 0, sizeof(dacSession_t));
 
-      getInternal(session) = &internal;//(dacStruct_t *) malloc(sizeof(dacStruct_t));
+        getInternal(session) = &internal;//(dacStruct_t *) malloc(sizeof(dacStruct_t));
 
-      if(NULL != getInternal(session))
-      {
-         memset((void *) getInternal(session), 0, sizeof(dacStruct_t));
+        if (NULL != getInternal(session)) {
+            memset((void *) getInternal(session), 0, sizeof(dacStruct_t));
 
-         getInternalType(session) = type;
-         session->ext = ext;
+            getInternalType(session) = type;
+            session->ext = ext;
 
-         ret = DAC_OK;
-      }
-   }
+            ret = DAC_OK;
+        }
+    }
 
-   return ret;
+    return ret;
 }
 
-/* DAC_ERRORS */int dacInitClient(dacSession_t *session, void *ext)
-{
-   return dacInit(session, ext, DAC_TYPE_CLIENT);
+/* DAC_ERRORS */int dacInitClient(dacSession_t *session, void *ext) {
+    return dacInit(session, ext, DAC_TYPE_CLIENT);
 }
 
-/* DAC_ERRORS */int dacInitServer(dacSession_t *session, void *ext)
-{
-   return dacInit(session, ext, DAC_TYPE_SERVER);
+/* DAC_ERRORS */int dacInitServer(dacSession_t *session, void *ext) {
+    return dacInit(session, ext, DAC_TYPE_SERVER);
 }
 
-/* DAC_ERRORS */int dacSetOption(dacSession_t *session, const char *key, unsigned char *value)
-{
-	int ret = DAC_ERROR;
+/* DAC_ERRORS */int dacSetOption(dacSession_t *session, const char *key, unsigned char *value) {
+    int ret = DAC_ERROR;
 
-	//debug("dacSetOption START");
+    //debug("dacSetOption START");
 
-	if (NULL != session)
-	{
-		if(DAC_TYPE_SERVER == getInternalType(session))
-		{
-			ret = dacServerSetOption(session, key, value);
-		}
-		else if(DAC_TYPE_CLIENT == getInternalType(session))
-		{
-			ret = dacClientSetOption(session, key, value);
-		}
-	}
+    if (NULL != session) {
+        if (DAC_TYPE_SERVER == getInternalType(session)) {
+            ret = dacServerSetOption(session, key, value);
+        } else if (DAC_TYPE_CLIENT == getInternalType(session)) {
+            ret = dacClientSetOption(session, key, value);
+        }
+    }
 
-	// debug("dacSetOption END");
+    // debug("dacSetOption END");
 
-	return ret;
+    return ret;
 }
 
-/* DAC_ERRORS */int dacAuthenticate(dacSession_t *session)
-{
-   int ret = DAC_ERROR;
+/* DAC_ERRORS */int dacAuthenticate(dacSession_t *session) {
+    int ret = DAC_ERROR;
 
-   //debug("dacAuthenticate START");
+    //debug("dacAuthenticate START");
 
-   if (NULL != session)
-   {
-      if(DAC_TYPE_SERVER == getInternalType(session))
-      {
-         ret = dacServerAuthenticate(session);
-      } else if(DAC_TYPE_CLIENT == getInternalType(session))
-      {
-         ret = dacClientAuthenticate(session);
-      }
-   }
+    if (NULL != session) {
+        if (DAC_TYPE_SERVER == getInternalType(session)) {
+            ret = dacServerAuthenticate(session);
+        } else if (DAC_TYPE_CLIENT == getInternalType(session)) {
+            ret = dacClientAuthenticate(session);
+        }
+    }
 
-  // debug("dacAuthenticate END");
+    // debug("dacAuthenticate END");
 
-   return ret;
+    return ret;
 }
 
-/* DAC_ERRORS */int dacSend(dacSession_t *session, const unsigned char *data, unsigned short  len)
-{
-   int ret = DAC_ERROR;
+/* DAC_ERRORS */int dacSend(dacSession_t *session, const unsigned char *data, unsigned short len) {
+    int ret = DAC_ERROR;
 
-   //debug("dacSend START");
+    //debug("dacSend START");
 
-   if ((NULL != session) && (NULL != data) && (len > 0))
-   {
-      /* Encrypt and send */
-      if (DAC_TYPE_SERVER == getInternalType(session))
-      {
-         ret = dacSendServer(session, data, len);
-      } else if (DAC_TYPE_CLIENT == getInternalType(session))
-      {
-         ret = dacSendClient(session, data, len);
-      }
-   }
+    if ((NULL != session) && (NULL != data) && (len > 0)) {
+        /* Encrypt and send */
+        if (DAC_TYPE_SERVER == getInternalType(session)) {
+            ret = dacSendServer(session, data, len);
+        } else if (DAC_TYPE_CLIENT == getInternalType(session)) {
+            ret = dacSendClient(session, data, len);
+        }
+    }
 
-   //debug("dacSend END");
+    //debug("dacSend END");
 
-   return ret;
+    return ret;
 }
 
-/* DAC_ERRORS */int dacReceive(dacSession_t *session, unsigned char **data, unsigned short  *len)
-{
-   int ret = DAC_ERROR;
+/* DAC_ERRORS */int dacReceive(dacSession_t *session, unsigned char **data, unsigned short *len) {
+    int ret = DAC_ERROR;
 
-   //debug("dacReceive START");
+    //debug("dacReceive START");
 
-   if (NULL != session)
-   {
-      /* Decrypt and receive */
-      if (DAC_TYPE_SERVER == getInternalType(session))
-      {
-         ret = dacReceiveServer(session, data, len);
-      } else if (DAC_TYPE_CLIENT == getInternalType(session))
-      {
-         ret = dacReceiveClient(session, data, len);
-      }
-   }
+    if (NULL != session) {
+        /* Decrypt and receive */
+        if (DAC_TYPE_SERVER == getInternalType(session)) {
+            ret = dacReceiveServer(session, data, len);
+        } else if (DAC_TYPE_CLIENT == getInternalType(session)) {
+            ret = dacReceiveClient(session, data, len);
+        }
+    }
 
-  // debug("dacReceive END");
+    // debug("dacReceive END");
 
-   return ret;
+    return ret;
 
 }
 
-/* DAC_ERRORS */int dacRelease(dacSession_t *session)
-{
-   int ret = DAC_ERROR;
+/* DAC_ERRORS */int dacRelease(dacSession_t *session) {
+    int ret = DAC_ERROR;
 
-   //debug("dacRelease START");
+    //debug("dacRelease START");
 
-   if (NULL != getInternal(session))
-   {
-      if (DAC_TYPE_SERVER == getInternalType(session))
-      {
-         dacReleaseServer(session);
-      } else if (DAC_TYPE_CLIENT == getInternalType(session))
-      {
-         dacReleaseClient(session);
-      }
+    if (NULL != getInternal(session)) {
+        if (DAC_TYPE_SERVER == getInternalType(session)) {
+            dacReleaseServer(session);
+        } else if (DAC_TYPE_CLIENT == getInternalType(session)) {
+            dacReleaseClient(session);
+        }
 
 //      free((void *) getInternal(session));
-      getInternal(session) = NULL;
+        getInternal(session) = NULL;
 
-      ret = DAC_OK;
-   }
+        ret = DAC_OK;
+    }
 
-   if (NULL != session)
-   {
-      session = NULL;
+    if (NULL != session) {
 
-      ret = DAC_OK;
-   }
+        ret = DAC_OK;
+    }
 
 
 
-   //debug("dacRelease END");
+    //debug("dacRelease END");
 
-   return ret;
+    return ret;
+}
+
+int cryptoSignKeypair(unsigned char *pub_key, unsigned char *prv_key) {
+    return crypto_sign_keypair(pub_key, prv_key);
+}
+
+int cryptoSign(
+        unsigned char *signed_message,
+        unsigned long long *signed_message_len,
+        const unsigned char *message,
+        unsigned long long message_len,
+        const unsigned char *secret_key
+) {
+    return crypto_sign(signed_message, signed_message_len, message, message_len, secret_key);
 }

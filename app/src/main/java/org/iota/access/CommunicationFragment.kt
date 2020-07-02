@@ -64,16 +64,16 @@ abstract class CommunicationFragment<T : CommunicationViewModel> : BaseFragment(
     @CallSuper
     protected open fun bindViewModel() {
         disposable = CompositeDisposable()
-        disposable?.let {
-            it.add(viewModel.observableShowLoadingMessage
+        disposable?.apply {
+            add(viewModel.observableShowLoadingMessage
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             { pair: Pair<Boolean?, String?> -> showLoading(pair.first, pair.second) }) { t: Throwable? -> Timber.e(t) })
-            it.add(viewModel
+            add(viewModel
                     .observableShowDialogMessage
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ message: String -> showInfoDialog(message) }) { t: Throwable? -> Timber.e(t) })
-            it.add(viewModel
+            add(viewModel
                     .observableSnackbarMessage
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ message: String -> showInfoDialog(message) }) { t: Throwable? -> Timber.e(t) })

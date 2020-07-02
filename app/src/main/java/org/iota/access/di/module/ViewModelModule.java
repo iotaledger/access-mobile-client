@@ -25,7 +25,6 @@ import androidx.lifecycle.ViewModelProvider;
 import org.iota.access.CommunicationViewModel;
 import org.iota.access.di.ViewModelKey;
 import org.iota.access.ui.auth.login.LoginViewModel;
-import org.iota.access.ui.auth.register.RegisterViewModel;
 import org.iota.access.ui.main.commandlist.CommandListViewModel;
 import org.iota.access.ui.main.delegation.DelegationRuleViewModel;
 import org.iota.access.ui.main.delegation.DelegationSharedViewModel;
@@ -61,11 +60,6 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(DelegationRuleViewModel.class)
     abstract ViewModel bindDelegationRuleViewModel(DelegationRuleViewModel viewModel);
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(RegisterViewModel.class)
-    abstract ViewModel bindRegisterViewModel(RegisterViewModel viewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(CustomViewModelFactory factory);

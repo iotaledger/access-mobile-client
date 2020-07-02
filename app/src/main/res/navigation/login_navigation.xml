@@ -17,20 +17,13 @@
             app:popEnterAnim="@anim/pop_enter_anim"
             app:popExitAnim="@anim/pop_exit_anim" />
         <action
-            android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment"
-            app:enterAnim="@anim/enter_anim"
-            app:exitAnim="@anim/exit_anim"
-            app:popEnterAnim="@anim/pop_enter_anim"
-            app:popExitAnim="@anim/pop_exit_anim" />
-        <action
             android:id="@+id/action_loginFragment_to_activityMain"
             app:destination="@id/activityMain"
             app:enterAnim="@anim/enter_anim"
             app:exitAnim="@anim/exit_anim"
             app:popEnterAnim="@anim/pop_enter_anim"
             app:popExitAnim="@anim/pop_exit_anim"
-            app:popUpTo="@id/login_nav_graph"
+            app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
     </fragment>
 
@@ -38,20 +31,6 @@
         android:id="@+id/settingsFragment"
         android:name="org.iota.access.SettingsFragment" />
 
-    <fragment
-        android:id="@+id/registerFragment"
-        android:name="org.iota.access.ui.auth.register.RegisterFragment"
-        tools:layout="@layout/fragment_register">
-        <action
-            android:id="@+id/action_registerFragment_to_activityMain"
-            app:destination="@id/activityMain"
-            app:enterAnim="@anim/enter_anim"
-            app:exitAnim="@anim/exit_anim"
-            app:popEnterAnim="@anim/pop_enter_anim"
-            app:popExitAnim="@anim/pop_exit_anim"
-            app:popUpTo="@id/login_nav_graph"
-            app:popUpToInclusive="true" />
-    </fragment>
 
     <activity
         android:id="@+id/activityMain"

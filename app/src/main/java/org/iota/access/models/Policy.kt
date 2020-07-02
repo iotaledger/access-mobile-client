@@ -74,8 +74,7 @@ data class PolicyObject(
     @Throws(NoSuchAlgorithmException::class)
     fun calculateHash(hashFunction: String): ByteArray = MessageDigest.getInstance(hashFunction)
             .apply { reset() }
-            .digest(toString().toByteArray())
-
+            .digest(JSONObject(toMap()).toString().toByteArray(Charsets.UTF_8))
 
     companion object {
         fun fromJSON(json: JSONObject): PolicyObject? {

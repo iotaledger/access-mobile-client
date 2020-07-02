@@ -1,3 +1,4 @@
+#include <cstdint>
 /*
 * This file is part of the IOTA Access distribution
 * (https://github.com/iotaledger/access)
@@ -21,8 +22,8 @@
 #include <string>
 #include <android/log.h>
 #include <libauthdac.h>
-#include <ref/apiorig.h>
-
+#include <cstring>
+#include <malloc.h>
 
 // Android log function wrappers
 static const char *kTAG = "jniAPILibDacAuthNative";
@@ -30,6 +31,8 @@ static const char *kTAG = "jniAPILibDacAuthNative";
   ((void)__android_log_print(ANDROID_LOG_INFO, kTAG, __VA_ARGS__))
 #define LOGE(...) \
   ((void)__android_log_print(ANDROID_LOG_ERROR, kTAG, __VA_ARGS__))
+
+#define SIGNATURE_LEN 64
 
 // processing callback to handler class
 typedef struct JniLibDacAuthContext {
@@ -234,8 +237,11 @@ Java_org_iota_access_api_APILibDacAuthNative_dacReceive(JNIEnv *env, jobject ins
 
 extern "C"
 JNIEXPORT jint JNICALL
-Java_org_iota_access_api_APILibDacAuthNative_dacRelease(JNIEnv *env, jobject instance,
-                                                        jlongArray session_) {
+Java_org_iota_access_api_APILibDacAuthNative_dacRelease(
+        JNIEnv *env,
+        jobject instance,
+        jlongArray session_
+) {
     if (session_ == nullptr) {
         return 0;
     }
@@ -249,5 +255,61 @@ Java_org_iota_access_api_APILibDacAuthNative_dacRelease(JNIEnv *env, jobject ins
     LOGI("APILibDacAuthNative_dacRelease");
 
     env->ReleaseLongArrayElements(session_, session, 0);
+    return ret;
+}
+
+extern "C"
+JNIEXPORT jbyteArray JNICALL
+Java_org_iota_access_api_APILibDacAuthNative_cryptoSign(
+        JNIEnv *env,
+        jobject  __unused thiz,
+        jbyteArray message,
+        jint message_len,
+        jbyteArray private_key
+) {
+    jbyteArray signature = env->NewByteArray(SIGNATURE_LEN);
+    jbyte *message_jbyte = env->GetByteArrayElements(message, nullptr);
+    jbyte *prv_key = env->GetByteArrayElements(private_key, nullptr);
+
+    unsigned long long signed_message_len = 0;
+
+    char *signed_message = (char *) calloc((message_len + SIGNATURE_LEN), sizeof(char));
+
+    cryptoSign(
+            (unsigned char *) signed_message,
+            &signed_message_len,
+            (unsigned char *) message_jbyte,
+            (unsigned long long) message_len,
+            (unsigned char *) prv_key);
+
+    env->SetByteArrayRegion(
+            signature,
+            0,
+            SIGNATURE_LEN,
+            (jbyte *) (signed_message));
+
+    free(signed_message);
+
+    return signature;
+}
+
+extern "C"
+JNIEXPORT jint JNICALL
+Java_org_iota_access_api_APILibDacAuthNative_generateKeyPair(
+        JNIEnv *env,
+        jobject  __unused thiz,
+        jbyteArray public_key,
+        jbyteArray private_key
+) {
+    int ret;
+
+    jbyte *pub_key = env->GetByteArrayElements(public_key, nullptr);
+    jbyte *prv_key = env->GetByteArrayElements(private_key, nullptr);
+
+    ret = cryptoSignKeypair((unsigned char *) pub_key, (unsigned char *) prv_key);
+
+    env->ReleaseByteArrayElements(public_key, pub_key, 0);
+    env->ReleaseByteArrayElements(private_key, prv_key, 0);
+
     return ret;
 }

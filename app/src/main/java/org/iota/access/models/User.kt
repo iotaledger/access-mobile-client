@@ -18,14 +18,12 @@
  */
 package org.iota.access.models
 
-import net.i2p.crypto.eddsa.EdDSAPrivateKey
-import org.iota.access.utils.EdDSAPrivateKeyUtils
+import android.util.Base64
 import org.json.JSONObject
 import java.io.Serializable
 
 @Suppress("MemberVisibilityCanBePrivate", "unused")
 class User(
-        val id: String,
         val publicId: String,
         val username: String,
         val firstName: String,
@@ -39,7 +37,6 @@ class User(
         get() = "$firstName $lastName"
 
     fun toMap(): Map<String, Any> = mapOf(
-            KEY_ID to id,
             KEY_PUBLIC_ID to publicId,
             KEY_USERNAME to username,
             KEY_FIRST_NAME to firstName,
@@ -49,7 +46,6 @@ class User(
     )
 
     fun toJSONObject(): JSONObject = JSONObject().apply {
-        put(KEY_ID, id)
         put(KEY_PUBLIC_ID, publicId)
         put(KEY_USERNAME, username)
         put(KEY_FIRST_NAME, firstName)
@@ -58,7 +54,7 @@ class User(
         put(KEY_SIGNING_KEY, signingKey)
     }
 
-    val privateKey: EdDSAPrivateKey? = EdDSAPrivateKeyUtils.fromBase64(signingKey)
+    val privateKey: ByteArray = Base64.decode(signingKey, Base64.NO_WRAP)
 
     companion object {
         private const val KEY_ID = "id"
@@ -71,7 +67,6 @@ class User(
 
         @JvmStatic
         fun fromMap(map: Map<String, Any>): User? {
-            val id = map[KEY_ID]?.toString() ?: return null
             val publicId = map[KEY_PUBLIC_ID]?.toString() ?: return null
             val username = map[KEY_USERNAME]?.toString() ?: return null
             val firstName = map[KEY_FIRST_NAME]?.toString() ?: return null
@@ -80,7 +75,6 @@ class User(
             val signingKey = map[KEY_SIGNING_KEY]?.toString() ?: return null
 
             return User(
-                    id = id,
                     publicId = publicId,
                     username = username,
                     firstName = firstName,
@@ -92,7 +86,6 @@ class User(
 
         @JvmStatic
         fun fromJSONObject(json: JSONObject): User? {
-            val id = json.optString(KEY_ID) ?: return null
             val publicId = json.optString(KEY_PUBLIC_ID) ?: return null
             val username = json.optString(KEY_USERNAME) ?: return null
             val firstName = json.optString(KEY_FIRST_NAME) ?: return null
@@ -101,7 +94,6 @@ class User(
             val signingKey = json.optString(KEY_SIGNING_KEY) ?: return null
 
             return User(
-                    id = id,
                     publicId = publicId,
                     username = username,
                     firstName = firstName,

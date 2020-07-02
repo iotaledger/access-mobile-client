@@ -21,18 +21,25 @@ package org.iota.access.ui.main.commandlist
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.util.Pair
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.ViewModelProvider
 import io.reactivex.android.schedulers.AndroidSchedulers
-import org.iota.access.CommunicationFragment
+import io.reactivex.disposables.CompositeDisposable
+import org.iota.access.BaseFragment
 import org.iota.access.R
 import org.iota.access.api.model.CommandAction
 import org.iota.access.api.model.token_server.TSSendRequest
 import org.iota.access.databinding.FragmentCommandListBinding
 import org.iota.access.di.AppSharedPreferences
+import org.iota.access.di.Injectable
 import org.iota.access.ui.dialogs.QuestionDialogFragment
 import org.iota.access.ui.main.commandlist.CommandActionAdapter.CommandActionAdapterListener
 import org.iota.access.user.UserManager
@@ -43,9 +50,9 @@ import java.io.IOException
 import javax.inject.Inject
 
 /**
- * Fragment representing the Main Screen
+ * Fragment representing the Main Screen.
  */
-class CommandListFragment : CommunicationFragment<CommandListViewModel>(), CommandActionAdapterListener {
+class CommandListFragment : BaseFragment(R.layout.fragment_command_list), Injectable, CommandActionAdapterListener {
 
     @Inject
     lateinit var preferences: AppSharedPreferences
@@ -53,40 +60,53 @@ class CommandListFragment : CommunicationFragment<CommandListViewModel>(), Comma
     @Inject
     lateinit var userManager: UserManager
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
     private lateinit var binding: FragmentCommandListBinding
+    private lateinit var viewModel: CommandListViewModel
 
     private val commands: MutableList<CommandAction> = mutableListOf()
 
-    override val viewModelClass: Class<CommandListViewModel>
-        get() = CommandListViewModel::class.java
-
     private var unpaidCommand: CommandAction? = null
-
     private var commandToDelete: CommandAction? = null
+    private var disposable: CompositeDisposable? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = DataBindingUtil.bind(view)!!
+        binding.fab.setOnClickListener { onMicrophoneButtonClicked() }
         setHasOptionsMenu(true)
     }
 
     override fun onStart() {
         super.onStart()
-        if (!viewModel.isPolicyRequested) viewModel.policyList else if (!viewModel.commandList.isEmpty) {
+        if (!viewModel.isPolicyRequested) viewModel.getPolicyList() else if (!viewModel.commandList.isEmpty) {
             binding.fab.show()
         }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_command_list, container, false)
-        binding.recyclerView.layoutManager = LinearLayoutManager(activity)
-        binding.fab.setOnClickListener { onMicrophoneButtonClicked() }
-        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.recyclerView.adapter = CommandActionAdapter(commands, this)
-        binding.swipeRefreshLayout.setOnRefreshListener { viewModel.policyList }
+        binding.swipeRefreshLayout.setOnRefreshListener { viewModel.getPolicyList() }
+
+        val storeOwner = navController.getViewModelStoreOwner(navController.graph.id)
+        viewModel = ViewModelProvider(storeOwner, viewModelFactory).get(CommandListViewModel::class.java)
+
+        activity?.onBackPressedDispatcher
+                ?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                    override fun handleOnBackPressed() {
+                        this@CommandListFragment.activity?.finish()
+                    }
+                })
+
+        bindViewModel()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        unbindViewModel()
     }
 
     override fun showSnackbar(message: String) {
@@ -148,6 +168,7 @@ class CommandListFragment : CommunicationFragment<CommandListViewModel>(), Comma
             }
         }
     }
+
 
     @Suppress("UNUSED_PARAMETER")
     private fun deleteCommand(commandAction: CommandAction) {
@@ -256,18 +277,37 @@ class CommandListFragment : CommunicationFragment<CommandListViewModel>(), Comma
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 
-    override fun bindViewModel() {
-        super.bindViewModel()
-        disposable?.let {
-            it.add(viewModel.observableCommandList
+    private fun bindViewModel() {
+        lifecycle.addObserver(viewModel)
+        disposable = CompositeDisposable()
+        disposable?.apply {
+            add(viewModel.observableCommandList
                     .observeOn(AndroidSchedulers.mainThread())
                     .filter { optList -> !optList.isEmpty }
                     .map { optList -> optList.get()!! }
                     .subscribe({ commandList: List<CommandAction> -> handleNewCommandList(commandList) }, Timber::e))
-            it.add(viewModel.showRefresh
+            add(viewModel.showRefresh
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ flag: Boolean -> showRefresh(flag) }, Timber::e))
+
+            add(viewModel.observableShowLoadingMessage
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            { pair: Pair<Boolean?, String?> -> showLoading(pair.first, pair.second) }, Timber::e))
+            add(viewModel
+                    .observableShowDialogMessage
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ message: String -> showInfoDialog(message) }, Timber::e))
+            add(viewModel
+                    .observableSnackbarMessage
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ message: String -> showInfoDialog(message) }, Timber::e))
         }
+    }
+
+    private fun unbindViewModel() {
+        lifecycle.removeObserver(viewModel)
+        disposable?.dispose()
     }
 
     companion object {
