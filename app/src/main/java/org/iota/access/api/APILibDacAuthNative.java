@@ -117,4 +117,7 @@ public class APILibDacAuthNative {
 
     public native int dacRelease(long[] session);
 
+    public native byte[] cryptoSign(byte[] message, int messageLen, byte[] privateKey);
+
+    public native int generateKeyPair(byte[] publicKey, byte[] privateKey);
 }

@@ -41,7 +41,7 @@
             app:iconSpaceReserved="false" />
 
         <ListPreference
-            android:defaultValue="2"
+            android:defaultValue="0"
             android:entries="@array/protocol_types"
             android:entryValues="@array/protocol_types"
             android:key="pref_protocol"

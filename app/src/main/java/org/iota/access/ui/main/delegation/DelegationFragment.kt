@@ -161,7 +161,7 @@ class DelegationFragment : BaseFragment(R.layout.fragment_delegation), Injectabl
                 true,
                 null,
                 getRule(viewModel.rulesGrantId),
-                getRule(viewModel.rulesDenyId)) ?: return
+                getRule(viewModel.rulesDenyId))
 
         delegationSharedViewModel.previewingPolicy = policy
         val direction = DelegationFragmentDirections.actionDelegationFragmentToDelegationPreviewFragment()

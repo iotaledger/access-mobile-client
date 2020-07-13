@@ -22,6 +22,10 @@ package org.iota.access.di.module;
 import android.app.Application;
 import android.content.Context;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.iota.access.BuildConfig;
 import org.iota.access.api.APILibDacAuthNative;
 import org.iota.access.api.Communicator;
@@ -38,9 +42,6 @@ import org.iota.access.data.DataProvider;
 import org.iota.access.data.DataProviderImpl;
 import org.iota.access.di.AppSharedPreferences;
 import org.iota.access.utils.ResourceProvider;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.security.KeyManagementException;
 import java.security.KeyStore;
@@ -86,9 +87,13 @@ public class AppModule {
 
     @Provides
     @Singleton
+
     public Communicator providesCommunicator(TCPClient tcpClient, TSService tsService, PSService psService) {
-//        return new CommunicatorImpl(tcpClient);
-        return new CommunicatorStub(tsService, psService);
+        if (BuildConfig.STUB_DEVICE_COMUNICATOR) {
+            return new CommunicatorStub(tsService, psService);
+        } else {
+            return new CommunicatorImpl(tcpClient);
+        }
     }
 
     @Singleton

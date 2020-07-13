@@ -19,7 +19,7 @@ int crypto_sign_keypair(unsigned char *pk,unsigned char *sk)
 	  tmp[i] =(unsigned char) (rand() % 256);
   }
   memcpy(sk,tmp,32);
-  //randombytes(sk,32);
+//  randombytes(sk,32);
   crypto_hash_sha512(az,sk,32);
   az[0] &= 248;
   az[31] &= 127;

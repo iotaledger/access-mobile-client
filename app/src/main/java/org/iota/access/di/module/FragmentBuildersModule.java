@@ -20,13 +20,12 @@
 package org.iota.access.di.module;
 
 import org.iota.access.SettingsFragment;
-import org.iota.access.ui.main.delegation.preview.DelegationPreviewJsonFragment;
-import org.iota.access.ui.main.delegation.preview.DelegationPreviewStructuredFragment;
 import org.iota.access.ui.auth.login.LoginFragment;
-import org.iota.access.ui.auth.register.RegisterFragment;
 import org.iota.access.ui.main.commandlist.CommandListFragment;
 import org.iota.access.ui.main.delegation.DelegationFragment;
 import org.iota.access.ui.main.delegation.DelegationRuleFragment;
+import org.iota.access.ui.main.delegation.preview.DelegationPreviewJsonFragment;
+import org.iota.access.ui.main.delegation.preview.DelegationPreviewStructuredFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -57,7 +56,4 @@ public abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract DelegationPreviewJsonFragment contributeDelegationPreviewJsonFragment();
-
-    @ContributesAndroidInjector
-    abstract RegisterFragment contributeRegisterFragment();
 }

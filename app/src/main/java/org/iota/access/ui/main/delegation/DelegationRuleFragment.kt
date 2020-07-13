@@ -73,13 +73,15 @@ class DelegationRuleFragment : BaseFragment(R.layout.fragment_delegation_rule),
     private lateinit var viewModel: DelegationRuleViewModel
 
     private var disposable: CompositeDisposable? = null
-    private var rulesAdapter: RulesAdapter? = RulesAdapter(this)
+    private var rulesAdapter: RulesAdapter? = null
 
     private val args: Arguments by lazy { Arguments(arguments ?: Bundle()) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = DataBindingUtil.bind(view)!!
+
+        rulesAdapter = RulesAdapter(this)
 
         // Type of rule
         binding.spinnerTypeOfRule.adapter = SpinnerArrayAdapter(
@@ -99,7 +101,6 @@ class DelegationRuleFragment : BaseFragment(R.layout.fragment_delegation_rule),
                 RuleLimitation.getAllStringValues(resources)
         )
     }
-
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

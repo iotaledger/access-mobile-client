@@ -66,7 +66,7 @@ class CommandAction(
 
     companion object {
         private const val ACTION = "action"
-        private const val POLICY_ID = "policyId"
+        private const val POLICY_ID = "policy_id"
         private const val COST = "cost"
 
         @Suppress("unused")

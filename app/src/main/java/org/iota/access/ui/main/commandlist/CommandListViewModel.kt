@@ -54,10 +54,11 @@ import retrofit2.Response
 import timber.log.Timber
 import javax.inject.Inject
 
-class CommandListViewModel @Inject constructor(
+class CommandListViewModel
+@Inject constructor(
         communicator: Communicator?,
+        resourceProvider: ResourceProvider,
         private val dataProvider: DataProvider,
-        resourceProvider: ResourceProvider?,
         private val asrClient: ASRClient,
         private val userManager: UserManager,
         private val tsService: TSService,
@@ -90,26 +91,29 @@ class CommandListViewModel @Inject constructor(
      * @param command command which should be executed
      */
     fun executeCommand(command: CommandAction) {
+        val user = userManager.user ?: return
         invokedCommand = command
         val policy = command.policyId
-        sendTCPMessage(CommunicationMessage.makeResolvePolicyRequest(policy), resourceProvider.getString(R.string.msg_executing_command, command.actionName))
+        sendTCPMessage(
+                CommunicationMessage.makeResolvePolicyRequest(policy, user.publicId),
+                resourceProvider.getString(R.string.msg_executing_command, command.actionName))
     }
 
-    val policyList: Unit
-        get() {
-            if (userManager.user == null) return
-            isPolicyRequested = true
-            _showRefresh.onNext(true)
-            val userId = userManager.user!!.publicId
-            sendTCPMessage(CommunicationMessage.makePolicyListRequest(userId))
-        }
+    fun getPolicyList() {
+        val user = userManager.user ?: return
+        isPolicyRequested = true
+        _showRefresh.onNext(true)
+        val userId = user.publicId
+        sendTCPMessage(CommunicationMessage.makePolicyListRequest(userId))
+    }
 
-    fun enablePolicy(policyId: String?) {
+    fun enablePolicy(policyId: String) {
+        val user = userManager.user ?: return
         policyIdToEnable = policyId
-        sendTCPMessage(CommunicationMessage.makeEnablePolicyRequest(policyId))
+        sendTCPMessage(CommunicationMessage.makeEnablePolicyRequest(policyId, user.publicId))
     }
 
-    fun payPolicy(requestBody: TSSendRequest?, policyId: String?) {
+    fun payPolicy(requestBody: TSSendRequest, policyId: String) {
         mSendTokenResponseBodyCall = tsService.sendTokens(requestBody)
         mSendTokenResponseBodyCall?.enqueue(object : Callback<TSEmptyResponse?> {
             override fun onResponse(call: Call<TSEmptyResponse?>, response: Response<TSEmptyResponse?>) {

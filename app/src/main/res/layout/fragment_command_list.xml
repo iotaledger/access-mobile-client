@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  This file is part of the IOTA Access distribution
   ~  (https://github.com/iotaledger/access)
   ~
@@ -51,9 +50,8 @@
                     android:clipToPadding="false"
                     android:paddingTop="8dp"
                     android:paddingBottom="72dp"
-                    android:scrollbars="vertical">
-
-                </androidx.recyclerview.widget.RecyclerView>
+                    android:scrollbars="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
