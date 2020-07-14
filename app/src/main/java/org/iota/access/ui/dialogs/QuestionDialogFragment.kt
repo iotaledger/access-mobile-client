@@ -42,10 +42,10 @@ class QuestionDialogFragment : DialogFragment() {
 
         val parentFragment = parentFragment
 
-        if (context is QuestionDialogListener) {
-            listener = context
-        } else if (parentFragment is QuestionDialogListener) {
+        if (parentFragment is QuestionDialogListener) {
             listener = parentFragment
+        } else if (context is QuestionDialogListener) {
+            listener = context
         }
     }
 

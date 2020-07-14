@@ -28,7 +28,7 @@ class TCPClientWorker : HandlerThread(TAG) {
         handler = Handler()
     }
 
-    fun execute(task: Runnable?) {
+    fun execute(task: Runnable) {
         handler.post(task)
     }
 

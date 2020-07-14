@@ -30,6 +30,7 @@ import org.iota.access.api.Communicator
 import org.iota.access.models.User
 import org.iota.access.models.UserUtils
 import org.iota.access.user.UserManager
+import org.iota.access.utils.Constants
 import org.iota.access.utils.ResourceProvider
 import javax.inject.Inject
 
@@ -58,7 +59,7 @@ class LoginViewModel @Inject constructor(
                 mShowLoading.onNext(Pair(false, null))
 
                 val defaultUser = UserUtils.getDefaultUser(loginUsername)
-                if (defaultUser != null) {
+                if (defaultUser != null && loginPassword == Constants.DEFAULT_PASSWORD) {
                     userManager.startSession(defaultUser)
                     _loginCompleted.onNext(defaultUser)
                 } else {

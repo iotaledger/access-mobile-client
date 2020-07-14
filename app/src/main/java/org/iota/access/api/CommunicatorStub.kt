@@ -27,10 +27,8 @@ import io.reactivex.subjects.PublishSubject
 import org.iota.access.api.model.CommunicationMessage
 import org.iota.access.api.model.TCPResponse
 import org.iota.access.api.tcp.TCPClient.TCPError
-import org.iota.access.models.DelegationUser
 import org.iota.access.models.GetUserIdResponse
 import org.iota.access.models.User
-import org.iota.access.models.UserUtils.getDefaultUser
 import org.iota.access.utils.JSONUtils.extractJsonElement
 import java.util.*
 import javax.inject.Inject
@@ -84,20 +82,7 @@ class CommunicatorStub @Inject constructor(private val mTsService: TSService, pr
                     val response = TCPResponse<User>()
                     response.setError(0)
                     response.message = "success"
-                    val user = getDefaultUser("jamie")
                     mResponse.onNext(Pair(message, gson.toJson(response)))
-                }
-                CommunicationMessage.GET_ALL_USERS -> {
-                    val tcpResponse = TCPResponse<List<DelegationUser>>()
-                    val users: MutableList<DelegationUser> = ArrayList()
-                    users.add(DelegationUser("jamie", "3c9d985c5d630e6e02f676997c5e9f03b45c6b7529b2491e8de03c18af3c9d87f0a65ecb5dd8f390dee13835354b222df414104684ce9f1079a059f052ca6e51"))
-                    users.add(DelegationUser("charlie", "3c9d985c5d630e6e02f676997c5e9f03b45c6b7529b2491e8de03c18af3c9d87f0a65ecb5dd8f390dee13835354b222df414104684ce9f1079a059f052ca6e51"))
-                    users.add(DelegationUser("alex", "3c9d985c5d630e6e02f676997c5e9f03b45c6b7529b2491e8de03c18af3c9d87f0a65ecb5dd8f390dee13835354b222df414104684ce9f1079a059f052ca6e51"))
-                    users.add(DelegationUser("richard", "3c9d985c5d630e6e02f676997c5e9f03b45c6b7529b2491e8de03c18af3c9d87f0a65ecb5dd8f390dee13835354b222df414104684ce9f1079a059f052ca6e51"))
-                    tcpResponse.setError(0)
-                    tcpResponse.message = "success"
-                    tcpResponse.data = users
-                    mResponse.onNext(Pair(message, gson.toJson(tcpResponse)))
                 }
                 else -> mResponse.onNext(Pair(message, ""))
             }

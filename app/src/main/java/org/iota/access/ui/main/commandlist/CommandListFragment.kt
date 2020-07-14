@@ -36,7 +36,6 @@ import io.reactivex.disposables.CompositeDisposable
 import org.iota.access.BaseFragment
 import org.iota.access.R
 import org.iota.access.api.model.CommandAction
-import org.iota.access.api.model.token_server.TSSendRequest
 import org.iota.access.databinding.FragmentCommandListBinding
 import org.iota.access.di.AppSharedPreferences
 import org.iota.access.di.Injectable
@@ -44,7 +43,6 @@ import org.iota.access.ui.dialogs.QuestionDialogFragment
 import org.iota.access.ui.main.commandlist.CommandActionAdapter.CommandActionAdapterListener
 import org.iota.access.user.UserManager
 import org.iota.access.utils.Constants
-import org.iota.access.utils.ui.DialogFragmentUtil
 import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
@@ -135,10 +133,6 @@ class CommandListFragment : BaseFragment(R.layout.fragment_command_list), Inject
                 showQuestionDialog(question, REFILL_ACCOUNT_QUESTION)
                 true
             }
-            R.id.action_clear_users -> {
-                clearUserList()
-                true
-            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -166,6 +160,11 @@ class CommandListFragment : BaseFragment(R.layout.fragment_command_list), Inject
                 }
                 commandToDelete = null
             }
+            TAG_CLEAR_POLICY -> {
+                if (answer == QuestionDialogFragment.QuestionDialogAnswer.POSITIVE) {
+                    viewModel.clearPolicyList()
+                }
+            }
         }
     }
 
@@ -175,33 +174,18 @@ class CommandListFragment : BaseFragment(R.layout.fragment_command_list), Inject
         // TODO: 29.6.2020. Delete command
     }
 
-    private fun clearPolicyList() {
-        val dialog = DialogFragmentUtil.createAlertDialog(
-                getString(R.string.clear_policy),
-                android.R.string.yes,
-                android.R.string.no
-        ) { viewModel.clearPolicyList() }
-        DialogFragmentUtil.showDialog(dialog, childFragmentManager, TAG_CLEAR_POLICY)
-    }
+    private fun clearPolicyList() = showQuestionDialog(getString(R.string.clear_policy), TAG_CLEAR_POLICY)
 
-    private fun clearUserList() {
-        val dialog = DialogFragmentUtil.createAlertDialog(
-                getString(R.string.clear_users),
-                android.R.string.yes,
-                android.R.string.no
-        ) { viewModel.clearUserList() }
-        DialogFragmentUtil.showDialog(dialog, childFragmentManager, TAG_CLEAR_POLICY)
-    }
-
+    @Suppress("UNUSED_PARAMETER")
     private fun payForCommand(command: CommandAction) {
-        val user = userManager.user ?: return
-        val senderWalletId = user.walletId
-        val receiverWalletId = resources.getStringArray(R.array.wallet_ids)[0]
-        val priority = 4
-        val requestBody = TSSendRequest(senderWalletId,
-                receiverWalletId, command.cost.toString(),
-                priority)
-        viewModel.payPolicy(requestBody, command.policyId)
+//        val user = userManager.user ?: return
+//        val senderWalletId = user.walletId
+//        val receiverWalletId = resources.getStringArray(R.array.wallet_ids)[0]
+//        val priority = 4
+//        val requestBody = TSSendRequest(senderWalletId,
+//                receiverWalletId, command.cost.toString(),
+//                priority)
+//        viewModel.payPolicy(requestBody, command.policyId)
     }
 
     override fun onCommandSelected(commandAction: CommandAction) {
@@ -228,9 +212,8 @@ class CommandListFragment : BaseFragment(R.layout.fragment_command_list), Inject
         showQuestionDialog(question, DELETE_COMMAND_QUESTION)
     }
 
-    private fun onMicrophoneButtonClicked() {
-        startActivityForResult(viewModel.asrIntent, ACTIVITY_RESULT_SPEECH)
-    }
+    private fun onMicrophoneButtonClicked() =
+            startActivityForResult(viewModel.asrIntent, ACTIVITY_RESULT_SPEECH)
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
