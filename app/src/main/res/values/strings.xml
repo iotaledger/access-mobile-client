@@ -229,7 +229,7 @@
     <string name="msg_action_not_paid_question">This action is not paid!\nDo you want to pay %s tokens for it?</string>
     <string name="msg_paying">Paying…</string>
     <string name="msg_unable_to_pay">Unable to make a payment. Please try again later…</string>
-    <string name="msg_unable_to_log_in">Unable to log in</string>
+    <string name="msg_unable_to_log_in">Invalid credentials</string>
     <string name="msg_requesting_users">Requesting users…</string>
     <string name="msg_clearing_users">Clearing users…</string>
     <string name="msg_unable_to_clear_users">Unable to clear users</string>

@@ -34,10 +34,10 @@ class InfoDialogFragment : DialogFragment() {
 
         val parentFragment = parentFragment
 
-        if (context is InfoDialogListener) {
-            listener = context
-        } else if (parentFragment is InfoDialogListener) {
+        if (parentFragment is InfoDialogListener) {
             listener = parentFragment
+        } else if (context is InfoDialogListener) {
+            listener = context
         }
     }
 

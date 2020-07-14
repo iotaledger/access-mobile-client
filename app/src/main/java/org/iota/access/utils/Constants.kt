@@ -27,4 +27,5 @@ object Constants {
     const val ACTION_OPEN_TRUNK = "open_trunk"
     const val DATE_AND_TIME_FORMAT = "dd/MM/yyyy HH:mm"
     const val TOKEN_SCALE_FACTOR = 1000f
+    const val DEFAULT_PASSWORD = "IOTApass1234"
 }

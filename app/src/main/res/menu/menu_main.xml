@@ -27,12 +27,6 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_clear_users"
-        android:orderInCategory="103"
-        android:title="@string/action_clear_users"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/action_refill_tokens"
         android:orderInCategory="105"
         android:title="@string/action_refill_tokens"

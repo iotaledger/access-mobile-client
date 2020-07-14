@@ -21,11 +21,9 @@ package org.iota.access
 import android.graphics.Color
 import android.view.Menu
 import android.view.MenuInflater
-import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.annotation.CallSuper
-import androidx.annotation.StringRes
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
@@ -35,8 +33,6 @@ import com.google.android.material.snackbar.Snackbar
 import org.iota.access.ui.dialogs.InfoDialogFragment
 import org.iota.access.ui.dialogs.ProgressDialogFragment
 import org.iota.access.ui.dialogs.QuestionDialogFragment
-import org.iota.access.utils.ui.DialogFragmentUtil
-import org.iota.access.utils.ui.DialogFragmentUtil.AlertDialogFragment.AlertDialogListener
 import org.iota.access.utils.ui.UiUtils
 import timber.log.Timber
 
@@ -44,35 +40,30 @@ abstract class BaseFragment : Fragment,
         InfoDialogFragment.InfoDialogListener,
         QuestionDialogFragment.QuestionDialogListener {
 
-    private var mSnackbar: Snackbar? = null
+    private var snackbar: Snackbar? = null
 
     constructor()
 
     constructor(contentLayoutId: Int) : super(contentLayoutId)
 
     protected open fun showSnackbar(message: String) {
-        showSnackbar(message, null)
-    }
-
-    protected val navController: NavController
-        get() = NavHostFragment.findNavController(this)
-
-
-    protected fun showSnackbar(message: String?, listener: View.OnClickListener?) {
         val fragmentView = view ?: return
         try {
-            mSnackbar = Snackbar.make(fragmentView, message!!, Snackbar.LENGTH_LONG)
-            mSnackbar!!.setAction(android.R.string.ok) { v: View? ->
-                mSnackbar!!.dismiss()
-                listener?.onClick(v)
+            snackbar = Snackbar.make(fragmentView, message, Snackbar.LENGTH_LONG)
+            snackbar?.apply {
+                setAction(android.R.string.ok) { snackbar?.dismiss() }
+                setActionTextColor(Color.GREEN)
+                show()
             }
-            mSnackbar!!.setActionTextColor(Color.GREEN)
-            mSnackbar!!.show()
             Timber.d("Shown snackbar with message: %s", message)
         } catch (e: Exception) {
             Timber.e(e)
         }
     }
+
+    protected val navController: NavController
+        get() = NavHostFragment.findNavController(this)
+
 
     @CallSuper
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -92,28 +83,13 @@ abstract class BaseFragment : Fragment,
         }
     }
 
-    protected fun showProgress(message: String?) {
-        DialogFragmentUtil.showDialog(DialogFragmentUtil.createProgressDialog(message, android.R.string.cancel, null),
-                childFragmentManager,
-                FRAGMENT_TAG_PROGRESS_DIALOG)
-    }
-
-    protected fun showProgress(@StringRes message: Int) {
-        DialogFragmentUtil
-                .showDialog(DialogFragmentUtil.createProgressDialog(getString(message), android.R.string.cancel, null),
-                        childFragmentManager,
-                        FRAGMENT_TAG_PROGRESS_DIALOG)
-    }
+    protected fun showProgress(message: String?) =
+            ProgressDialogFragment.newInstance(message).show(childFragmentManager, FRAGMENT_TAG_PROGRESS_DIALOG)
 
     protected fun hideProgress() {
         childFragmentManager.executePendingTransactions()
         val progressFragment = childFragmentManager.findFragmentByTag(FRAGMENT_TAG_PROGRESS_DIALOG) as ProgressDialogFragment?
         progressFragment?.dismiss()
-    }
-
-    protected fun showDialogMessage(message: String?, listener: AlertDialogListener?) {
-        val dialog = DialogFragmentUtil.createAlertDialog(message, android.R.string.yes, android.R.string.no, listener)
-        DialogFragmentUtil.showDialog(dialog, childFragmentManager, FRAGMENT_TAG_MESSAGE_DIALOG)
     }
 
     protected fun showLoading(show: Boolean?, message: String?) {
@@ -193,15 +169,14 @@ abstract class BaseFragment : Fragment,
 
     override fun onPause() {
         super.onPause()
-        if (mSnackbar != null) {
-            mSnackbar!!.dismiss()
-            mSnackbar = null
+        if (snackbar != null) {
+            snackbar!!.dismiss()
+            snackbar = null
         }
     }
 
     companion object {
         private const val FRAGMENT_TAG_PROGRESS_DIALOG = "com.iota.access.progress_dialog_tag"
-        private const val FRAGMENT_TAG_MESSAGE_DIALOG = "com.iota.access.message_dialog"
 
         private const val INFO_DIALOG_TAG = "infoDialogTag"
     }

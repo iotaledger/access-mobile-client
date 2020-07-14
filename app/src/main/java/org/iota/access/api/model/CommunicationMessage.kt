@@ -39,7 +39,6 @@ object CommunicationMessage {
     const val GET_USER = "get_user"
     const val REGISTER_USER = "register_user"
     const val USER = "user"
-    const val GET_ALL_USERS = "get_all_users"
     const val CLEAR_ALL_USERS = "clear_all_users"
 
     @JvmStatic

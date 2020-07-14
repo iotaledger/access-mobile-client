@@ -43,15 +43,17 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import org.iota.access.di.AppSharedPreferences
 import org.iota.access.ui.auth.login.LoginActivity
+import org.iota.access.ui.dialogs.QuestionDialogFragment
 import org.iota.access.user.UserManager
-import org.iota.access.utils.ui.DialogFragmentUtil
 import org.iota.access.utils.ui.Theme
 import org.iota.access.utils.ui.ThemeLab
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
+class MainActivity : AppCompatActivity(),
+        HasSupportFragmentInjector,
+        QuestionDialogFragment.QuestionDialogListener {
 
     @Inject
     lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
@@ -150,17 +152,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     }
 
     private fun onLogOutMenuItemSelected() {
-        val logoutDialog = DialogFragmentUtil.createAlertDialog(
-                getString(R.string.msg_logout),
-                android.R.string.yes,
-                android.R.string.no
-        ) {
-            userManager.endSession()
-            startActivity(Intent(this, LoginActivity::class.java))
-            Timber.d("Successfully logged out")
-            finish()
-        }
-        DialogFragmentUtil.showDialog(logoutDialog, supportFragmentManager, "logout")
+        QuestionDialogFragment
+                .newInstance(getString(R.string.msg_logout), LOGOUT_QUESTION_TAG)
+                .show(supportFragmentManager, LOGOUT_QUESTION_TAG)
     }
 
     private fun onSettingsMenuItemSelected() {
@@ -176,8 +170,19 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     }
 
     companion object {
+        const val LOGOUT_QUESTION_TAG = "logOutQuestion"
+
         fun newIntent(context: Context): Intent {
             return Intent(context, MainActivity::class.java)
+        }
+    }
+
+    override fun onQuestionDialogAnswer(dialogTag: String, answer: QuestionDialogFragment.QuestionDialogAnswer) {
+        if (dialogTag == LOGOUT_QUESTION_TAG && answer == QuestionDialogFragment.QuestionDialogAnswer.POSITIVE) {
+            userManager.endSession()
+            startActivity(Intent(this, LoginActivity::class.java))
+            Timber.d("Successfully logged out")
+            finish()
         }
     }
 }
