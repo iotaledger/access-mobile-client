@@ -27,7 +27,7 @@
 
         <EditTextPreference
             android:defaultValue="192.168.3.1"
-            android:key="pref_ip_address"
+            android:key="pref_ip_address_embedded"
             android:textColorHint="@color/red"
             android:theme="?attr/label_style"
             android:title="@string/pref_title_ip_address"
@@ -36,7 +36,7 @@
         <EditTextPreference
             android:defaultValue="9998"
             android:dialogMessage="Value between 0 and 65535"
-            android:key="pref_port_number"
+            android:key="pref_port_number_embedded"
             android:title="@string/pref_title_port_number"
             app:iconSpaceReserved="false" />
 
@@ -47,6 +47,27 @@
             android:key="pref_protocol"
             android:title="@string/label_protocol"
             app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Policy Store"
+        app:iconSpaceReserved="false">
+
+        <EditTextPreference
+            android:defaultValue="193.239.219.4"
+            android:key="pref_ip_address_pstore"
+            android:textColorHint="@color/red"
+            android:theme="?attr/label_style"
+            android:title="@string/pref_title_ip_address"
+            app:iconSpaceReserved="false" />
+
+        <EditTextPreference
+            android:defaultValue="9998"
+            android:dialogMessage="Value between 0 and 65535"
+            android:key="pref_port_number_pstore"
+            android:title="@string/pref_title_port_number"
+            app:iconSpaceReserved="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
