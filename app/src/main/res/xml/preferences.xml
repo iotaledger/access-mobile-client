@@ -62,7 +62,7 @@
             app:iconSpaceReserved="false" />
 
         <EditTextPreference
-            android:defaultValue="9998"
+            android:defaultValue="6007"
             android:dialogMessage="Value between 0 and 65535"
             android:key="pref_port_number_pstore"
             android:title="@string/pref_title_port_number"
