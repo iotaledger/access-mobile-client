@@ -65,6 +65,12 @@ class SettingsFragment : BasePreferenceFragmentCompat(), Injectable, Preference.
             it.isVisible = showAdditionalSettings
         }
 
+        // Device ID
+        (preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_DEVICE_ID) as? EditTextPreference)?.let {
+            it.summary = it.text
+            it.onPreferenceChangeListener = this
+        }
+
         // IP address embedded
         (preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_IP_ADDRESS_EMBEDDED) as? EditTextPreference)?.let {
             it.summary = it.text
@@ -166,6 +172,7 @@ class SettingsFragment : BasePreferenceFragmentCompat(), Injectable, Preference.
     object Keys {
         const val PREF_KEY_USER = "pref_user"
         const val PREF_KEY_THEME = "pref_theme"
+        const val PREF_DEVICE_ID = "pref_device_id"
         const val PREF_KEY_IP_ADDRESS_EMBEDDED = "pref_ip_address_embedded"
         const val PREF_KEY_PORT_NUMBER_EMBEDDED = "pref_port_number_embedded"
         const val PREF_KEY_PROTOCOL = "pref_protocol"

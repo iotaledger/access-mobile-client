@@ -124,6 +124,7 @@
     <string name="imperial">Imperial</string>
 
     <!-- Preference Titles -->
+    <string name="pref_device_id">Device ID</string>
     <string name="pref_title_ip_address">IP address</string>
     <string name="pref_title_port_number">Port number</string>
     <string name="pref_title_protocol">Protocol</string>

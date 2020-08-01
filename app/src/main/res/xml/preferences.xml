@@ -26,6 +26,14 @@
         app:iconSpaceReserved="false">
 
         <EditTextPreference
+            android:defaultValue="123"
+            android:key="pref_device_id"
+            android:textColorHint="@color/red"
+            android:theme="?attr/label_style"
+            android:title="@string/pref_device_id"
+            app:iconSpaceReserved="false" />
+
+        <EditTextPreference
             android:defaultValue="192.168.3.1"
             android:key="pref_ip_address_embedded"
             android:textColorHint="@color/red"
