@@ -139,18 +139,6 @@ class CommandListFragment : BaseFragment(R.layout.fragment_command_list), Inject
 
     override fun onQuestionDialogAnswer(dialogTag: String, answer: QuestionDialogFragment.QuestionDialogAnswer) {
         when (dialogTag) {
-            REFILL_ACCOUNT_QUESTION -> {
-                if (answer == QuestionDialogFragment.QuestionDialogAnswer.POSITIVE) {
-                    refillAccount()
-                }
-            }
-            PAY_ACTION_QUESTION -> {
-                if (answer == QuestionDialogFragment.QuestionDialogAnswer.POSITIVE) {
-                    val command = unpaidCommand ?: return
-                    payForCommand(command)
-                }
-                unpaidCommand = null
-            }
             DELETE_COMMAND_QUESTION -> {
                 if (answer == QuestionDialogFragment.QuestionDialogAnswer.POSITIVE) {
                     val commandToDelete = this.commandToDelete
@@ -233,14 +221,6 @@ class CommandListFragment : BaseFragment(R.layout.fragment_command_list), Inject
 
     private fun hideBackgroundMessage() {
         binding.textMessage.visibility = View.GONE
-    }
-
-    private fun refillAccount() {
-        if (userManager.user == null) {
-            return  // should newer occur
-        }
-        val walletId = userManager.user!!.walletId
-        viewModel.refillAccount(walletId)
     }
 
     private fun showRefresh(flag: Boolean) {

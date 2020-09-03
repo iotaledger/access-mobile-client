@@ -33,7 +33,6 @@ import org.iota.access.api.CommunicatorImpl;
 import org.iota.access.api.CommunicatorStub;
 import org.iota.access.api.OnMessageReceived;
 import org.iota.access.api.PSService;
-import org.iota.access.api.TSService;
 import org.iota.access.api.asr.ASRClient;
 import org.iota.access.api.tcp.TCPClient;
 import org.iota.access.api.tcp.TCPClientImpl;
@@ -75,8 +74,6 @@ public class AppModule {
 
     private final String SSL_PROTOCOL = "SSL";
 
-    private final String TOKEN_SERVER_URL = BuildConfig.TOKEN_SERVER_URL;
-
     private final String POLICY_SERVER_URL = BuildConfig.POLICY_SERVER_URL;
 
     @Singleton
@@ -88,9 +85,9 @@ public class AppModule {
     @Provides
     @Singleton
 
-    public Communicator providesCommunicator(TCPClient tcpClient, TSService tsService, PSService psService) {
+    public Communicator providesCommunicator(TCPClient tcpClient, PSService psService) {
         if (BuildConfig.STUB_DEVICE_COMUNICATOR) {
-            return new CommunicatorStub(tsService, psService);
+            return new CommunicatorStub(psService);
         } else {
             return new CommunicatorImpl(tcpClient);
         }
@@ -177,18 +174,6 @@ public class AppModule {
         );
 
         return client.build();
-    }
-
-    @Provides
-    @Singleton
-    public TSService provideTSService(Gson gson, OkHttpClient okHttpClient) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(TOKEN_SERVER_URL)
-                .client(okHttpClient)
-                .build();
-        return retrofit.create(TSService.class);
     }
 
     @Provides

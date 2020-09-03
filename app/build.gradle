@@ -62,8 +62,7 @@ android {
         }
 
         buildTypes.each {
-            it.buildConfigField('String', 'TOKEN_SERVER_URL', '"http://193.239.219.4:6009"') //todo remove
-            it.buildConfigField('String', 'POLICY_SERVER_URL', '"http://193.239.219.4:6008"')
+            it.buildConfigField('String', 'POLICY_SERVER_URL', '"http://policy.store.ip.addr:6008"')
         }
     }
     externalNativeBuild {

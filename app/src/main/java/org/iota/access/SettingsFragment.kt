@@ -100,11 +100,6 @@ class SettingsFragment : BasePreferenceFragmentCompat(), Injectable, Preference.
             if (initialTheme == null) initialTheme = it.value
         }
 
-        // Protocols
-        (preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_PROTOCOL) as? ListPreference)?.let {
-            configListPreference(it, resources.getStringArray(R.array.protocol_types))
-        }
-
         // Temperature units
         (preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_TEMPERATURE_UNIT) as? ListPreference)?.let {
             configListPreference(it, resources.getStringArray(R.array.temperature_units))
