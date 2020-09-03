@@ -117,7 +117,7 @@
 
     <!-- Preference categories -->
     <string name="pref_category_appearance">Appearance</string>
-    <string name="pref_category_connection">Embedded Server</string>
+    <string name="pref_category_connection">Connection</string>
     <string name="pref_category_units">Units</string>
 
     <string name="metric">Metric</string>

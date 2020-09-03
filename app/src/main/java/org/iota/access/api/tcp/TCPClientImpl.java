@@ -278,8 +278,8 @@ public class TCPClientImpl implements TCPClient {
     @WorkerThread
     private void initConnection() throws TCPClientException {
         try {
-            InetAddress serverAddress = InetAddress.getByName(mPreferences.getString(SettingsFragment.Keys.PREF_KEY_IP_ADDRESS_EMBEDDED));
-            mTcpSocketObject = new TCPSocketObject(serverAddress, mPreferences.getInt(SettingsFragment.Keys.PREF_KEY_PORT_NUMBER_EMBEDDED));
+            InetAddress serverAddress = InetAddress.getByName(mPreferences.getString(SettingsFragment.Keys.PREF_KEY_IP_ADDRESS));
+            mTcpSocketObject = new TCPSocketObject(serverAddress, mPreferences.getInt(SettingsFragment.Keys.PREF_KEY_PORT_NUMBER));
             mBufferIn = new BufferedReader(new InputStreamReader(mTcpSocketObject.getDataInputStream()));
             mBufferOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(mTcpSocketObject.getDataOutputStream())), true);
         } catch (Exception e) {
