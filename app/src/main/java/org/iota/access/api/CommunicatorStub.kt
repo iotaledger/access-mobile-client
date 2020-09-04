@@ -35,7 +35,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class CommunicatorStub @Inject constructor(private val mTsService: TSService, private val mPsService: PSService) : Communicator {
+class CommunicatorStub @Inject constructor(private val mPsService: PSService) : Communicator {
     private var mDataset = JsonArray()
     private val mResponse = PublishSubject.create<Pair<String, String>>()
     private val mTCPError = PublishSubject.create<TCPError>()

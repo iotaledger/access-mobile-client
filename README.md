@@ -1,17 +1,28 @@
 # Access Android Application
 
-IOTA Android application is a client based smartphone application used to create access delegation policies for commands and data streams distributed over IOTA network to the embedded resource. Policies can be conbined with attributes to create rules that affect resolution of the policy on the embedded device.
+IOTA Android application is a client based smartphone application used to create Access Policies (as device owner) and Access Requests (as device user). Policies can be combined with attributes to create rules that affect resolution of the policy on the embedded device.
+
+There are 4 hardcoded users:
+- `alice`
+- `bob`
+- `carol`
+- `dave`
+
+all of them have `IOTApass1234` as password.
 
 ## Building instructions
 
-Clone the repository:
+1. Clone the repository:
 ```
-git clone https://github.com/iotaledger/access.git
-cd access/android
+git clone https://github.com/iotaledger/access-mobile-client.git
+cd access-mobile-client
 ```
-Open the android/ directory in Android Studio.
-Select Build -> Build APK
-This will build Access Android Application apk package file that can be moved to android phone
+
+2. Open the project in Android Studio.
+
+3. Change line 65 of `app/build.gradle` so that it contains the appropriate value for your [Policy Store](https://github.com/iotaledger/access-policy-store) IP address.
+
+4. Select Build -> Build APK. This will build the Access Mobile Client [APK](https://en.wikipedia.org/wiki/Android_application_package) file.
 
 ##  Run instructions
 1. In the android security settings select: 
@@ -19,4 +30,4 @@ This will build Access Android Application apk package file that can be moved to
 Allow instalation of the apps from unknown sources
 ```
 2. Copy generated APK to the Android phone using USB cable
-3. From the file explorer of the Android smarthone device select Run file in order to install
+3. From the file explorer of the Android smartphone device select Run file in order to install

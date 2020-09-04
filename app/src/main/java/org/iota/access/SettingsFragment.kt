@@ -67,6 +67,7 @@ class SettingsFragment : BasePreferenceFragmentCompat(), Injectable, Preference.
 
         // IP address
         (preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_IP_ADDRESS) as? EditTextPreference)?.let {
+
             it.summary = it.text
             it.onPreferenceChangeListener = this
         }
@@ -98,11 +99,6 @@ class SettingsFragment : BasePreferenceFragmentCompat(), Injectable, Preference.
         (preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_THEME) as? ListPreference)?.let {
             configListPreference(it, themeLab.getThemeNames(getActivity()))
             if (initialTheme == null) initialTheme = it.value
-        }
-
-        // Protocols
-        (preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_PROTOCOL) as? ListPreference)?.let {
-            configListPreference(it, resources.getStringArray(R.array.protocol_types))
         }
 
         // Temperature units
@@ -156,6 +152,9 @@ class SettingsFragment : BasePreferenceFragmentCompat(), Injectable, Preference.
         const val PREF_KEY_THEME = "pref_theme"
         const val PREF_KEY_IP_ADDRESS = "pref_ip_address"
         const val PREF_KEY_PORT_NUMBER = "pref_port_number"
+        const val PREF_DEVICE_ID = "pref_device_id"
+        const val PREF_KEY_IP_ADDRESS_EMBEDDED = "pref_ip_address_embedded"
+        const val PREF_KEY_PORT_NUMBER_EMBEDDED = "pref_port_number_embedded"
         const val PREF_KEY_PROTOCOL = "pref_protocol"
         const val PREF_KEY_TEMPERATURE_UNIT = "pref_temperature_unit"
         const val PREF_KEY_DISTANCE_UNIT = "pref_distance_unit"

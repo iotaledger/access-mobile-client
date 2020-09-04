@@ -31,7 +31,6 @@ import org.iota.access.CommunicationViewModel
 import org.iota.access.R
 import org.iota.access.api.Communicator
 import org.iota.access.api.PSService
-import org.iota.access.api.TSService
 import org.iota.access.api.asr.ASRClient
 import org.iota.access.api.model.CommandAction
 import org.iota.access.api.model.CommunicationMessage
@@ -61,7 +60,6 @@ class CommandListViewModel
         private val dataProvider: DataProvider,
         private val asrClient: ASRClient,
         private val userManager: UserManager,
-        private val tsService: TSService,
         private val psService: PSService,
         private val gson: Gson
 ) : CommunicationViewModel(communicator, resourceProvider) {
@@ -111,58 +109,6 @@ class CommandListViewModel
         val user = userManager.user ?: return
         policyIdToEnable = policyId
         sendTCPMessage(CommunicationMessage.makeEnablePolicyRequest(policyId, user.publicId))
-    }
-
-    fun payPolicy(requestBody: TSSendRequest, policyId: String) {
-        mSendTokenResponseBodyCall = tsService.sendTokens(requestBody)
-        mSendTokenResponseBodyCall?.enqueue(object : Callback<TSEmptyResponse?> {
-            override fun onResponse(call: Call<TSEmptyResponse?>, response: Response<TSEmptyResponse?>) {
-                mShowLoading.onNext(Pair(false, null))
-                when {
-                    response.body() == null -> {
-                        mShowDialogMessage.onNext(resourceProvider.getString(R.string.msg_unable_to_pay))
-                    }
-                    response.body()!!.isError -> {
-                        mShowDialogMessage.onNext(response.body()!!.message)
-                    }
-                    else -> {
-                        enablePolicy(policyId)
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<TSEmptyResponse?>, t: Throwable) {
-                mShowLoading.onNext(Pair(false, null))
-                mShowDialogMessage.onNext(t.message ?: "Unknown error occurred")
-            }
-        })
-        mShowLoading.onNext(Pair(true, resourceProvider.getString(R.string.msg_paying)))
-    }
-
-    fun refillAccount(walletId: String?) {
-        mAccountRefillCall = tsService.fundAccount(TSFundRequest(walletId, REFILL_AMOUNT))
-        mAccountRefillCall?.enqueue(object : Callback<TSEmptyResponse?> {
-            override fun onResponse(call: Call<TSEmptyResponse?>, response: Response<TSEmptyResponse?>) {
-                mShowLoading.onNext(Pair(false, null))
-                when {
-                    response.body() == null -> {
-                        mShowDialogMessage.onNext(resourceProvider.getString(R.string.msg_refilling_failed))
-                    }
-                    response.body()!!.isError -> {
-                        mShowDialogMessage.onNext(response.body()!!.message)
-                    }
-                    else -> {
-                        mShowDialogMessage.onNext(resourceProvider.getString(R.string.msg_refilling_successful))
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<TSEmptyResponse?>, t: Throwable) {
-                mShowLoading.onNext(Pair(false, null))
-                mShowDialogMessage.onNext(t.message ?: "Unknown error occurred")
-            }
-        })
-        mShowLoading.onNext(Pair(true, resourceProvider.getString(R.string.msg_refilling_account)))
     }
 
     fun clearUserList() {

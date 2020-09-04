@@ -22,11 +22,12 @@
     android:divider="@drawable/separation_line">
 
     <PreferenceCategory
-        android:title="@string/pref_category_connection"
+        android:title="Access Server"
         app:iconSpaceReserved="false">
 
         <EditTextPreference
-            android:defaultValue="192.168.3.1"
+            android:defaultValue="ip.addr.access.server"
+            android:dialogMessage="IP of Access Server"
             android:key="pref_ip_address"
             android:textColorHint="@color/red"
             android:theme="?attr/label_style"
@@ -40,37 +41,6 @@
             android:title="@string/pref_title_port_number"
             app:iconSpaceReserved="false" />
 
-        <ListPreference
-            android:defaultValue="0"
-            android:entries="@array/protocol_types"
-            android:entryValues="@array/protocol_types"
-            android:key="pref_protocol"
-            android:title="@string/label_protocol"
-            app:iconSpaceReserved="false" />
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="@string/pref_category_appearance"
-        app:iconSpaceReserved="false">
-
-        <ListPreference
-            android:key="pref_theme"
-            android:title="@string/pref_title_theme"
-            app:iconSpaceReserved="false" />
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:key="pref_category_units"
-        android:title="@string/pref_category_units"
-        app:iconSpaceReserved="false"
-        app:isPreferenceVisible="false">
-        <ListPreference
-            android:key="pref_temperature_unit"
-            android:title="@string/pref_title_temperature_unit"
-            app:iconSpaceReserved="false" />
-        <ListPreference
-            android:key="pref_distance_unit"
-            android:title="@string/pref_title_distance_unit"
-            app:iconSpaceReserved="false" />
-    </PreferenceCategory>
 </PreferenceScreen>
