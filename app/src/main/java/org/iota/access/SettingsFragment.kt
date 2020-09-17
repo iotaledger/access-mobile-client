@@ -65,15 +65,28 @@ class SettingsFragment : BasePreferenceFragmentCompat(), Injectable, Preference.
             it.isVisible = showAdditionalSettings
         }
 
-        // IP address
-        (preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_IP_ADDRESS) as? EditTextPreference)?.let {
+        // ACCESS IP address
+        (preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_ACCESS_IP_ADDRESS) as? EditTextPreference)?.let {
 
             it.summary = it.text
             it.onPreferenceChangeListener = this
         }
 
-        // port number
-        (preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_PORT_NUMBER) as? EditTextPreference)?.let {
+        // ACCESS port number
+        (preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_ACCESS_PORT_NUMBER) as? EditTextPreference)?.let {
+            it.summary = it.text
+            it.onPreferenceChangeListener = this
+        }
+
+        // POLICY IP address
+        (preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_POLICY_IP_ADDRESS) as? EditTextPreference)?.let {
+
+            it.summary = it.text
+            it.onPreferenceChangeListener = this
+        }
+
+        // POLICY port number
+        (preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_POLICY_PORT_NUMBER) as? EditTextPreference)?.let {
             it.summary = it.text
             it.onPreferenceChangeListener = this
         }
@@ -150,8 +163,10 @@ class SettingsFragment : BasePreferenceFragmentCompat(), Injectable, Preference.
     object Keys {
         const val PREF_KEY_USER = "pref_user"
         const val PREF_KEY_THEME = "pref_theme"
-        const val PREF_KEY_IP_ADDRESS = "pref_ip_address"
-        const val PREF_KEY_PORT_NUMBER = "pref_port_number"
+        const val PREF_KEY_ACCESS_IP_ADDRESS = "pref_access_ip_address"
+        const val PREF_KEY_ACCESS_PORT_NUMBER = "pref_access_port_number"
+        const val PREF_KEY_POLICY_IP_ADDRESS = "pref_policy_ip_address"
+        const val PREF_KEY_POLICY_PORT_NUMBER = "pref_policy_port_number"
         const val PREF_DEVICE_ID = "pref_device_id"
         const val PREF_KEY_IP_ADDRESS_EMBEDDED = "pref_ip_address_embedded"
         const val PREF_KEY_PORT_NUMBER_EMBEDDED = "pref_port_number_embedded"
