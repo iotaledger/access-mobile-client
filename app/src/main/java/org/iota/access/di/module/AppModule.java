@@ -65,6 +65,9 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static org.iota.access.SettingsFragment.Keys.PREF_KEY_POLICY_IP_ADDRESS;
+import static org.iota.access.SettingsFragment.Keys.PREF_KEY_POLICY_PORT_NUMBER;
+
 /**
  * Module for providing components used by the application
  */
@@ -73,8 +76,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AppModule {
 
     private final String SSL_PROTOCOL = "SSL";
-
-    private final String POLICY_SERVER_URL = BuildConfig.POLICY_SERVER_URL;
 
     @Singleton
     @Provides
@@ -178,11 +179,15 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public PSService providePService(Gson gson, OkHttpClient okHttpClient) {
+    public PSService providePService(Gson gson, OkHttpClient okHttpClient, AppSharedPreferences appSharedPreferences) {
+        final String policyServer = appSharedPreferences.getString(PREF_KEY_POLICY_IP_ADDRESS,"policy.store.ip.addr");
+        final int policyPort = appSharedPreferences.getInt(PREF_KEY_POLICY_PORT_NUMBER, 6008);
+        final String policyUrl = "http://" + policyServer + ":" + policyPort;
+
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(POLICY_SERVER_URL)
+                .baseUrl(policyUrl)
                 .client(okHttpClient)
                 .build();
         return retrofit.create(PSService.class);

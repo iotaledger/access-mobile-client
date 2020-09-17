@@ -28,7 +28,7 @@
         <EditTextPreference
             android:defaultValue="ip.addr.access.server"
             android:dialogMessage="IP of Access Server"
-            android:key="pref_ip_address"
+            android:key="pref_access_ip_address"
             android:textColorHint="@color/red"
             android:theme="?attr/label_style"
             android:title="@string/pref_title_ip_address"
@@ -37,7 +37,29 @@
         <EditTextPreference
             android:defaultValue="9998"
             android:dialogMessage="Value between 0 and 65535"
-            android:key="pref_port_number"
+            android:key="pref_access_port_number"
+            android:title="@string/pref_title_port_number"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Policy Store"
+        app:iconSpaceReserved="false">
+
+        <EditTextPreference
+            android:defaultValue="policy.store.ip.addr"
+            android:dialogMessage="IP of Policy Server"
+            android:key="pref_policy_ip_address"
+            android:textColorHint="@color/red"
+            android:theme="?attr/label_style"
+            android:title="@string/pref_title_ip_address"
+            app:iconSpaceReserved="false" />
+
+        <EditTextPreference
+            android:defaultValue="6008"
+            android:dialogMessage="Value between 0 and 65535"
+            android:key="pref_policy_port_number"
             android:title="@string/pref_title_port_number"
             app:iconSpaceReserved="false" />
 
