@@ -20,9 +20,7 @@ cd access-mobile-client
 
 2. Open the project in Android Studio.
 
-3. Change line 65 of `app/build.gradle` so that it contains the appropriate value for your [Policy Store](https://github.com/iotaledger/access-policy-store) IP address.
-
-4. Select Build -> Build APK. This will build the Access Mobile Client [APK](https://en.wikipedia.org/wiki/Android_application_package) file.
+3. Select Build -> Build APK. This will build the Access Mobile Client [APK](https://en.wikipedia.org/wiki/Android_application_package) file.
 
 ##  Run instructions
 1. In the android security settings select: 

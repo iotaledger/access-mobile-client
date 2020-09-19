@@ -123,6 +123,9 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
 
+    // Retrofit dynamic base URL
+    implementation 'me.jessyan:retrofit-url-manager:1.4.0'
+
     // Jackson
     implementation(
             [group: 'com.fasterxml.jackson.core',
