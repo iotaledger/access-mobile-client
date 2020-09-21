@@ -302,5 +302,6 @@
     <string name="action_3">Action #3</string>
     <string name="action_4">Action #4</string>
     <string name="action_5">Action #5</string>
+    <string name="invalid_policy_url">Invalid Server or Port format</string>
 
 </resources>

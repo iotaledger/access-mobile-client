@@ -26,14 +26,16 @@ import org.iota.access.api.model.policy_server.PSEmptyResponse;
 import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.PUT;
 
 public interface PSService {
 
     @PUT("/policy")
+    @Headers({"Domain-Name: policy"})
     Call<PSEmptyResponse> clearPolicyList(@Body PSClearPolicyListRequest request);
 
     @PUT("/policy")
+    @Headers({"Domain-Name: policy"})
     Observable<PSEmptyResponse> delegatePolicy(@Body PSDelegatePolicyRequest request);
 }
