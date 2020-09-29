@@ -21,14 +21,18 @@ package org.iota.access
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
+import me.jessyan.retrofiturlmanager.RetrofitUrlManager
+import org.iota.access.SettingsFragment.Keys.PREF_KEY_POLICY_IP_ADDRESS
 import org.iota.access.di.Injectable
 import org.iota.access.utils.ui.DisplayUtil
 import org.iota.access.utils.ui.ThemeLab
 import org.iota.access.utils.ui.UiUtils
+import java.lang.Exception
 import javax.inject.Inject
 
 class SettingsFragment : BasePreferenceFragmentCompat(), Injectable, Preference.OnPreferenceChangeListener {
@@ -59,24 +63,61 @@ class SettingsFragment : BasePreferenceFragmentCompat(), Injectable, Preference.
         super.onViewCreated(view, savedInstanceState)
         view.setBackgroundColor(Color.WHITE)
 
-
         // Unit category
         (preferenceScreen.findPreference<Preference>(PREF_CATEGORY_UNITS) as? PreferenceCategory)?.let {
             it.isVisible = showAdditionalSettings
         }
 
-        // IP address
-        (preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_IP_ADDRESS) as? EditTextPreference)?.let {
+        // ACCESS IP address
+        (preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_ACCESS_IP_ADDRESS) as? EditTextPreference)?.let {
 
             it.summary = it.text
             it.onPreferenceChangeListener = this
         }
 
-        // port number
-        (preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_PORT_NUMBER) as? EditTextPreference)?.let {
+        // ACCESS port number
+        (preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_ACCESS_PORT_NUMBER) as? EditTextPreference)?.let {
             it.summary = it.text
             it.onPreferenceChangeListener = this
         }
+
+        // POLICY IP address
+        (preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_POLICY_IP_ADDRESS) as? EditTextPreference)?.let {
+            it.summary = it.text
+        }
+        preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_POLICY_IP_ADDRESS)?.setOnPreferenceChangeListener { preference, newValue ->
+            try {
+                val policyPort: String? = (preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_POLICY_PORT_NUMBER) as? EditTextPreference)?.text
+                updatePolicyUrl(newValue.toString(), policyPort)
+                preference.summary = newValue.toString()
+                true
+            } catch (e: Exception) {
+                Toast.makeText(context, getString(R.string.invalid_policy_url),Toast.LENGTH_SHORT).show()
+                false
+            }
+        }
+
+
+        // POLICY port number
+        (preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_POLICY_PORT_NUMBER) as? EditTextPreference)?.let {
+            it.summary = it.text
+        }
+        preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_POLICY_PORT_NUMBER)?.setOnPreferenceChangeListener { preference, newValue ->
+            try {
+                val policyServer: String? = (preferenceScreen.findPreference<Preference>(Keys.PREF_KEY_POLICY_IP_ADDRESS) as? EditTextPreference)?.text
+                updatePolicyUrl(policyServer, newValue.toString())
+                preference.summary = newValue.toString()
+                true
+            } catch (e: Exception) {
+                Toast.makeText(context, getString(R.string.invalid_policy_url),Toast.LENGTH_SHORT).show()
+                false
+            }
+        }
+    }
+
+    private fun updatePolicyUrl(server: String?, port: String?) {
+        val policyUrl = "http://$server:$port"
+        RetrofitUrlManager.getInstance().putDomain("policy", policyUrl);
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -150,8 +191,10 @@ class SettingsFragment : BasePreferenceFragmentCompat(), Injectable, Preference.
     object Keys {
         const val PREF_KEY_USER = "pref_user"
         const val PREF_KEY_THEME = "pref_theme"
-        const val PREF_KEY_IP_ADDRESS = "pref_ip_address"
-        const val PREF_KEY_PORT_NUMBER = "pref_port_number"
+        const val PREF_KEY_ACCESS_IP_ADDRESS = "pref_access_ip_address"
+        const val PREF_KEY_ACCESS_PORT_NUMBER = "pref_access_port_number"
+        const val PREF_KEY_POLICY_IP_ADDRESS = "pref_policy_ip_address"
+        const val PREF_KEY_POLICY_PORT_NUMBER = "pref_policy_port_number"
         const val PREF_DEVICE_ID = "pref_device_id"
         const val PREF_KEY_IP_ADDRESS_EMBEDDED = "pref_ip_address_embedded"
         const val PREF_KEY_PORT_NUMBER_EMBEDDED = "pref_port_number_embedded"

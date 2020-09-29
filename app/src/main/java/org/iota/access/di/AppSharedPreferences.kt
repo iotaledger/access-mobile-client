@@ -44,13 +44,17 @@ class AppSharedPreferences @Inject internal constructor(
         sharedPreferences.edit().putString(key, value).apply()
     }
 
-    fun getString(key: String?): String? {
-        return sharedPreferences.getString(key, "")
+    fun getString(key: String?, defaultValue: String? = ""): String? {
+        return sharedPreferences.getString(key, defaultValue)
     }
 
-    fun getInt(key: String?): Int {
+    fun getString(key: String?): String? {
+        return getString(key, "")
+    }
+
+    fun getInt(key: String?, defaultValue: Int = 0): Int {
         return try {
-            sharedPreferences.getInt(key, 0)
+            sharedPreferences.getInt(key, defaultValue)
         } catch (ignored: Exception) {
             try {
                 Integer.valueOf(sharedPreferences.getString(key, "0")!!)
@@ -58,6 +62,10 @@ class AppSharedPreferences @Inject internal constructor(
                 0
             }
         }
+    }
+
+    fun getInt(key: String?): Int {
+        return getInt(key, 0)
     }
 
     fun putUser(user: User?) {
